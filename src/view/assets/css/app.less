@@ -1,0 +1,263 @@
+.tac {
+  text-align: center;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.cp {
+  cursor: pointer;
+}
+
+
+/*---------------*/
+
+
+#webapp {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 20px;
+}
+
+.ivu-avatar-largest {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 40px !important;
+}
+
+.ivu-icon-ios-close:hover {
+  color: #2d8cf0 !important;
+}
+
+.user-modal {
+
+  @win-bg-color: #9EA2A6;
+  @win-head-color: #1F2F38;
+  @win-font-color: #ffffff;
+
+  .ivu-modal-header {
+    background-color: @win-head-color;
+    color: @win-font-color;
+    border-bottom: none;
+  }
+
+  .ivu-modal-header-inner {
+    color: @win-font-color;
+  }
+
+  .ivu-modal-body {
+    padding: 0px;
+  }
+
+  .ivu-modal-content {
+    background-color: @win-bg-color;
+    color: @win-font-color;
+    border: 5px solid @win-head-color;
+  }
+
+  .ivu-modal-close i {
+    color: @win-font-color;
+  }
+
+  .ivu-split-trigger-vertical {
+    background: @win-head-color;
+  }
+
+  .ivu-split-trigger {
+    border: 1px solid @win-head-color;
+  }
+
+}
+
+.voice-modal {
+
+  @win-bg-color: #1E2E37;
+  @win-head-color: #1E2E37;
+  @win-foot-color: #595957;
+  @win-font-color: #ffffff;
+
+  .ivu-modal-header {
+    background-color: @win-head-color;
+    color: @win-font-color;
+    border-bottom: none;
+  }
+
+  .ivu-modal-header-inner {
+    color: @win-font-color;
+  }
+
+  .ivu-modal-body {
+    padding: 0px;
+  }
+
+  .ivu-modal-content {
+    background-color: @win-bg-color;
+    color: @win-font-color;
+    border: 2px solid @win-foot-color;
+    border-radius: 4px;
+  }
+
+  .ivu-modal-close i {
+    color: @win-font-color;
+  }
+
+  .ivu-modal-footer {
+    background-color: @win-foot-color;
+    border-top: 1px solid @win-foot-color;
+    padding: 5px 15px;
+  }
+}
+
+.voice-call-modal {
+  @win-body-color: #0E1A23;
+
+  .ivu-modal-body {
+    background-color: @win-body-color;
+  }
+
+  .ivu-modal-footer {
+    padding: 8px 15px;
+  }
+
+}
+
+.video-modal {
+  @win-body-color: #0E1A23;
+
+  .ivu-modal-header {
+    padding: 6px 4px;
+  }
+
+  .ivu-modal-close {
+    top: 0px;
+  }
+
+  .ivu-modal-body {
+    background-color: @win-body-color;
+  }
+
+  .ivu-modal-footer {
+    padding: 2px 2px;
+  }
+
+}
+
+.group-create-modal {
+  .ivu-modal-header {
+    padding: 2px 4px;
+  }
+
+  .ivu-modal-close {
+    top: -4px;
+    right: 2px;
+  }
+
+  .search_ipt input {
+    background-color: #585756;
+    border-color: #9E9E9E;
+    //border: none !important;
+    //border-bottom: 1px solid #fff;
+    color: #fff;
+    font-size: 1.1em;
+  }
+
+  .search_ipt input:focus {
+    border-color: #585756;
+  }
+
+  .ivu-modal-footer {
+    background-color: #515456;
+    border-top: 1px solid #515456;
+  }
+
+}
+
+.user-list-modal {
+
+  .ivu-modal-content {
+    top: 70px;
+    right: 450px;
+  }
+
+  .ivu-modal-header {
+    padding: 2px 4px;
+  }
+
+  .ivu-modal-close {
+    top: -4px;
+    right: 2px;
+  }
+
+  .ivu-tabs-bar {
+    .ivu-tabs-tab {
+      color: #111;
+      background-color: #c9caca;
+    }
+
+    .ivu-tabs-nav {
+      .ivu-tabs-ink-bar {
+        background-color: #585756;
+      }
+
+      .ivu-tabs-tab-active {
+        color: #fff;
+        background-color: #585756;
+      }
+    }
+  }
+
+  .search_ipt input {
+    background-color: #585756;
+    border-color: #585756;
+    border: none !important;
+    //border-bottom: 1px solid #fff;
+    color: #fff;
+    font-size: 1.1em;
+  }
+
+  .search_ipt input:focus {
+    border-color: #585756;
+  }
+
+  .ivu-modal-footer {
+    background-color: #515456;
+    border-top: 1px solid #515456;
+  }
+}
+
+//全屏窗口时要重置拖动的偏移量，不然会错位。
+.fullscreen_toggle_modal {
+  .ivu-modal-fullscreen {
+    .ivu-modal-content-drag {
+      left: 0px !important;
+      top: 0px !important;
+    }
+  }
+}
+
+.ivu-modal-fullscreen .ivu-modal-body {
+  bottom: 38px !important;
+}
+
+.im-image-modal {
+  .ivu-modal-header {
+    padding: 3px;
+  }
+
+  .ivu-modal-close {
+    top: 0px;
+    right: 0px;
+  }
+
+  .ivu-modal-content {
+    border: none;
+  }
+}
