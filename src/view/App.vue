@@ -1,5 +1,5 @@
 <template>
-    <div id="webapp">
+    <div id="sdk_webapp">
         <div v-for="obj in im" v-bind:key="'im-' + obj.id">
             <IMModal v-show="obj.main_modal_show" :id="obj.id" :im_target_type="obj.im_target_type"
                      :init_param_obj="obj.init_param_obj" v-on:on-im-cancel="hideIMModal(obj.id)"></IMModal>
@@ -30,7 +30,7 @@
                            :target="video_confirm.target" v-on:on-vcall-confirm-cancel="hideVideoConfirmModal()"></VideoConfirmModal>
 
         <div v-if="debug" style="width: 55%;float: left;">
-            <div id="output"
+            <div id="sdk_output"
                  style="width: 100%;height: 480px;margin-left: 10px;padding:10px;overflow: auto;word-break: break-all;line-height: 20px;text-align: left;border:solid 1px gray;"></div>
             <div style="padding:5px;">
                 <Button type="success" @click="clear_log()">clear_log</Button>
@@ -40,12 +40,12 @@
         <div v-if="debug" style="width: 43%;float: left;text-align: left;padding:0px 15px;">
             <div style="">
                 <div>
-                    <label for="logonName">帐号:</label>
-                    <Input id="logonName" v-model="logonName" placeholder="logonName" clearable style="width: 110px"/>
-                    <label for="password">密码:</label>
-                    <Input id="password" v-model="password" placeholder="password" clearable style="width: 110px"/>
-                    <label for="consoleName">console:</label>
-                    <Input id="consoleName" v-model="consoleName" placeholder="多个console时填写" clearable style="width: 120px"/>
+                    <label for="sdk_logonName">帐号:</label>
+                    <Input id="sdk_logonName" v-model="logonName" placeholder="logonName" clearable style="width: 110px"/>
+                    <label for="sdk_password">密码:</label>
+                    <Input id="sdk_password" v-model="password" placeholder="password" clearable style="width: 110px"/>
+                    <label for="sdk_consoleName">console:</label>
+                    <Input id="sdk_consoleName" v-model="consoleName" placeholder="多个console时填写" clearable style="width: 120px"/>
                     <Button style="margin:5px;" type="primary" @click="doLogin()">重新登陆</Button>
                     <span>console id: 68508</span>
                 </div>
@@ -465,10 +465,10 @@
 
             /** -------- XXX GLOBAL API TEST --------**/
             clear_log: function () {
-                document.getElementById('output').innerHTML = '';
+                document.getElementById('sdk_webapp').innerHTML = '';
             },
             doLogin: function () {
-                websdk.request.authRequest.logon(null, 0, 0, this.logonName, this.password, this.consoleName, function (rsp) {
+                websdk.request.authRequest.logon('39.105.135.70', 80, 10, this.logonName, this.password, this.consoleName, function (rsp) {
                     //this.request.authRequest.logon(null, 0, 0, 'testcu', '123456', 'c1552965016425r279235228', function (rsp) {
                     //logger.debug('logon result:{}', rsp);
                 }, 'test_req_logon');//

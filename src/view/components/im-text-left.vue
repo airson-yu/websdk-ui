@@ -1,16 +1,16 @@
 <template>
-    <div class="im-text-left">
-        <div class="avatar">
+    <div class="sdk-im-text-left">
+        <div class="sdk-avatar">
             <Avatar size="large" class="" :src="avatar"/>
         </div>
-        <div class="im-content">
-            <div class="item-top">
+        <div class="sdk-im-content">
+            <div class="sdk-item-top">
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <div class="item-content">
-                <div class="left-angle"></div>
-                <div class="message">
+            <div class="sdk-item-content">
+                <div class="sdk-left-angle"></div>
+                <div class="sdk-message">
                     <span>{{content}}</span>
                 </div>
             </div>

@@ -1,18 +1,18 @@
 <template>
-    <div class="im-text-right">
-        <div class="im-content">
-            <div class="item-top">
+    <div class="sdk-im-text-right">
+        <div class="sdk-im-content">
+            <div class="sdk-item-top">
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <div class="item-content-right">
-                <div class="message msg_img" @click="showImageModal(url_large)">
-                    <img class="im_image" :src="url_small"/>
+            <div class="sdk-item-content-right">
+                <div class="sdk-message sdk-msg-img" @click="showImageModal(url_large)">
+                    <img class="sdk-im-image" :src="url_small"/>
                 </div>
-                <div class="right-angle"></div>
+                <div class="sdk-right-angle"></div>
             </div>
         </div>
-        <div class="avatar">
+        <div class="sdk-avatar">
             <Avatar size="large" class="" :src="avatar"/>
         </div>
     </div>

@@ -994,7 +994,7 @@ export default {
         im_div_scroll_bottom: function (delay_time) {
             if (!delay_time) delay_time = 100;
             setTimeout(function () {
-                let node = document.getElementById('im-div');
+                let node = document.getElementById('sdk_im_div');
                 if (!node) {
                     return;
                 }

@@ -58,7 +58,7 @@ export default {
     //vue_root: null,
     init: (processor, callback) => {
         try {
-            const container_dom_id = 'webapp'; // XXX processor.js hard code
+            const container_dom_id = 'sdk_webapp'; // XXX processor.js hard code
             let container_dom = document.getElementById(container_dom_id);
             if (container_dom) {
                 container_dom.innerHTML = '';

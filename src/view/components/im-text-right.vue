@@ -1,23 +1,23 @@
 <template>
-    <div class="im-text-right">
-        <div class="im-content">
-            <div class="item-top">
+    <div class="sdk-im-text-right">
+        <div class="sdk-im-content">
+            <div class="sdk-item-top">
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <!--<div class="item-content">
-                &lt;!&ndash;<span class="message">{{content}}</span>&ndash;&gt;
-                <span class="message">content</span>
-                <div class="right-angle right-text-angle"></div>
+            <!--<div class="sdk-item-content">
+                &lt;!&ndash;<span class="sdk-message">{{content}}</span>&ndash;&gt;
+                <span class="sdk-message">content</span>
+                <div class="sdk-right-angle sdk-right-text-angle"></div>
             </div>-->
-            <div class="item-content-right">
-                <div class="message">
+            <div class="sdk-item-content-right">
+                <div class="sdk-message">
                     <span>{{content}}</span>
                 </div>
-                <div class="right-angle"></div>
+                <div class="sdk-right-angle"></div>
             </div>
         </div>
-        <div class="avatar">
+        <div class="sdk-avatar">
             <Avatar size="large" class="" :src="avatar"/>
         </div>
     </div>

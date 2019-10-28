@@ -1,25 +1,25 @@
 <template>
-    <div class="im-text-right">
-        <div class="im-content">
-            <div class="item-top">
+    <div class="sdk-im-text-right">
+        <div class="sdk-im-content">
+            <div class="sdk-item-top">
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <div class="item-content-right">
-                <div class="message msg_file_right">
-                    <div class="im_file_icon_div_right">
-                        <div class="im_file_icon">
+            <div class="sdk-item-content-right">
+                <div class="sdk-message sdk-msg-file-right">
+                    <div class="sdk-im-file-icon-div-right">
+                        <div class="sdk-im-file-icon">
                             <Icon :size=40 type="ios-folder-outline"/>
                         </div>
                     </div>
-                    <div class="im_file_name_div_right">
-                        <div class="im_file_name_right"><a :href=content :download=file_name class="im_file_name" target="_blank">{{file_name}}</a></div>
+                    <div class="sdk-im-file-name-div-right">
+                        <div class="sdk-im-file-name-right"><a :href=content :download=file_name class="sdk-im-file-name" target="_blank">{{file_name}}</a></div>
                     </div>
                 </div>
-                <div class="right-angle"></div>
+                <div class="sdk-right-angle"></div>
             </div>
         </div>
-        <div class="avatar">
+        <div class="sdk-avatar">
             <Avatar size="large" class="" :src="avatar"/>
         </div>
     </div>
