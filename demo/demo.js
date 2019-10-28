@@ -22,7 +22,7 @@ var global_data = {
     con_id: 66249,
     con_other_id: 66254,
 }
-RHTX = true;
+RHTX = false;
 if (RHTX) {
     global_data.ipaddr = '39.105.135.70';
     global_data.orgid = 10;
