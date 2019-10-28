@@ -58,6 +58,7 @@ export default {
     //vue_root: null,
     init: (processor, callback) => {
         try {
+            logger.debug('vue_init start');
             const container_dom_id = 'sdk_webapp'; // XXX processor.js hard code
             let container_dom = document.getElementById(container_dom_id);
             if (container_dom) {
@@ -79,12 +80,16 @@ export default {
             //return vue_root;
 
             window.websdk.vm = vue_root;
+            window.websdk.view = vue_root.$children[0];
             window.websdk.core.processor.init(vue_root, callback);
+            logger.debug('vue_init end');
+            return vue_root;
 
         } catch (e) {
+            logger.error('websdk.view init fail:');
             logger.error(e);
             callback && callback(processor.build_rsp_fail(Result.vue_init_error));
-            //return null;
+            return null;
         }
     }
 }

@@ -9,7 +9,7 @@ class websdkui {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_ui_version: 2019.10.22.01');
+        logger.debug('websdk_ui_version: 2019.10.28.01');
     }
 
     demo = () => {
@@ -25,7 +25,7 @@ class websdkui {
     init = (callback) => {
         // XXX client调用init方法要有回调，返回Init成功还是失败，失败原因 2019年3月5日12:38:12
         let processor = window.websdk.core.processor;
-        vue_boot.init(processor, callback);
+        this.vm = vue_boot.init(processor, callback);
         return this;
     }
 
@@ -35,7 +35,7 @@ class websdkui {
 window.websdk.view = new websdkui();
 
 // FIXME set false when release
-window.debug = true;
+window.debug = false;
 
 if (window.debug) {
     window.websdk.init(function (result) {
