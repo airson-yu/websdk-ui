@@ -5,6 +5,7 @@
 @win-bg-color: #9EA2A6;
 @win-bg-left-color: #9EA2A6;
 @win-bg-right-color: #9EA2A6;
+@switch-color: #fff;
 
 // XXX theme_blue start
 @win-bg-color: #0F4185;
@@ -13,6 +14,7 @@
 @win-bg-btm-color: #E6E9EC;
 @icon-color: #fff;
 @uname-color: #fff;
+@switch-color: #04D2DF;
 // XXX theme_blue end
 /*-------common--------*/
 
@@ -64,6 +66,16 @@
 
 .sdk-touch-div {
   height: 30px;
+
+  .ivu-switch {
+    border: 1px solid #fff;
+    background-color: #fff;
+  }
+
+  .ivu-switch:after {
+    background-color: @switch-color;
+  }
+
 }
 
 .sdk-tg-member-list {
@@ -128,9 +140,9 @@
 }
 
 .sdk-im-bottom {
-  height: 43px;
+  height: 46px;
   border-top: 3px solid #1F2F38;
-  margin-bottom: 3px;
+  //margin-bottom: 3px;
   position: absolute;
   bottom: 0px;
   width: 100%;
