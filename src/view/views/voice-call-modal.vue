@@ -137,6 +137,18 @@
                         that.$Message.warning('目标忙');
                     } else if (status == 70) {
                         that.$Message.warning('目标无应答');
+                    } else if (status == 250) {
+                        that.$Message.warning('对方结束通话');
+                    } else if (status == 251) {
+                        that.$Message.warning('无法打开摄像头');
+                    } else if (status == 252) {
+                        that.$Message.warning('视频数已超限');
+                    } else if (status == 253) {
+                        that.$Message.warning('当前正在进行音视频通话，不能再次发起通话');
+                    } else if (status == 254) {
+                        that.$Message.warning('当前正在其他组分享视频');
+                    } else if (status == 255) {
+                        that.$Message.warning('未检测到麦克风');
                     }
                 }
                 /**
