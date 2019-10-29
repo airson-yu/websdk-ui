@@ -1,10 +1,18 @@
 /*-------variable--------*/
 @icon-color: #000;
+@uname-color: #000;
 @toggle-icon-color: #247FBA;
 @win-bg-color: #9EA2A6;
+@win-bg-left-color: #9EA2A6;
+@win-bg-right-color: #9EA2A6;
 
 // XXX theme_blue start
 @win-bg-color: #0F4185;
+@win-bg-left-color: #011D63;
+@win-bg-right-color: #001959;
+@win-bg-btm-color: #E6E9EC;
+@icon-color: #fff;
+@uname-color: #fff;
 // XXX theme_blue end
 /*-------common--------*/
 
@@ -44,7 +52,7 @@
 }
 
 .sdk-uname-txt {
-  color: orange;
+  color: @uname-color;
   word-break: break-all;
 }
 
@@ -69,7 +77,7 @@
   bottom: 0px;
   width: 100%;
   text-align: center;
-  background-color: @win-bg-color;
+  background-color: @win-bg-left-color;
   /*padding: 5px;*/
 }
 
@@ -110,6 +118,7 @@
 
 .sdk-im-panel {
   /*padding: 10px;*/
+  background-color: @win-bg-right-color;
 }
 
 .sdk-im-div {
@@ -125,6 +134,7 @@
   position: absolute;
   bottom: 0px;
   width: 100%;
+  background-color: @win-bg-btm-color;
 }
 
 .sdk-im-bottom-icon-div {

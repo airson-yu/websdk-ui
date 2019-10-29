@@ -1,8 +1,18 @@
 /*-------variable--------*/
+@font-color: #000;
 @icon-color: #000;
+@msg-left-font-color: #000;
+@msg-right-font-color: #000;
 @toggle-icon-color: #247FBA;
 @im-bg-color: #707172;
 
+
+@msg-right-color: #fff;
+@msg-left-color: #04D2DF;
+@msg-left-font-color: #000;
+@msg-right-font-color: #fff;
+@font-color: #fff;
+@icon-color: #fff;
 /*-------common--------*/
 
 .sdk-pointer {
@@ -22,26 +32,34 @@
 /*-------custom--------*/
 .sdk-im-text-right {
   text-align: right;
-  color: #000;
+  color: @msg-right-font-color;
   margin-bottom: -16px;
 }
 
 .sdk-im-text-left {
   text-align: left;
-  color: #000;
+  color: @msg-left-font-color;
   //margin-bottom: -16px;
 }
 
 .sdk-im-voice-right {
   text-align: right;
-  color: #000;
+  color: @msg-right-font-color;
   margin-bottom: -24px;
+
+  .sdk-message {
+    background-color: @msg-right-color;
+  }
 }
 
 .sdk-im-voice-left {
   text-align: left;
-  color: #000;
+  color: @msg-left-font-color;
   margin-bottom: -24px;
+
+  .sdk-message {
+    background-color: @msg-left-color;
+  }
 }
 
 .sdk-im-content {
@@ -82,12 +100,14 @@
 .sdk-im-text-left {
   .sdk-message {
     padding: 5px 8px 5px 10px;
+    background-color: @msg-left-color;
   }
 }
 
 .sdk-im-text-right {
   .sdk-message {
     padding: 5px 10px 5px 8px;
+    background-color: @msg-right-color;
   }
 }
 
@@ -184,7 +204,7 @@
 .sdk-right-angle {
   width: 15px;
   height: 15px;
-  background-color: @im-bg-color;
+  background-color: @msg-right-color;
   top: -25px;
   right: -3px;
   position: relative;
@@ -195,7 +215,7 @@
 .sdk-left-angle {
   width: 15px;
   height: 15px;
-  background-color: @im-bg-color;
+  background-color: @msg-left-color;
   top: 22px;
   right: 3px;
   position: relative;
