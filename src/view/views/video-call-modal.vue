@@ -1,44 +1,44 @@
 <template>
-    <Modal v-model="video_call_modal_show" class="voice-modal voice-call-modal" title="视频通话" draggable scrollable :width=380 :z-index="5000"
+    <Modal v-model="video_call_modal_show" class="sdk-voice-modal sdk-voice-call-modal" title="视频通话" draggable scrollable :width=380 :z-index="5000"
            v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>视频通话</span>
                 <span v-show="!show_max">-</span>
                 <span v-show="!show_max">{{uname}}</span>
-                <Icon v-show="show_max" @click="toggleMax" type="md-remove" color="#fff" class="toggle_max"/>
-                <Icon v-show="!show_max" @click="toggleMax" type="md-add" color="#fff" class="toggle_max"/>
+                <Icon v-show="show_max" @click="toggleMax" type="md-remove" color="#fff" class="sdk-toggle-max"/>
+                <Icon v-show="!show_max" @click="toggleMax" type="md-add" color="#fff" class="sdk-toggle-max"/>
             </div>
         </div>
-        <div v-show="show_max" class="panel" style="min-height: 420px;">
+        <div v-show="show_max" class="sdk-panel" style="min-height: 420px;">
             <div v-show="call_status==1" style="position: absolute;left: 0px;text-align: left;margin: 5px;">
-                <Avatar class="ivu-avatar avatar_medium" :src="res_avatar1"/>
+                <Avatar class="ivu-avatar sdk-avatar-medium" :src="res_avatar1"/>
                 <div style="display: inline-block;vertical-align: middle;">
-                    <div class="uname">{{uname}}</div>
+                    <div class="sdk-uname">{{uname}}</div>
                     <div>正在等待对方接受邀请...</div>
                 </div>
             </div>
             <div style="position: absolute;right: 0px; width:100px;display: inline-block; background-color: black;height: 120px;">
-                <canvas :id=canvas_local_dom style="width:100%;height:100%;"></canvas>
+                <canvas :id=sdk_canvas_local_dom style="width:100%;height:100%;"></canvas>
             </div>
             <div v-show="call_status==2" style="height: 420px;line-height: 420px;">
-                <canvas :id=canvas_remote_dom style="width:100%;height:100%;"></canvas>
+                <canvas :id=sdk_canvas_remote_dom style="width:100%;height:100%;"></canvas>
             </div>
-            <audio id="call_ring" loop="true" preload="auto" :src="res_ring" type="audio/mpeg"></audio>
+            <audio id="sdk_call_ring" loop="true" preload="auto" :src="res_ring" type="audio/mpeg"></audio>
         </div>
-        <div slot="footer" class="tac">
+        <div slot="footer" class="sdk-tac">
             <Icon v-show="mute&&call_status==2" @click="switchMute" type="md-volume-off" size="24"
                   style="cursor: pointer;position: absolute;left: 30px;line-height: 47px;" title="点击打开声音"/>
             <Icon v-show="!mute&&call_status==2" @click="switchMute" type="md-volume-up" size="24"
                   style="cursor: pointer;position: absolute;left: 30px;line-height: 47px;" title="点击关闭声音"/>
-            <!--<div v-show="show_volume" class="volume_bar">
+            <!--<div v-show="show_volume" class="sdk-volume-bar">
                 <Slider v-model="volume"></Slider>
             </div>
-            <Button shape="circle" class="call_btn" @click="toggleVolume">
+            <Button shape="circle" class="sdk-call-btn" @click="toggleVolume">
                 <Icon type="md-volume-up" color="#000" class="btn"/>
             </Button>-->
-            <Button @click="cancelCall" shape="circle" class="call_btn">
-                <Icon type="ios-call" color="#E62019" class="btn call"/>
+            <Button @click="cancelCall" shape="circle" class="sdk-call-btn">
+                <Icon type="ios-call" color="#E62019" class="sdk-btn sdk-call"/>
             </Button>
             <!--<span style="position: absolute;right: 30px;line-height: 47px;">00:01</span>-->
             <span style="position: absolute;right: 30px;line-height: 47px;" v-show="call_status==2">{{call_time}}</span>
@@ -82,8 +82,8 @@
                 call_time_num: 0,
                 call_ts_id: null,
                 //uname: this.username
-                canvas_local_dom: 'vcall_canvas_local',
-                canvas_remote_dom: 'vcall_canvas_remote',
+                sdk_canvas_local_dom: 'sdk_vcall_canvas_local',
+                sdk_canvas_remote_dom: 'sdk_vcall_canvas_remote',
                 ws_local: null,
                 ws_remote: null,
                 call_established: false,
@@ -140,8 +140,8 @@
                     if (playid) {
                         let url_local = config.build_video_url(0);
                         let url_remote = config.build_video_url(playid);
-                        let canvas_local_dom = that.canvas_local_dom;
-                        let canvas_remote_dom = that.canvas_remote_dom;
+                        let canvas_local_dom = that.sdk_canvas_local_dom;
+                        let canvas_remote_dom = that.sdk_canvas_remote_dom;
                         let vp1 = new VideoProcessor(url_local, canvas_local_dom);
                         //that.setVideoWS({id: that.id, ws: vp1.videoWebsocket});
                         that.ws_local = vp1.videoWebsocket;
@@ -188,12 +188,18 @@
                         that.$Message.warning('目标忙');
                     } else if (status == 70) {
                         that.$Message.warning('目标无应答');
+                    } else if (status == 250) {
+                        that.$Message.warning('对方结束通话');
                     } else if (status == 251) {
                         that.$Message.warning('无法打开摄像头');
                     } else if (status == 252) {
                         that.$Message.warning('视频数已超限');
                     } else if (status == 253) {
                         that.$Message.warning('当前正在进行音视频通话，不能再次发起通话');
+                    } else if (status == 254) {
+                        that.$Message.warning('当前正在其他组分享视频');
+                    } else if (status == 255) {
+                        that.$Message.warning('未检测到麦克风');
                     }
                 }
                 /**
@@ -234,7 +240,7 @@
 
             },
             /*resetCallStatus() {
-                document.getElementById('call_ring').load();
+                document.getElementById('sdk_call_ring').load();
                 this.call_ing = true;
                 this.call_time = '00:01';
                 if (this.call_ts_id) {
@@ -289,11 +295,11 @@
 
             clear_canvas() {
                 let that = this;
-                let canvas1 = document.getElementById(that.canvas_local_dom);
+                let canvas1 = document.getElementById(that.sdk_canvas_local_dom);
                 let gl1 = canvas1.getContext("webgl") || canvas1.getContext("experimental-webgl");
                 gl1 && gl1.clear(gl1.COLOR_BUFFER_BIT);
 
-                let canvas2 = document.getElementById(that.canvas_remote_dom);
+                let canvas2 = document.getElementById(that.sdk_canvas_remote_dom);
                 let gl2 = canvas2.getContext("webgl") || canvas2.getContext("experimental-webgl");
                 gl2 && gl2.clear(gl2.COLOR_BUFFER_BIT);
             },
@@ -329,15 +335,15 @@
                     clearInterval(that.call_ts_id);
                     that.call_ts_id = null;
                 }
-                document.getElementById('call_ring').load();
+                document.getElementById('sdk_call_ring').load();
                 if (!this.$store.state.video_call.modal_show) {
                     return;
                 }
 
                 if (val == 1) { // call ing
-                    document.getElementById('call_ring').play();
+                    document.getElementById('sdk_call_ring').play();
                 } else if (val == 2) { // call success
-                    //document.getElementById('call_ring').load();
+                    //document.getElementById('sdk_call_ring').load();
                     // TODO 开始计时
                     that.call_ts_id = setInterval(function () {
                         let duration = ++that.call_time_num;
@@ -353,7 +359,7 @@
                         logger.debug('vi_call:{}', that.call_time);
                     }, 1000);
                 } else {
-                    //document.getElementById('call_ring').load();
+                    //document.getElementById('sdk_call_ring').load();
                 }
             },
             ...mapActions([
@@ -398,9 +404,9 @@
         /*watch: {
             call_status: function (val) {
                 if (val == 1 && this.$store.state.video_call_modal_show) { // call ing
-                    document.getElementById('call_ring').play();
+                    document.getElementById('sdk_call_ring').play();
                 } else if (val == 2 && this.$store.state.video_call_modal_show) { // call success
-                    document.getElementById('call_ring').load();
+                    document.getElementById('sdk_call_ring').load();
                     // TODO 开始计时
                     let that = this;
                     if (that.call_ts_id) {
@@ -411,7 +417,7 @@
                         that.call_time = new Date();
                     }, 1000);
                 } else {
-                    document.getElementById('call_ring').load();
+                    document.getElementById('sdk_call_ring').load();
                 }
             },
         }*/
@@ -422,7 +428,7 @@
 <!--<style lang="less" scoped src="../assets/css/user-group-modal.less"></style>-->
 <style lang="less" scoped>
 
-    .toggle_max {
+    .sdk-toggle-max {
         font-size: 22px;
         right: 40px;
         position: absolute;
@@ -430,39 +436,39 @@
         top: 13px;
     }
 
-    .panel {
+    .sdk-panel {
         //height: 420px;
         text-align: center;
         padding: 0px;
     }
 
-    .avatar_medium {
+    .sdk-avatar-medium {
         width: 50px !important;
         height: 50px !important;
         border-radius: 25px !important;
     }
 
-    .volume_bar {
+    .sdk-volume-bar {
         position: absolute;
         bottom: 60px;
         width: 90%;
     }
 
-    .call_btn {
+    .sdk-call-btn {
         padding: 5px;
         margin-left: 15px;
         margin-right: 15px;
     }
 
-    .btn {
+    .sdk-btn {
         font-size: 35px;
     }
 
-    .call {
+    .sdk-call {
         transform: rotate(135deg);
     }
 
-    .uname {
+    .sdk-uname {
         //margin: 20px;
         word-break: break-all;
     }

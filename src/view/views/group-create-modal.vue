@@ -1,23 +1,23 @@
 <template>
-    <Modal v-model="group_create_modal_show" class="user-modal group-create-modal" draggable scrollable :title="modal_title" :width=400 :z-index="1000"
+    <Modal v-model="group_create_modal_show" class="sdk-user-modal sdk-group-create-modal" draggable scrollable :title="modal_title" :width=400 :z-index="1000"
            v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
-        <div class="user-list-container">
+        <div class="sdk-user-list-container">
             <div style="padding:3px;">组名：</div>
-            <Input v-model="tg_name" class="search_ipt" clearable placeholder="请输入组名"/>
+            <Input v-model="tg_name" class="sdk-search-ipt" clearable placeholder="请输入组名"/>
             <div style="padding:3px;">选择组成员：</div>
-            <Input v-model="user_search" class="search_ipt" search clearable placeholder="搜索组成员"/>
-            <CheckboxGroup v-model="user_list_checked" class="checkbox">
+            <Input v-model="user_search" class="sdk-search-ipt" search clearable placeholder="搜索组成员"/>
+            <CheckboxGroup v-model="user_list_checked" class="sdk-checkbox">
                 <div v-for="item in user_list">
                     <Checkbox :label="item.uid" v-show="!item.search_hide">
-                        <Icon type="md-person" size="20" class="avatar"/>
-                        <span class="uname">{{item.display_name}}</span>
+                        <Icon type="md-person" size="20" class="sdk-avatar"/>
+                        <span class="sdk-uname">{{item.display_name}}</span>
                     </Checkbox>
-                    <div class="item-line" v-show="!item.search_hide"></div>
+                    <div class="sdk-item-line" v-show="!item.search_hide"></div>
                 </div>
             </CheckboxGroup>
         </div>
         <div slot="footer">
-            <div class="foot">
+            <div class="sdk-foot">
                 <Button @click="createGroup">确定</Button>
                 <Button @click="on_hide_modal">取消</Button>
             </div>

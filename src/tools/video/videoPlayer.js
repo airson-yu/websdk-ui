@@ -6,10 +6,10 @@ class VideoPlayer {
 
     createRenderContext(canvas) {
         if (!canvas) {
-            /*canvas = document.getElementById('video-canvas');
+            /*canvas = document.getElementById('sdk_video_canvas');
             if (!canvas) {
                 canvas = document.createElement("canvas");
-                canvas.setAttribute('id', 'video-canvas')
+                canvas.setAttribute('id', 'sdk_video_canvas')
             }*/
         }
         let renderContext = this.setupCanvas(canvas, {
@@ -109,8 +109,8 @@ class VideoPlayer {
     /* Player controls Start Here */
 
     fullscreen() {
-        let node = document.getElementById('vidPlayerComp');
-        let canvas = document.getElementById('canvas');
+        let node = document.getElementById('sdk_vidPlayerComp');
+        let canvas = document.getElementById('sdk_canvas');
         let childrens = node.children;
         let fullScreen;
 

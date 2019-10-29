@@ -1,24 +1,24 @@
 <template>
-    <div class="im-voice-left">
-        <div class="avatar">
+    <div class="sdk-im-voice-left">
+        <div class="sdk-avatar">
             <Avatar size="large" class="" :src="avatar"/>
         </div>
-        <div class="im-content">
-            <div class="item-top">
+        <div class="sdk-im-content">
+            <div class="sdk-item-top">
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <div class="item-content">
-                <div class="left-angle"></div>
-                <div @click="togglePlayVoice" class="message">
-                    <div class="box-left">
-                        <div class="wifi-symbol-left">
-                            <div class="wifi-circle first"></div>
-                            <div v-bind:class="playing ? 'second-active' : 'second'" class="wifi-circle"></div>
-                            <div v-bind:class="playing ? 'third-active' : 'third'" class="wifi-circle"></div>
+            <div class="sdk-item-content">
+                <div class="sdk-left-angle"></div>
+                <div @click="togglePlayVoice" class="sdk-message">
+                    <div class="sdk-box-left">
+                        <div class="sdk-wifi-symbol-left">
+                            <div class="sdk-wifi-circle sdk-first"></div>
+                            <div v-bind:class="playing ? 'sdk-second-active' : 'sdk-second'" class="sdk-wifi-circle"></div>
+                            <div v-bind:class="playing ? 'sdk-third-active' : 'sdk-third'" class="sdk-wifi-circle"></div>
                         </div>
                     </div>
-                    <span class="voice-dur-left">{{duration}}</span>
+                    <span class="sdk-voice-dur-left">{{duration}}</span>
                 </div>
             </div>
         </div>

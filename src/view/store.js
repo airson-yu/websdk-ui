@@ -97,7 +97,7 @@ export default new Vuex.Store({
     mutations: {
         resetState: (state) => {
             /*window.websdk.vm.$destroy();
-            document.getElementById('webapp').innerHTML = '';*/
+            document.getElementById('sdk_webapp').innerHTML = '';*/
 
             /*for (let im_idx in state.im) {
                 Vue.delete(state.im, im_idx);

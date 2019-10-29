@@ -1,27 +1,27 @@
 <template>
-    <Modal v-model="main_modal_show" class="voice-modal video-modal" title="视频数据" width="auto" draggable scrollable :z-index="5000"
-           :fullscreen="fullscreen" class-name="fullscreen_toggle_modal" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
+    <Modal v-model="main_modal_show" class="sdk-voice-modal sdk-video-modal" title="视频数据" width="auto" draggable scrollable :z-index="5000"
+           :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>视频数据-{{uname}}</span>
-                <Icon v-show="show_max && !fullscreen" @click="toggleMax" type="md-remove" color="#fff" class="toggle_max"/>
-                <Icon v-show="!show_max && !fullscreen" @click="toggleMax" type="md-add" color="#fff" class="toggle_max"/>
-                <Icon @click="toggleFullscreen" type="md-square-outline" color="#fff" class="toggle_fullscreen"/>
+                <Icon v-show="show_max && !fullscreen" @click="toggleMax" type="md-remove" color="#fff" class="sdk-toggle-max"/>
+                <Icon v-show="!show_max && !fullscreen" @click="toggleMax" type="md-add" color="#fff" class="sdk-toggle-max"/>
+                <Icon @click="toggleFullscreen" type="md-square-outline" color="#fff" class="sdk-toggle-fullscreen"/>
             </div>
         </div>
-        <div v-show="show_max" class="panel">
+        <div v-show="show_max" class="sdk-panel">
             <div v-show="call_status==1" style="position: absolute;left: 0px;text-align: left;margin: 5px;">
-                <Avatar class="ivu-avatar avatar_medium" :src="res_avatar1"/>
+                <Avatar class="ivu-avatar sdk-avatar-medium" :src="res_avatar1"/>
                 <div style="display: inline-block;vertical-align: middle;">
-                    <div class="uname">{{uname}}</div>
+                    <div class="sdk-uname">{{uname}}</div>
                     <div>正在等待视频数据...</div>
                 </div>
             </div>
             <div style="min-width:288px;min-height:288px;"><!--  v-bind:style="{height: height + 'px' }" -->
-                <canvas :id="video_canvas_id" style="max-width:100%;max-height:100%;margin:1px 1px 0px 1px;"></canvas>
+                <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:1px 1px 0px 1px;"></canvas>
             </div>
         </div>
-        <div v-show="playid !== 0" slot="footer" class="tac">
+        <div v-show="playid !== 0" slot="footer" class="sdk-tac">
             <!--<Button @click="switchCamera" size="small">
                 <Icon type="ios-reverse-camera-outline" color="#111"/>
             </Button>-->
@@ -127,7 +127,7 @@
             //let root = that.$root;
 
             if (that.url) {
-                let dom_id = that.video_canvas_id;
+                let dom_id = that.sdk_video_canvas_id;
                 that.vp = new VideoProcessor(that.url, dom_id);
                 that.setVideoWS({id: that.id, ws: that.vp.videoWebsocket});
                 that.call_status = 2;
@@ -289,10 +289,10 @@
                     // TODO TODO update username
                 }
             },
-            video_canvas_id: {
+            sdk_video_canvas_id: {
                 get() {
                     //return 'test';
-                    return 'video_canvas_' + this.id;
+                    return 'sdk_video_canvas_' + this.id;
                 },
             },
             target_self: {
@@ -315,7 +315,7 @@
 <!--<style lang="less" scoped src="../assets/css/user-group-modal.less"></style>-->
 <style lang="less" scoped>
 
-    .toggle_max {
+    .sdk-toggle-max {
         font-size: 22px;
         right: 68px;
         position: absolute;
@@ -323,7 +323,7 @@
         //top: 13px;
     }
 
-    .toggle_fullscreen {
+    .sdk-toggle-fullscreen {
         font-size: 22px;
         right: 40px;
         position: absolute;
@@ -331,39 +331,39 @@
         //top: 13px;
     }
 
-    .panel {
+    .sdk-panel {
         //height: 480px;
         text-align: center;
         padding: 0px;
     }
 
-    .avatar_medium {
+    .sdk-avatar-medium {
         width: 50px !important;
         height: 50px !important;
         border-radius: 25px !important;
     }
 
-    .volume_bar {
+    .sdk-volume-bar {
         position: absolute;
         bottom: 60px;
         width: 90%;
     }
 
-    .call_btn {
+    .sdk-call-btn {
         padding: 5px;
         margin-left: 15px;
         margin-right: 15px;
     }
 
-    .btn {
+    .sdk-btn {
         font-size: 35px;
     }
 
-    .call {
+    .sdk-call {
         transform: rotate(135deg);
     }
 
-    .uname {
+    .sdk-uname {
         //margin: 20px;
         word-break: break-all;
     }

@@ -1,25 +1,25 @@
 <template>
-    <div class="im-voice-right">
-        <div class="im-content">
-            <div class="item-top">
+    <div class="sdk-im-voice-right">
+        <div class="sdk-im-content">
+            <div class="sdk-item-top">
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <div class="item-content-right">
-                <div @click="togglePlayVoice" class="message">
-                    <div class="box-right">
-                        <div class="wifi-symbol-right">
-                            <div class="wifi-circle first"></div>
-                            <div v-bind:class="playing ? 'second-active' : 'second'" class="wifi-circle"></div>
-                            <div v-bind:class="playing ? 'third-active' : 'third'" class="wifi-circle"></div>
+            <div class="sdk-item-content-right">
+                <div @click="togglePlayVoice" class="sdk-message">
+                    <div class="sdk-box-right">
+                        <div class="sdk-wifi-symbol-right">
+                            <div class="sdk-wifi-circle sdk-first"></div>
+                            <div v-bind:class="playing ? 'sdk-second-active' : 'sdk-second'" class="sdk-wifi-circle"></div>
+                            <div v-bind:class="playing ? 'sdk-third-active' : 'sdk-third'" class="sdk-wifi-circle"></div>
                         </div>
                     </div>
-                    <span class="voice-dur-right">{{duration}}</span>
+                    <span class="sdk-voice-dur-right">{{duration}}</span>
                 </div>
-                <div class="right-angle"></div>
+                <div class="sdk-right-angle"></div>
             </div>
         </div>
-        <div class="avatar">
+        <div class="sdk-avatar">
             <Avatar size="large" class="" :src="avatar"/>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
-    <Modal v-model="im_image_modal_show" class="user-modal im-image-modal" draggable scrollable width="auto" title="图片浏览窗口"
+    <Modal v-model="im_image_modal_show" class="sdk-user-modal sdk-im-image-modal" draggable scrollable width="auto" title="图片浏览窗口"
            :z-index=2000 :footer-hide=true>
-        <div class="im-image-modal">
+        <div class="sdk-im-image-modal">
             <img :src="url" style="max-width: 800px;max-height: 700px;"/>
         </div>
     </Modal>

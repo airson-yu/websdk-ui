@@ -1,9 +1,9 @@
 <template>
-    <Modal v-model="video_confirm_modal_show" class="voice-modal" draggable scrollable :width=340 :z-index="5000"
+    <Modal v-model="video_confirm_modal_show" class="sdk-voice-modal" draggable scrollable :width=340 :z-index="5000"
            v-on:on-cancel="on_hide_modal(true)">
         <div slot="header" style="">
         </div>
-        <div class="panel" style="font-size:large;padding: 5px 20px 15px 20px;">
+        <div class="sdk-panel" style="font-size:large;padding: 5px 20px 15px 20px;">
             <div>
                 <div style="display: inline-block;width:20%;">
                     <Icon type="ios-videocam-outline" color="#fff" style="font-size:45px;"/>

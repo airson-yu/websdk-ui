@@ -1,38 +1,38 @@
 <template>
-    <Modal v-model="voice_call_modal_show" class="voice-modal voice-call-modal" title="语音通话" draggable scrollable :width=340 :z-index="5000"
+    <Modal v-model="voice_call_modal_show" class="sdk-voice-modal sdk-voice-call-modal" title="语音通话" draggable scrollable :width=340 :z-index="5000"
            v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>语音通话</span>
                 <span v-show="!show_max">-</span>
                 <span v-show="!show_max">{{uname}}</span>
-                <Icon v-show="show_max" @click="toggleMax" type="md-remove" color="#fff" class="toggle_max"/>
-                <Icon v-show="!show_max" @click="toggleMax" type="md-add" color="#fff" class="toggle_max"/>
+                <Icon v-show="show_max" @click="toggleMax" type="md-remove" color="#fff" class="sdk-toggle-max"/>
+                <Icon v-show="!show_max" @click="toggleMax" type="md-add" color="#fff" class="sdk-toggle-max"/>
             </div>
         </div>
-        <div v-show="show_max" class="panel">
+        <div v-show="show_max" class="sdk-panel">
             <div>
                 <Avatar class="ivu-avatar-largest" :src="res_avatar1"/>
             </div>
-            <div class="uname">{{uname}}</div>
+            <div class="sdk-uname">{{uname}}</div>
             <div v-show="call_status==1">正在等待对方接受邀请...</div>
             <div v-show="call_status==11">正在建立语音连接...</div>
             <div v-show="call_status==2">{{call_time}}</div>
-            <audio id="call_ring" loop="true" preload="auto" :src="res_ring" type="audio/mpeg"></audio>
+            <audio id="sdk_call_ring" loop="true" preload="auto" :src="res_ring" type="audio/mpeg"></audio>
         </div>
-        <div slot="footer" class="tac">
+        <div slot="footer" class="sdk-tac">
             <!-- TODO 尚不支持音量调节 2019年6月13日15:59:37
-            <div v-show="call_status==2 && show_volume" class="volume_bar">
+            <div v-show="call_status==2 && show_volume" class="sdk-volume-bar">
                 <Slider v-model="volume"></Slider>
             </div>
-            <Button v-show="call_status==2" shape="circle" class="call_btn" @click="toggleVolume">
-                <Icon type="md-volume-up" color="#000" class="btn"/>
+            <Button v-show="call_status==2" shape="circle" class="sdk-call-btn" @click="toggleVolume">
+                <Icon type="md-volume-up" color="#000" class="sdk-btn"/>
             </Button>-->
-            <Button @click="cancelCall" shape="circle" class="call_btn">
-                <Icon type="ios-call" color="#E62019" class="btn call"/>
+            <Button @click="cancelCall" shape="circle" class="sdk-call-btn">
+                <Icon type="ios-call" color="#E62019" class="sdk-btn sdk-call"/>
             </Button>
-            <!--<Button @click="mockCall" shape="circle" class="call_btn">
-                <Icon type="ios-call" color="green" class="btn call"/>
+            <!--<Button @click="mockCall" shape="circle" class="sdk-call-btn">
+                <Icon type="ios-call" color="green" class="sdk-btn sdk-call"/>
             </Button>-->
         </div>
     </Modal>
@@ -137,6 +137,18 @@
                         that.$Message.warning('目标忙');
                     } else if (status == 70) {
                         that.$Message.warning('目标无应答');
+                    } else if (status == 250) {
+                        that.$Message.warning('对方结束通话');
+                    } else if (status == 251) {
+                        that.$Message.warning('无法打开摄像头');
+                    } else if (status == 252) {
+                        that.$Message.warning('视频数已超限');
+                    } else if (status == 253) {
+                        that.$Message.warning('当前正在进行音视频通话，不能再次发起通话');
+                    } else if (status == 254) {
+                        that.$Message.warning('当前正在其他组分享视频');
+                    } else if (status == 255) {
+                        that.$Message.warning('未检测到麦克风');
                     }
                 }
                 /**
@@ -165,7 +177,7 @@
                 this.show_max = !this.show_max;
             },
             /*resetCallStatus() {
-                document.getElementById('call_ring').load();
+                document.getElementById('sdk_call_ring').load();
                 this.call_ing = true;
                 this.call_time = '00:01';
                 if (this.call_ts_id) {
@@ -236,15 +248,15 @@
                     clearInterval(that.call_ts_id);
                     that.call_ts_id = null;
                 }
-                document.getElementById('call_ring').load();
+                document.getElementById('sdk_call_ring').load();
                 if (!this.$store.state.voice_call.modal_show) {
                     return;
                 }
 
                 if (val == 1) { // call ing
-                    document.getElementById('call_ring').play();
+                    document.getElementById('sdk_call_ring').play();
                 } else if (val == 2) { // call success
-                    //document.getElementById('call_ring').load();
+                    //document.getElementById('sdk_call_ring').load();
                     // TODO 开始计时
                     that.call_ts_id = setInterval(function () {
                         let duration = ++that.call_time_num;
@@ -260,7 +272,7 @@
                         logger.debug('vo_call:{}', that.call_time);
                     }, 1000);
                 } else {
-                    //document.getElementById('call_ring').load();
+                    //document.getElementById('sdk_call_ring').load();
                 }
             },
             ...mapActions([
@@ -307,9 +319,9 @@
         /*watch: {
             call_status: function (val) {
                 if (val == 1 && this.$store.state.voice_call_modal_show) { // call ing
-                    document.getElementById('call_ring').play();
+                    document.getElementById('sdk_call_ring').play();
                 } else if (val == 2 && this.$store.state.voice_call_modal_show) { // call success
-                    document.getElementById('call_ring').load();
+                    document.getElementById('sdk_call_ring').load();
                     // TODO 开始计时
                     let that = this;
                     if (that.call_ts_id) {
@@ -320,7 +332,7 @@
                         that.call_time = new Date();
                     }, 1000);
                 } else {
-                    document.getElementById('call_ring').load();
+                    document.getElementById('sdk_call_ring').load();
                 }
             },
         }*/
@@ -332,7 +344,7 @@
 <style lang="less" scoped>
 
 
-    .toggle_max {
+    .sdk-toggle-max {
         font-size: 22px;
         right: 40px;
         position: absolute;
@@ -340,34 +352,34 @@
         top: 13px;
     }
 
-    .panel {
+    .sdk-panel {
         height: 340px;
         text-align: center;
         font-size: large;
         padding: 60px 20px 20px 20px;
     }
 
-    .volume_bar {
+    .sdk-volume-bar {
         position: absolute;
         bottom: 60px;
         width: 90%;
     }
 
-    .call_btn {
+    .sdk-call-btn {
         padding: 5px;
         margin-left: 15px;
         margin-right: 15px;
     }
 
-    .btn {
+    .sdk-btn {
         font-size: 35px;
     }
 
-    .call {
+    .sdk-call {
         transform: rotate(135deg);
     }
 
-    .uname {
+    .sdk-uname {
         margin: 20px;
         word-break: break-all;
     }
