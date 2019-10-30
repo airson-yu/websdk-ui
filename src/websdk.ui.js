@@ -9,7 +9,7 @@ class websdkui {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_ui_version: 2019.10.28.01');
+        logger.debug('websdk_ui_version: 2019.10.30.01');
     }
 
     demo = () => {
