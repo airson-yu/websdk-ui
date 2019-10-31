@@ -990,8 +990,7 @@ export default {
 
         toggleType() {
             this.im_type == 1 ? this.im_type = 2 : this.im_type = 1;
-        }
-        ,
+        },
         on_hide_modal() {// XXX 当modal窗口发起$emit事件通知窗口关闭时，这里继续通知App.vue窗口已经关闭
             let that = this;
             logger.debug('on_hide_modal im');
@@ -999,8 +998,7 @@ export default {
                 that.reqCallPTT(false);
             }
             this.$emit('on-im-cancel');
-        }
-        ,
+        },
         im_div_scroll_bottom: function (delay_time) {
             if (!delay_time) delay_time = 100;
             setTimeout(function () {
@@ -1014,8 +1012,7 @@ export default {
         ,
         on_visible_change(result) {
             //logger.debug('on_visible_change:{}', result);
-        }
-        ,
+        },
         toggleEditName() {
             return;// FIXME NEXT PHASE
             logger.debug('toggleEditName');
@@ -1023,16 +1020,13 @@ export default {
                 logger.debug('do save');
             }
             this.name_edit = !this.name_edit;
-        }
-        ,
+        },
         toggleOperType() {
             this.oper_type == 1 ? this.oper_type = 2 : this.oper_type = 1;
-        }
-        ,
+        },
         switchOperPanel(oper_panel) {
             this.oper_panel = oper_panel;
-        }
-        ,
+        },
 
         reqCallPTT(flag) {
             let that = this;
@@ -1062,8 +1056,7 @@ export default {
                 }, 'req_call_ptt_im_stop');//
             }
             //that.im_div_scroll_bottom();
-        }
-        ,
+        },
 
         /*buildVoiceMsg(type, user){
         },*/
@@ -1093,8 +1086,7 @@ export default {
                 that.ts_s = moment(now).format('HH:mm:ss');
                 that.ts_s_num = now.getTime();
             }, 'req_ptt_on_im');//
-        }
-        ,
+        },
 
         reqPttOff() {
             let that = this;
@@ -1105,16 +1097,14 @@ export default {
                 //logger.debug('req_ptt_off_im result:{}', rsp);
                 that.ptt_send_ing = false; // 测试发现有时发送ptt不会收到status=1的notice，这里先更新状态
             }, 'req_ptt_off_im');//
-        }
-        ,
+        },
 
         checkImageOfFile(file_url) {
             if (file_url.endsWith('.jpg') || file_url.endsWith('.jpeg') || file_url.endsWith('.bmp') || file_url.endsWith('.gif') || file_url.endsWith('.png')) {
                 return true;
             }
             return false;
-        }
-        ,
+        },
 
         sendIMMsg() {
             let that = this;
@@ -1150,8 +1140,7 @@ export default {
             }, 'req_send_im');//
 
             that.text_content = '';//清空输入框
-        }
-        ,
+        },
 
         append_im_msg(that, type, uname, ts, content, avatar, not_scroll) {
             that.im_list.push({
@@ -1168,8 +1157,7 @@ export default {
             if (!not_scroll) {
                 that.im_div_scroll_bottom();
             }
-        }
-        ,
+        },
 
         append_voice_msg(that, type, uname, ts, refid, duration, avatar, not_scroll) {
             that.im_list.push({
@@ -1186,8 +1174,7 @@ export default {
             if (!not_scroll) {
                 that.im_div_scroll_bottom();
             }
-        }
-        ,
+        },
 
         check_call_status(type) {
             let that = this;
@@ -1212,8 +1199,7 @@ export default {
             websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, function (rsp) {
                 //logger.debug('user-modal req_call_im result:{}', rsp);
             }, 'req_call_im_15');//
-        }
-        ,
+        },
 
         reqVideoCall() {
             let that = this;
@@ -1226,8 +1212,7 @@ export default {
             websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 1, function (rsp) {
                 //logger.debug('user-modal req_call_im result:{}', rsp);
             }, 'req_call_im_1');//
-        }
-        ,
+        },
 
         showIMModalUser(uid) {
             let login_uid = websdk.private_cache.login_uid;
@@ -1244,42 +1229,36 @@ export default {
                 that.$store.dispatch('showIMModal', target).then(() => {
                 });
             }, 'req_user_profile_im_tg');//
-        }
-        ,
+        },
 
         toggleVideo(uid) {
 
-        }
-        ,
+        },
 
         // group operation
         forceEnterGroup() {
             let that = this;
             websdk.request.groupRequest.forceEnterGroup(that.id, function (rsp) {
             }, 'force_enter_group_im_tg');//
-        }
-        ,
+        },
 
         forceLeaveGroup() {
             let that = this;
             websdk.request.groupRequest.forceLeaveGroup(that.id, function (rsp) {
             }, 'force_leave_group_im_tg');//
-        }
-        ,
+        },
 
         showGrpMemAdd() {
             let that = this;
             that.$store.dispatch('showIMUserListModal', {id: that.id, oper_type: 'add'}).then(() => {
             });
-        }
-        ,
+        },
 
         showGrpMemRem() {
             let that = this;
             that.$store.dispatch('showIMUserListModal', {id: that.id, oper_type: 'remove'}).then(() => {
             });
-        }
-        ,
+        },
 
         append_image_msg(that, type, uname, ts, url_small, url_large, filename, avatar, not_scroll) {
             let file_name = filename || '';
@@ -1299,8 +1278,7 @@ export default {
             if (!not_scroll) {
                 that.im_div_scroll_bottom(200);
             }
-        }
-        ,
+        },
 
         append_file_msg(that, type, uname, ts, file_url, filename, avatar, not_scroll) {
             if (!file_url) {
@@ -1324,8 +1302,7 @@ export default {
             if (!not_scroll) {
                 that.im_div_scroll_bottom(200);
             }
-        }
-        ,
+        },
 
         onUploadFormatErrorCore(type, file, fileList) {
             let that = this;
@@ -1348,8 +1325,7 @@ export default {
             } else {
                 logger.warn('onUploadFormatErrorFile');
             }
-        }
-        ,
+        },
         onUploadErrorCore(type, error, file, fileList) {
             let that = this;
             let message = type == 1 ? '图片发送失败' : '文件发送失败';
@@ -1364,8 +1340,7 @@ export default {
 
         onUploadProgressImg(event, file, fileList) {
             logger.debug('onUploadProgressImg');
-        }
-        ,
+        },
         onUploadSuccessImg(rsp, file, fileList) {
             let that = this;
             logger.debug('onUploadSuccessImg:{}', rsp);
@@ -1377,25 +1352,20 @@ export default {
             websdk.request.imRequest.sendIMFileDone(that.id, null, 4, ts, rsp.fid, rsp.filename, size, rsp.hurl, rsp.surl, function (rsp) {
             }, 'req_send_im_file_done_im_img');//
 
-        }
-        ,
+        },
         onUploadFormatErrorImg(file, fileList) {
             this.onUploadFormatErrorCore(1, file, fileList);
-        }
-        ,
+        },
         onUploadExceededSizeImg(file, fileList) {
             this.onUploadExceededSizeCore(1, file, fileList);
-        }
-        ,
+        },
         onUploadErrorImg(error, file, fileList) {
             this.onUploadErrorCore(1, error, file, fileList);
-        }
-        ,
+        },
 
         onUploadProgressFile(event, file, fileList) {
             logger.debug('onUploadProgressFile');
-        }
-        ,
+        },
         onUploadSuccessFile(rsp, file, fileList) {
             let that = this;
             logger.debug('onUploadSuccessFile:{}', rsp);
@@ -1405,20 +1375,16 @@ export default {
             let size = rsp.size || file.size || 0;
             websdk.request.imRequest.sendIMFileDone(that.id, null, 4, ts, rsp.fid, rsp.filename, size, rsp.file_url, rsp.file_url, function (rsp) {
             }, 'req_send_im_file_done_im_file');//
-        }
-        ,
+        },
         onUploadFormatErrorFile(file, fileList) {
             this.onUploadFormatErrorCore(2, file, fileList);
-        }
-        ,
+        },
         onUploadExceededSizeFile(file, fileList) {
             this.onUploadExceededSizeCore(2, file, fileList);
-        }
-        ,
+        },
         onUploadErrorFile(error, file, fileList) {
             this.onUploadErrorCore(2, file, fileList);
-        }
-        ,
+        },
 
         reqPlayVideo(uid) {
             let that = this;
@@ -1428,8 +1394,7 @@ export default {
                 logger.debug('req_play_video_im result:{}', rsp);
             }, 'req_play_video_im');//
             that.updateVideoState(uid, 'playVideo');
-        }
-        ,
+        },
 
         reqStopVideo: function (uid) {
             let that = this;
@@ -1440,8 +1405,7 @@ export default {
             websdk.request.videoRequest.stopPlayVideo(login_uid, uid, null, null, 0, 0, function (rsp) {
                 logger.debug('req_stop_video_im result:{}', rsp);
             }, 'req_stop_video_im');//
-        }
-        ,
+        },
         toggleVideoConf() {
             let that = this;
             let login_uid = websdk.private_cache.login_uid;
@@ -1461,8 +1425,7 @@ export default {
                     that.updateVideoState(that.video_ing_uid, 'stopPlayVideo');
                 }
             }
-        }
-        ,
+        },
         shareVideoConf(uid) {
             if (!uid) return;
             let that = this;
@@ -1472,8 +1435,7 @@ export default {
             websdk.request.videoRequest.shareVideoInVideoConf(login_uid, null, that.id, uid, function (rsp) {
             }, 'req_share_video_in_video_conf_im');//
             that.updateVideoState(uid, 'shareVideo');
-        }
-        ,
+        },
         stopShareVideoConf(uid) {
             if (!uid) return;
             let that = this;
@@ -1482,8 +1444,7 @@ export default {
             }, 'req_stop_share_video_in_video_conf_im');//
             that.video_conf_share_uid = null;
             that.updateVideoState(uid, 'stopShareVideo');
-        }
-        ,
+        },
 
         operateVideo(item_name) {
             logger.debug('operateVideo:{}', item_name);
@@ -1504,8 +1465,7 @@ export default {
                 that.stopShareVideoConf(uid);
 
             }
-        }
-        ,
+        },
         updateVideoState(uid, oper) {
             logger.debug('updateVideoState:{}-{}', uid, oper);
             let that = this;
