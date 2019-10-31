@@ -39,7 +39,7 @@
                                 </div>
                                 <!--theme_blue-->
                                 <!--<div class="sdk-oper-item" title="拉取视频">
-                                    <Icon @click="reqPlayVideo" type="ios-videocam-outline" class="sdk-icon-btn"/>
+                                    <Icon @click="reqPullVideoCall" type="ios-videocam-outline" class="sdk-icon-btn"/>
                                 </div>-->
                                 <div class="sdk-oper-item" title="定位">
                                     <Icon @click="justNoticeLocation" type="ios-locate-outline" class="sdk-icon-btn"/>

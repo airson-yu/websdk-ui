@@ -32,7 +32,7 @@ class websdkui {
 }
 
 // XXX init ui, mount to window.websdk
-window.websdk.view = new websdkui();
+window.websdk.websdkui = new websdkui();
 
 // FIXME set false when release
 window.debug = false;
@@ -40,7 +40,7 @@ window.debug = false;
 if (window.debug) {
     window.websdk.init(function (result) {
         logger.debug('init:{}', JSON.stringify(result));
-        window.websdk.view.demo();
+        window.websdk.websdkui.demo();
     });
 }
 
