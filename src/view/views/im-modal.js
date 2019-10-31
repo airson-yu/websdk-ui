@@ -1214,6 +1214,14 @@ export default {
             }, 'req_call_im_1');//
         },
 
+        reqPullVideoCall() {
+            let that = this;
+            let login_uid = websdk.private_cache.login_uid;
+            websdk.request.videoRequest.playVideo(login_uid, that.target, null, null, 0, 0, 0, function (rsp) {
+                //logger.debug('user-modal playVideo result:{}', rsp);
+            }, 'req_call_im_1');//
+        },
+
         showIMModalUser(uid) {
             let login_uid = websdk.private_cache.login_uid;
             if (uid === login_uid) { // 不能打开调度台本身的IM窗口
@@ -1545,7 +1553,7 @@ export default {
         },
 
         ...mapActions([
-            'showIMModal', 'hideIMModal', 'showIMUserListModal', 'hideIMUserListModal', 'hideVideoModal', 'updateVideoConf',
+            'showIMModal', 'hideIMModal', 'showIMUserListModal', 'hideIMUserListModal', 'showVideoModal', 'hideVideoModal', 'updateVideoConf',
             'showVoiceConfirmModal', 'hideVoiceConfirmModal', 'showVoiceCallModal', 'hideVoiceCallModal',
             'showVideoCallModal', 'hideVideoCallModal', 'updateDcgAttached', 'resetDcgAttached'
         ]),
