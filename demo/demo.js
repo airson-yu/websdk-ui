@@ -379,5 +379,3 @@ websdk.init(function (result) {
     api_demo.req_login();
 
 });
-
-
