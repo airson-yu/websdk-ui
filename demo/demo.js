@@ -4,7 +4,6 @@ var global_data = {
     port: 80,
     //orgid: 10,
     orgid: 28,
-    orgid: 1,
     username: '',
     consoleName: null,
     client: null,
