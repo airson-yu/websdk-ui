@@ -61,6 +61,9 @@
                                             <Icon type="ios-folder-outline" class="sdk-icon-btn"/>
                                         </Upload>
                                     </div>
+                                    <div class="sdk-oper-item" title="视频通话">
+                                        <Icon @click="reqVideoCall" type="ios-videocam-outline" class="sdk-icon-btn"/>
+                                    </div>
                                     <!--<div>
                                         <Icon @click="switchOperPanel(1)" type="md-remove" size="30" color="#2b85e4" class="sdk-icon-btn"/>
                                         <Icon @click="switchOperPanel(2)" type="md-remove" size="30" color="#000" class="sdk-icon-btn"/>
