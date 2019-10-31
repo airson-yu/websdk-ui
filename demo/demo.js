@@ -15,7 +15,8 @@ var global_data = {
     param_tgid2: 74753,
     con_id: 68508,
     con_other_id: 68509,*/
-    param_uid1: 66250,
+    //param_uid1: 66250,
+    param_uid1: 65619,
     param_uid2: 66251,
     param_tgid1: 74269,
     param_tgid2: 74270,
@@ -23,6 +24,7 @@ var global_data = {
     con_other_id: 66254,
 }
 RHTX = false;
+GA = false;
 if (RHTX) {
     global_data.ipaddr = '39.105.135.70';
     global_data.orgid = 10;
@@ -32,6 +34,11 @@ if (RHTX) {
     global_data.param_tgid2 = 74753;
     global_data.con_id = 68508;
     global_data.con_other_id = 68509;
+} else if (GA) {
+    global_data.ipaddr = '20.75.11.201';
+    global_data.orgid = 1;
+    global_data.logonName = 'cdsjydzh';
+    global_data.param_uid1 = 65619;
 } else {
     document.getElementById('sdk_server_tip').style.display = 'block';
 }
@@ -371,5 +378,3 @@ websdk.init(function (result) {
     api_demo.req_login();
 
 });
-
-
