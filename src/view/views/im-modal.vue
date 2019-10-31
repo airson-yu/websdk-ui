@@ -13,7 +13,7 @@
                     <div class="sdk-uname-div">
                         <div v-show="!name_edit" @click="toggleEditName" class="sdk-pointer">
                             <span class="sdk-uname-txt">{{ uname }}</span>
-                            <span class="sdk-uname-edit"><Icon type="md-create"/></span>
+                            <!--<span class="sdk-uname-edit"><Icon type="md-create"/></span>-->
                         </div>
                         <div v-show="name_edit" class="sdk-pointer">
                             <Input v-model="uname" @on-blur="toggleEditName" style="width: 100%"/>
@@ -37,6 +37,10 @@
                                 <div class="sdk-oper-item" title="视频通话">
                                     <Icon @click="reqVideoCall" type="ios-videocam-outline" class="sdk-icon-btn"/>
                                 </div>
+                                <!--theme_blue-->
+                                <!--<div class="sdk-oper-item" title="拉取视频">
+                                    <Icon @click="reqPlayVideo" type="ios-videocam-outline" class="sdk-icon-btn"/>
+                                </div>-->
                                 <div class="sdk-oper-item" title="定位">
                                     <Icon @click="justNoticeLocation" type="ios-locate-outline" class="sdk-icon-btn"/>
                                 </div>
