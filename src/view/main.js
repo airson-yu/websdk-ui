@@ -4,7 +4,6 @@ import store from './store'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import './my-theme/index.less';
-import './my-theme/default/default_blue.less';
 import Result from "../tools/result";
 import 'iview/dist/styles/fonts/ionicons.ttf';
 import 'iview/dist/styles/fonts/ionicons.woff';
