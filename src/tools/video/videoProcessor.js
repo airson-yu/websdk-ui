@@ -1,15 +1,21 @@
 import VideoWebsocket from './videoWebsocket';
 import VideoPlayer from "./videoPlayer";
+import config from "../config";
 import logger from "../logger";
 
 class VideoProcessor {
-    constructor(url, dom_id) {
+    constructor(url, dom_id, modal_outer_id) {
         this.canvas = null;
         if (dom_id) {
             this.canvas = document.getElementById(dom_id);
         }
-        this.canvas_default_w = 384; //640 * 0.6 微调一点，不能小于窗口footer的最小宽度;
-        this.canvas_default_h = 288; //480 * 0.6; 294/480*640 = 392
+        this.modal_outer_id = modal_outer_id;
+        this.modal_last_left = null;
+        this.modal_last_top = null;
+        //this.canvas_default_w = 384; //640 * 0.6 微调一点，不能小于窗口footer的最小宽度;
+        //this.canvas_default_h = 288; //480 * 0.6; 294/480*640 = 392
+        this.canvas_default_w = config.video_canvas_default_w; //640
+        this.canvas_default_h = config.video_canvas_default_h; //480
         this.canvas_last_fix_w = this.canvas_default_w;
         this.canvas_last_fix_h = this.canvas_default_h;
         this.video_real_w = 640;
@@ -22,6 +28,7 @@ class VideoProcessor {
         this.renderContext = this.videoPlayer.createRenderContext(this.canvas);
         this.videoWebsocket = new VideoWebsocket(url, {'processor': this});
         this.videoWebsocket.start();
+        logger.debug('videoWebsocket.start');
 
 
         //FIXME FOR TEST
@@ -48,8 +55,21 @@ class VideoProcessor {
     fresh_canvas_toggle_fullscreen(fullscreen) {
         this.fullscreen = fullscreen;
         if (fullscreen) {
-            let collection = document.getElementsByClassName('sdk-fullscreen-toggle-modal');
-            let modal = collection.item(0);
+            /*let collection = document.getElementsByClassName('sdk-fullscreen-toggle-modal');
+            let modal = collection.item(0);*/
+            let modal;
+            if (this.modal_outer_id) {
+                let selector = '#' + this.modal_outer_id + ' div.sdk-fullscreen-toggle-modal';
+                modal = document.querySelector(selector);
+                // XXX 记录窗口的left,top值，使其保持在全屏之前的位置2019年11月7日11:38:56
+                let selector2 = '#' + this.modal_outer_id + ' div.ivu-modal-content';
+                let modal_content = document.querySelector(selector2);
+                this.modal_last_left = modal_content.style.left;
+                this.modal_last_top = modal_content.style.top;
+            } else {
+                modal = document.getElementsByClassName('sdk-fullscreen-toggle-modal').item(0);
+            }
+
             this.fullscreen_w = modal.clientWidth - 6;
             this.fullscreen_h = modal.clientHeight - 99;
             let max_h = Math.ceil(this.fullscreen_w / this.canvas_last_fix_w * this.canvas_last_fix_h);
@@ -65,11 +85,27 @@ class VideoProcessor {
         } else {
             this.canvas.width = this.canvas_last_fix_w;
             this.canvas.height = this.canvas_last_fix_h;
+            if (this.modal_outer_id && null != this.modal_last_left) {
+                // XXX 重置窗口的left,top值，使其保持在全屏之前的位置2019年11月7日11:38:56
+                let selector2 = '#' + this.modal_outer_id + ' div.ivu-modal-content';
+                let modal_content = document.querySelector(selector2);
+                modal_content.style.left = this.modal_last_left;
+                modal_content.style.top = this.modal_last_top;
+            }
         }
         this.renderContext.viewport(0, 0, this.canvas.width, this.canvas.height);
     }
 
     fresh_canvas_scale(width, height, fresh_context) {
+        // XXX 窗口大小保持不变，只改变比例 2019年11月7日12:50:34
+        if (width >= 720) { //1280*720 1280的视频太大，缩小一点
+            this.canvas_default_w = config.video_canvas_default_w * 1.36; //640
+            this.canvas_default_h = 720 / 1280 * config.video_canvas_default_w * 1.36;
+        } else {
+            this.canvas_default_w = config.video_canvas_default_w; //640
+            this.canvas_default_h = config.video_canvas_default_h; //480
+        }
+
         if (this.fullscreen) {
             let max_h = Math.ceil(this.fullscreen_w / width * height);
             let max_w = Math.ceil(this.fullscreen_h / height * width);

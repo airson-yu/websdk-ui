@@ -1,6 +1,6 @@
 <template>
-    <Modal v-model="main_modal_show" class="sdk-voice-modal sdk-video-modal" title="视频数据" width="auto" draggable scrollable :z-index="5000"
-           :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
+    <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-voice-modal sdk-video-modal" title="视频数据" :width="modal_width" draggable scrollable
+           :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>视频数据-{{uname}}</span>
@@ -17,8 +17,8 @@
                     <div>正在等待视频数据...</div>
                 </div>
             </div>
-            <div style="min-width:288px;min-height:288px;"><!--  v-bind:style="{height: height + 'px' }" -->
-                <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:1px 1px 0px 1px;"></canvas>
+            <div style="min-width:288px;min-height:288px;"><!--  v-bind:style="{height: height + 'px' }" margin:1px 1px 0px 1px; -->
+                <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:0px 0px -4px 0px;"></canvas>
             </div>
         </div>
         <div v-show="playid !== 0" slot="footer" class="sdk-tac">
@@ -43,6 +43,7 @@
 <script>
     //import moment from 'moment';
     import logger from "../../tools/logger";
+    import config from "../../tools/config";
     import bus from '../bus';
     import {mapActions, mapState, mapGetters} from 'vuex'; //注册 action 和 state
     import res_ring from '../assets/audio/ring.wav';
@@ -61,6 +62,7 @@
                 show_max: true,
                 volume: 25,
                 //uname: 'ertestuser',
+                modal_width: config.video_modal_default_w,// 一般默认是竖屏，使用高度
                 call_status: 0, // 0:not_call, 1:call_ing, 2:call_success
                 call_time: '00:00',
                 call_time_num: 0,
@@ -128,7 +130,8 @@
 
             if (that.url) {
                 let dom_id = that.sdk_video_canvas_id;
-                that.vp = new VideoProcessor(that.url, dom_id);
+                let modal_outer_id = that.sdk_video_modal_id;
+                that.vp = new VideoProcessor(that.url, dom_id, modal_outer_id);
                 that.setVideoWS({id: that.id, ws: that.vp.videoWebsocket});
                 that.call_status = 2;
 
@@ -291,8 +294,12 @@
             },
             sdk_video_canvas_id: {
                 get() {
-                    //return 'test';
                     return 'sdk_video_canvas_' + this.id;
+                },
+            },
+            sdk_video_modal_id: {
+                get() {
+                    return 'sdk_video_modal_' + this.id;
                 },
             },
             target_self: {

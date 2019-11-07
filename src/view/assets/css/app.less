@@ -32,6 +32,16 @@
   cursor: pointer;
 }
 
+.sdk-modal-vert-cent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ivu-modal {
+    top: 0;
+    left: 300px;
+  }
+}
 
 /*---------------*/
 
@@ -265,6 +275,7 @@
 .sdk-fullscreen-toggle-modal {
   .ivu-modal-fullscreen {
     .ivu-modal-content-drag {
+      width: 100% !important;
       left: 0px !important;
       top: 0px !important;
     }
