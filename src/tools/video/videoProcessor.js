@@ -97,6 +97,15 @@ class VideoProcessor {
     }
 
     fresh_canvas_scale(width, height, fresh_context) {
+        // XXX 窗口大小保持不变，只改变比例 2019年11月7日12:50:34
+        if (width >= 720) { //1280*720 1280的视频太大，缩小一点
+            this.canvas_default_w = config.video_canvas_default_w * 1.36; //640
+            this.canvas_default_h = 720 / 1280 * config.video_canvas_default_w * 1.36;
+        } else {
+            this.canvas_default_w = config.video_canvas_default_w; //640
+            this.canvas_default_h = config.video_canvas_default_h; //480
+        }
+
         if (this.fullscreen) {
             let max_h = Math.ceil(this.fullscreen_w / width * height);
             let max_w = Math.ceil(this.fullscreen_h / height * width);

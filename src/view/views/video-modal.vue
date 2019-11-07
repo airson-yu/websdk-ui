@@ -17,8 +17,8 @@
                     <div>正在等待视频数据...</div>
                 </div>
             </div>
-            <div style="min-width:288px;min-height:288px;"><!--  v-bind:style="{height: height + 'px' }" -->
-                <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:1px 1px 0px 1px;"></canvas>
+            <div style="min-width:288px;min-height:288px;"><!--  v-bind:style="{height: height + 'px' }" margin:1px 1px 0px 1px; -->
+                <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:0px 0px -4px 0px;"></canvas>
             </div>
         </div>
         <div v-show="playid !== 0" slot="footer" class="sdk-tac">
@@ -62,7 +62,7 @@
                 show_max: true,
                 volume: 25,
                 //uname: 'ertestuser',
-                modal_width: config.video_canvas_default_h,// 一般默认是竖屏，使用高度
+                modal_width: config.video_modal_default_w,// 一般默认是竖屏，使用高度
                 call_status: 0, // 0:not_call, 1:call_ing, 2:call_success
                 call_time: '00:00',
                 call_time_num: 0,
