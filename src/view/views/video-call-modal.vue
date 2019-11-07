@@ -1,5 +1,5 @@
 <template>
-    <Modal v-model="video_call_modal_show" class="sdk-voice-modal sdk-voice-call-modal" title="视频通话" draggable scrollable :width=380 :z-index="5000"
+    <Modal v-model="video_call_modal_show" class="sdk-voice-modal sdk-voice-call-modal" title="视频通话" draggable scrollable :width=modal_width :z-index="5000"
            v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div slot="header">
             <div class="ivu-modal-header-inner">
@@ -18,10 +18,10 @@
                     <div>正在等待对方接受邀请...</div>
                 </div>
             </div>
-            <div style="position: absolute;right: 0px; width:100px;display: inline-block; background-color: black;height: 120px;">
+            <div class="sdk-canvas-local-dom">
                 <canvas :id=sdk_canvas_local_dom style="width:100%;height:100%;"></canvas>
             </div>
-            <div v-show="call_status==2" style="height: 420px;line-height: 420px;">
+            <div v-show="call_status==2" class="sdk-canvas-remote-dom">
                 <canvas :id=sdk_canvas_remote_dom style="width:100%;height:100%;"></canvas>
             </div>
             <audio id="sdk_call_ring" loop="true" preload="auto" :src="res_ring" type="audio/mpeg"></audio>
@@ -77,6 +77,7 @@
                 show_max: true,
                 volume: 25,
                 //uname: 'ertestuser',
+                modal_width: 380,//config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
                 //call_status: 0, // 0:not_call, 1:call_ing, 2:call_success
                 call_time: '00:00',
                 call_time_num: 0,
@@ -471,6 +472,20 @@
     .sdk-uname {
         //margin: 20px;
         word-break: break-all;
+    }
+
+    .sdk-canvas-local-dom {
+        position: absolute;
+        right: 0px;
+        width: 100px;
+        display: inline-block;
+        background-color: black;
+        height: 120px;
+    }
+
+    .sdk-canvas-remote-dom {
+        height: 420px;
+        line-height: 420px;
     }
 </style>
 

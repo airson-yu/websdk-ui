@@ -21,6 +21,8 @@ class Config {
         this.heart_beat_max_err = 20;      // 最多心跳异常次数
         this.init_callback = null;
         this.logon_callback = null;
+        this.video_canvas_default_w = 640;//640*0.6=384,640*0.95=608 微调一点，不能小于窗口footer的最小宽度;
+        this.video_canvas_default_h = 480;//480*0.6=288,640*0.95=456
     }
 
     get_next_ws_url = () => {
