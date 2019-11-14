@@ -10,7 +10,7 @@
                 <Icon v-show="!show_max" @click="toggleMax" type="md-add" color="#fff" class="sdk-toggle-max"/>
             </div>
         </div>
-        <div v-show="show_max" class="sdk-panel" style="min-height: 420px;">
+        <div v-show="show_max" class="sdk-panel" style="min-height: 640px;"> <!--420-->
             <div v-show="call_status==1" style="position: absolute;left: 0px;text-align: left;margin: 5px;">
                 <Avatar class="ivu-avatar sdk-avatar-medium" :src="res_avatar1"/>
                 <div style="display: inline-block;vertical-align: middle;">
@@ -77,7 +77,7 @@
                 show_max: true,
                 volume: 25,
                 //uname: 'ertestuser',
-                modal_width: 380,//config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
+                modal_width: 484,// 380 config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
                 //call_status: 0, // 0:not_call, 1:call_ing, 2:call_success
                 call_time: '00:00',
                 call_time_num: 0,
@@ -484,8 +484,8 @@
     }
 
     .sdk-canvas-remote-dom {
-        height: 420px;
-        line-height: 420px;
+        height: 640px;//420
+        line-height: 640px;//420
     }
 </style>
 
