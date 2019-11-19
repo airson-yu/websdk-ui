@@ -5,15 +5,16 @@
                 <span>{{ts}}</span>
                 <span>{{uname}}</span>
             </div>
-            <div class="sdk-item-content-right">sdk-left-top
+            <div class="sdk-item-content-right">
                 <div class="sdk-message sdk-msg-file-right">
                     <div class="sdk-im-file-icon-div-right">
                         <div class="sdk-im-file-icon">
                             <Icon :size=40 type="ios-folder-outline"/>
-                        </div>sdk-left-top
+                        </div>
                     </div>
                     <div class="sdk-im-file-name-div-right">
-                        <div class="sdk-im-file-name-right"><a :href=content :download=file_name class="sdk-im-file-name" target="_blank">{{file_name}}</a></div>
+                        <div class="sdk-im-file-name-right"><a :href=content :download=file_name class="sdk-im-file-name" target="_blank">{{file_name}}</a>
+                        </div>
                     </div>
                 </div>
                 <div class="sdk-right-angle"></div>

@@ -131,7 +131,7 @@
             if (that.url) {
                 let dom_id = that.sdk_video_canvas_id;
                 let modal_outer_id = that.sdk_video_modal_id;
-                that.vp = new VideoProcessor(that.url, dom_id, modal_outer_id);
+                that.vp = new VideoProcessor(that.url, dom_id, modal_outer_id, that);
                 that.setVideoWS({id: that.id, ws: that.vp.videoWebsocket});
                 that.call_status = 2;
 

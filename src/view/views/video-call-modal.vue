@@ -10,7 +10,7 @@
                 <Icon v-show="!show_max" @click="toggleMax" type="md-add" color="#fff" class="sdk-toggle-max"/>
             </div>
         </div>
-        <div v-show="show_max" class="sdk-panel" style="min-height: 640px;"> <!--420-->
+        <div v-show="show_max" class="sdk-panel" style="min-height: 480px;"> <!-- min-height: 640px; 420-->
             <div v-show="call_status==1" style="position: absolute;left: 0px;text-align: left;margin: 5px;">
                 <Avatar class="ivu-avatar sdk-avatar-medium" :src="res_avatar1"/>
                 <div style="display: inline-block;vertical-align: middle;">
@@ -77,7 +77,7 @@
                 show_max: true,
                 volume: 25,
                 //uname: 'ertestuser',
-                modal_width: 484,// 380 config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
+                modal_width: 724,// 380 config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
                 //call_status: 0, // 0:not_call, 1:call_ing, 2:call_success
                 call_time: '00:00',
                 call_time_num: 0,
@@ -131,6 +131,8 @@
 
                 // XXX 1:视频call
                 if (status == 64) {
+                    let is_con = that.video_call && that.video_call.is_con;
+                    that.modal_width = is_con ? 1284 : 724;
                     logger.debug('video-call-modal ready');
                     // ready TODO 建立视频连接
                     if (target !== that.$store.state.video_call.target) {
@@ -143,7 +145,7 @@
                         let url_remote = config.build_video_url(playid);
                         let canvas_local_dom = that.sdk_canvas_local_dom;
                         let canvas_remote_dom = that.sdk_canvas_remote_dom;
-                        let vp1 = new VideoProcessor(url_local, canvas_local_dom);
+                        let vp1 = new VideoProcessor(url_local, canvas_local_dom, is_con);
                         //that.setVideoWS({id: that.id, ws: vp1.videoWebsocket});
                         that.ws_local = vp1.videoWebsocket;
                         let vp2 = new VideoProcessor(url_remote, canvas_remote_dom);
@@ -156,6 +158,7 @@
 
                 } else if (status == 66) {
                     //  66 – 对方振铃中/振铃
+                    that.modal_width = (that.video_call && that.video_call.is_con) ? 1284 : 724;
 
                 } else if (status == 67) {
                     // 67 – 对方已接受/接受
@@ -484,8 +487,10 @@
     }
 
     .sdk-canvas-remote-dom {
-        height: 640px;//420
-        line-height: 640px;//420
+        //height: 640px;//420
+        //line-height: 640px;//420
+        //height: 420px;
+        //line-height: 420px;
     }
 </style>
 

@@ -4,8 +4,9 @@ import config from "../config";
 import logger from "../logger";
 
 class VideoProcessor {
-    constructor(url, dom_id, modal_outer_id) {
+    constructor(url, dom_id, modal_outer_id, modal_obj) {
         this.canvas = null;
+        this.modal_obj = modal_obj;
         if (dom_id) {
             this.canvas = document.getElementById(dom_id);
         }
@@ -18,8 +19,8 @@ class VideoProcessor {
         this.canvas_default_h = config.video_canvas_default_h; //480
         this.canvas_last_fix_w = this.canvas_default_w;
         this.canvas_last_fix_h = this.canvas_default_h;
-        this.video_real_w = 640;
-        this.video_real_h = 480;
+        this.video_real_w = 1280;//640
+        this.video_real_h = 720;//480
         this.fullscreen_w = 0;
         this.fullscreen_h = 0;
         this.fullscreen = false;
@@ -98,9 +99,15 @@ class VideoProcessor {
 
     fresh_canvas_scale(width, height, fresh_context) {
         // XXX 窗口大小保持不变，只改变比例 2019年11月7日12:50:34
+        if (this.modal_obj) {
+            //this.modal_obj.modal_width = width >= height ? (width + 4) : (height + 4);
+            this.modal_obj.modal_width = width + 4; // XXX 窗口宽度也随之变化 2019年11月19日17:31:1
+        }
         if (width >= 720) { //1280*720 1280的视频太大，缩小一点
-            this.canvas_default_w = config.video_canvas_default_w * 1.36; //640
-            this.canvas_default_h = 720 / 1280 * config.video_canvas_default_w * 1.36;
+            //this.canvas_default_w = config.video_canvas_default_w * 1.36; //640
+            //this.canvas_default_h = 720 / 1280 * config.video_canvas_default_w * 1.36;
+            this.canvas_default_w = 1280; //640
+            this.canvas_default_h = 720; //480
         } else {
             this.canvas_default_w = config.video_canvas_default_w; //640
             this.canvas_default_h = config.video_canvas_default_h; //480

@@ -87,7 +87,7 @@
             <div style="height:40px;line-height: 40px;margin: 0 auto;border-bottom:solid 1px gray;">UI调试</div>
             <div style="margin-top:15px;">
                 <Button style="margin:5px;width: 105px;" type="primary" @click="localShowIMModalUser(param_uid1)">打开个人68505</Button>
-                <Button style="margin:5px;width: 105px;" type="primary" @click="localShowIMModalUser(param_uid2)">打开个人68507</Button>
+                <Button style="margin:5px;width: 105px;" type="primary" @click="localShowIMModalUser(68509)">打开个人68509</Button>
                 <Button style="margin:5px;width: 105px;" type="success" @click="localShowIMModalGroup(param_tgid1)">打开群组74752</Button>
                 <Button style="margin:5px;width: 105px;" type="success" @click="localShowIMModalGroup(param_tgid2)">打开群组74753</Button>
                 <Button style="margin:5px;width: 105px;" type="primary" @click="hideIMModalUser()">关闭用户窗口</Button>
