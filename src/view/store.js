@@ -64,6 +64,7 @@ const getDefaultState = () => {
             modal_show: false,
             target: 0,
             uname: '',
+            is_con: false,
             avatar: '',
             status: 0,
             target_info: {},
@@ -686,6 +687,7 @@ export default new Vuex.Store({
                 state.video_call.target = id;
                 state.video_call.target_info = data.info;
                 state.video_call.uname = data.info.display_name;
+                state.video_call.is_con = data.info.type == 'console';
                 state.video_call.avatar = data.info.img_url;
                 state.video_call.status = target.status;
                 state.video_call.modal_show = true;
@@ -705,6 +707,7 @@ export default new Vuex.Store({
                 //state.video_call.target = id;
                 state.video_call.target_info = data;
                 state.video_call.uname = data.display_name;
+                state.video_call.is_con = data.info.type == 'console';
                 state.video_call.avatar = data.img_url;
                 //state.video_call.status = target.status;
                 state.video_call.modal_show = true;

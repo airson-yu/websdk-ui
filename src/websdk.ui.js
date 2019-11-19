@@ -9,7 +9,7 @@ class websdkui {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_ui_version: 2019.11.07.01');
+        logger.debug('websdk_ui_version: 2019.11.19.01');
     }
 
     demo = () => {
@@ -35,7 +35,7 @@ class websdkui {
 window.websdk.websdkui = new websdkui();
 
 // FIXME set false when release
-window.debug = false;
+window.debug = true;
 
 if (window.debug) {
     window.websdk.init(function (result) {
