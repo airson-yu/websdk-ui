@@ -77,7 +77,7 @@
                 show_max: true,
                 volume: 25,
                 //uname: 'ertestuser',
-                modal_width: 385,//config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
+                modal_width: 388,//config.video_canvas_default_h,// 一般默认是竖屏，使用高度 old:380
                 //call_status: 0, // 0:not_call, 1:call_ing, 2:call_success
                 call_time: '00:00',
                 call_time_num: 0,
@@ -132,7 +132,7 @@
                 // XXX 1:视频call
                 if (status == 64) {
                     let is_con = that.video_call && that.video_call.is_con;
-                    that.modal_width = is_con ? 645 : 385;
+                    that.modal_width = is_con ? 516 : 388;
                     logger.debug('video-call-modal ready');
                     // ready TODO 建立视频连接
                     if (target !== that.$store.state.video_call.target) {
@@ -158,7 +158,7 @@
 
                 } else if (status == 66) {
                     //  66 – 对方振铃中/振铃
-                    that.modal_width = (that.video_call && that.video_call.is_con) ? 645 : 385;
+                    that.modal_width = (that.video_call && that.video_call.is_con) ? 516 : 388;
 
                 } else if (status == 67) {
                     // 67 – 对方已接受/接受

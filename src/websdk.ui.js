@@ -35,7 +35,7 @@ class websdkui {
 window.websdk.websdkui = new websdkui();
 
 // FIXME set false when release
-window.debug = true;
+window.debug = false;
 
 if (window.debug) {
     window.websdk.init(function (result) {
