@@ -50,6 +50,7 @@ var api_demo = {
 
             console.log('websdk.init result:', result);
 
+            api_demo.logonNotice();
             api_demo.logoutNotice();
             api_demo.emergencyAlarmNotice();
             api_demo.emergencyHandledNotice();
@@ -242,6 +243,11 @@ var api_demo = {
     },
 
     // XXX listeners
+    logonNotice: function () {
+        websdk.listeners.logonNotice(function (rsp) {
+            console.log('demo logonNotice result:', rsp);
+        }, 'demo');
+    },
     logoutNotice: function () {
         websdk.listeners.logoutNotice(function (rsp) {
             console.log('demo logoutNotice result:', rsp);
@@ -359,6 +365,7 @@ websdk.init(function (result) {
 
     console.log('websdk.init result:', result);
 
+    api_demo.logonNotice();
     api_demo.logoutNotice();
     api_demo.emergencyAlarmNotice();
     api_demo.emergencyHandledNotice();
