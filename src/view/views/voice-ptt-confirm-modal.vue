@@ -95,7 +95,7 @@
             acceptCall() {
                 let that = this;
                 let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 67, function (rsp) {
+                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 67, null, function (rsp) {
                     logger.debug('req_call_status_voice_ptt_confirm_accept showIMModal');
                     websdk.request.userRequest.getUserInfo([that.target], null, function (rsp) {
                         if (!rsp.user_info) {
@@ -120,7 +120,7 @@
                 let that = this;
                 //let root = this.$root;
                 let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 69, function (rsp) {
+                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 69, null, function (rsp) {
                     logger.debug('req_call_status_voice_ptt_confirm_reject on_hide_modal');
                     that.on_hide_modal();
                 }, 'req_call_status_voice_ptt_confirm_reject');//

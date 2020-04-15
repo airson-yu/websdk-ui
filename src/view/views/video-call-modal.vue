@@ -256,7 +256,7 @@
                 let that = this;
                 let login_uid = websdk.private_cache.login_uid;
                 //if (that.call_status == 1 || that.call_status == 2) {
-                websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 0, function (rsp) {
+                websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 0, null,function (rsp) {
                     logger.debug('video_call_req_call_stop result:{}', rsp);
                 }, 'video_call_req_call_stop');//
                 //}

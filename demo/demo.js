@@ -23,7 +23,7 @@ var global_data = {
     con_id: 66249,
     con_other_id: 66254,
 }
-RHTX = false;
+RHTX = true;
 GA = false;
 if (RHTX) {
     global_data.ipaddr = '39.105.135.70';
@@ -34,6 +34,10 @@ if (RHTX) {
     global_data.param_tgid2 = 74753;
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
+
+    global_data.ipaddr = '39.106.17.196';
+    global_data.logonName = 'pstn';
+    global_data.con_id = 66266;
 } else if (GA) {
     global_data.ipaddr = '20.75.11.201';
     global_data.orgid = 1;
@@ -211,12 +215,12 @@ var api_demo = {
 
     // XXX voiceRequest
     voice_call: function () {
-        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 1, function (rsp) {
+        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 1, null, function (rsp) {
             console.log('demo_voice_call result:{}', rsp);
         }, 'demo_voice_call');//
     },
     voice_call_stop: function () {
-        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, function (rsp) {
+        websdk.request.voiceRequest.call(global_data.con_id, global_data.param_uid1, null, null, 0, 15, 0, 0, null, function (rsp) {
             console.log('demo_voice_call_stop result:{}', rsp);
         }, 'demo_voice_call_stop');//
     },
@@ -236,9 +240,13 @@ var api_demo = {
             alert('请输入需要拨打的号码');
             return;
         }
-        websdk.request.voiceRequest.call(global_data.con_id, null, null, null, 0, 32, 0, 1, telno, function (rsp) {
-            console.log('demo_voice_pstn_call result:{}', rsp);
-        }, 'demo_voice_pstn_call');//
+        websdk.view.showPstnVoiceCallModal(null, telno, function (result) {
+            console.log('showPstnVoiceCallModal result:{}', result);
+            websdk.request.voiceRequest.call(global_data.con_id, null, null, null, 0, 32, 0, 1, telno, function (rsp) {
+                console.log('demo_voice_pstn_call result:{}', rsp);
+            }, 'demo_voice_pstn_call');//
+        });
+
     },
     voice_pstn_dtmf_call: function () {
         var telno = document.getElementById('pstn_telno').value;

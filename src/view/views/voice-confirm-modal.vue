@@ -60,8 +60,12 @@
             let that = this;
             //let root = this.$root;
             bus.$on('call-status-voice-confirm', (rsp) => {
-                if (rsp.call_type !== 15) {
+                if (rsp.call_type !== 15 && rsp.call_type !== 32) {
                     return;
+                }
+                that.pstn_telno = '';
+                if (rsp.call_type == 32) {
+                    that.pstn_telno = rsp.telno;
                 }
                 let demander = rsp.demander;
                 let target = rsp.target;
@@ -75,7 +79,7 @@
                 //logger.debug('call-confirm-modal status:{}', rsp);
                 if (status == 66 && target == login_uid) { //
                     logger.debug('showVoiceConfirmModal');
-                    that.showVoiceConfirmModal({id: demander, status: 1});
+                    that.showVoiceConfirmModal({id: demander, status: 1, pstn_telno: that.pstn_telno});
                 } else if (status == 70 && target == login_uid) { //
                     logger.debug('voice timeout on_hide_modal');
                     that.on_hide_modal();
@@ -118,9 +122,13 @@
                 let that = this;
                 //let root = this.$root;
                 let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 15, 67, function (rsp) {
+                let call_type = 15;
+                if (that.pstn_telno) {
+                    call_type = 32;
+                }
+                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, call_type, 67, that.pstn_telno, function (rsp) {
                     logger.debug('req_call_status_voice_confirm_accept showVoiceCallModal');
-                    that.showVoiceCallModal({id: that.target, status: 2});
+                    that.showVoiceCallModal({id: that.target, status: 2, pstn_telno: that.pstn_telno});
                     that.on_hide_modal();
                 }, 'req_call_status_voice_confirm_accept');//
             },
@@ -128,7 +136,11 @@
                 let that = this;
                 //let root = this.$root;
                 let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 15, 69, function (rsp) {
+                let call_type = 15;
+                if (that.pstn_telno) {
+                    call_type = 32;
+                }
+                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, call_type, 69, that.pstn_telno, function (rsp) {
                     logger.debug('req_call_status_voice_confirm_reject on_hide_modal');
                     that.on_hide_modal();
                 }, 'req_call_status_voice_confirm_reject');//

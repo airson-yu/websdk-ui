@@ -88,7 +88,7 @@
             let that = this;
             //let root = that.$root;
             bus.$on('call-status-voice-call', (rsp) => {
-                if (rsp.call_type !== 15 && rsp.call_type !== 17) {
+                if (rsp.call_type !== 15 && rsp.call_type !== 17 && rsp.call_type !== 32) {
                     return;
                 }
                 let demander = rsp.demander;
@@ -98,6 +98,12 @@
                 if (login_uid != demander && login_uid != target) { // send call or receive call
                     logger.debug('voice-call-modal ignore');
                     return;
+                }
+
+                //call_type=32:pstn call
+                that.pstn_telno = '';
+                if (rsp.call_type == 32) {
+                    that.pstn_telno = rsp.telno;
                 }
 
                 // XXX 15:全双工，17:全双工语音强拉, 这里专门处理全双工呼叫
@@ -188,8 +194,12 @@
             callStop() {
                 let that = this;
                 let login_uid = websdk.private_cache.login_uid;
+                let call_type = 15;
+                if (that.pstn_telno) {
+                    call_type = 32;
+                }
                 //if (that.call_status == 1 || that.call_status == 11 || that.call_status == 2) {
-                websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 0, function (rsp) {
+                websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, call_type, 0, 0, that.pstn_telno, function (rsp) {
                     //logger.debug('voice_call_req_call_stop result:{}', rsp);
                 }, 'voice_call_req_call_stop');//
                 //}
@@ -353,10 +363,10 @@
     }
 
     .sdk-panel {
-        height: 488px;//388 340
+        height: 488px; //388 340
         text-align: center;
         font-size: large;
-        padding: 115px 20px 20px 20px;//60px 20px 20px 20px
+        padding: 115px 20px 20px 20px; //60px 20px 20px 20px
     }
 
     .sdk-volume-bar {

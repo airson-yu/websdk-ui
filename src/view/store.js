@@ -457,6 +457,17 @@ export default new Vuex.Store({
                     return true;
                 }
             });*/
+
+            // check pstn, pstn的uid是虚拟的，只用显示电话号码 2020年4月15日13:53:12
+            if (target.pstn_telno) {
+                state.voice_confirm.target = id || 0;
+                state.voice_confirm.uname = target.pstn_telno;
+                state.voice_confirm.status = target.status;
+                state.voice_confirm.modal_show = true;
+                logger.debug('store pstn showVoiceConfirmModal:{}-{}', id, target.pstn_telno);
+                return true;
+            }
+
             let data = state.im[id];
             if (data) {
                 state.voice_confirm.target = id;
@@ -560,6 +571,17 @@ export default new Vuex.Store({
                     return true;
                 }
             });*/
+
+            // check pstn, pstn的uid是虚拟的，只用显示电话号码 2020年4月15日13:53:12
+            if (target.pstn_telno) {
+                state.voice_call.target = id || 0;
+                state.voice_call.uname = target.pstn_telno;
+                state.voice_call.status = target.status;
+                state.voice_call.modal_show = true;
+                logger.debug('store pstn showVoiceCallModal:{}-{}', id, target.pstn_telno);
+                return true;
+            }
+
             let data = state.im[id];
             if (data) {
                 if (state.voice_call.status == 2) {

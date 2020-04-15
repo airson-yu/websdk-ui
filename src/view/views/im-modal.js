@@ -1041,7 +1041,7 @@ export default {
                 }, 1);
                 // start
                 //let uid = this.$store.state.user.uid;
-                websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 1, function (rsp) {
+                websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 1, null, function (rsp) {
                     //logger.debug('user-modal req_call_ptt_im_start result:{}', rsp);
                 }, 'req_call_ptt_im_start');//
             } else {
@@ -1051,7 +1051,7 @@ export default {
                     that.resetDcgAttached(that.id);
                 }, 1);
                 // end 直接视为成功
-                websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 0, function (rsp) {
+                websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 0, null, function (rsp) {
                     //logger.debug('user-modal req_call_ptt_im_stop result:{}', rsp);
                 }, 'req_call_ptt_im_stop');//
             }
@@ -1196,7 +1196,7 @@ export default {
             }
             that.showVoiceCallModal({id: that.target, status: 1});
             let login_uid = websdk.private_cache.login_uid;
-            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, function (rsp) {
+            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, null, function (rsp) {
                 //logger.debug('user-modal req_call_im result:{}', rsp);
             }, 'req_call_im_15');//
         },
@@ -1209,7 +1209,7 @@ export default {
             }
             this.showVideoCallModal({id: that.target, status: 1});
             let login_uid = websdk.private_cache.login_uid;
-            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 1, function (rsp) {
+            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 1, null, function (rsp) {
                 //logger.debug('user-modal req_call_im result:{}', rsp);
             }, 'req_call_im_1');//
         },

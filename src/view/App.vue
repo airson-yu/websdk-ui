@@ -527,7 +527,7 @@
 
             req_call: function () {
                 //call = (demander, target, channel, call_type, priority, callback, cbid) => {
-                websdk.request.voiceRequest.call(this.param_uid1, this.param_uid2, null, null, 1, 20, 0, 1, function (rsp) {
+                websdk.request.voiceRequest.call(this.param_uid1, this.param_uid2, null, null, 1, 20, 0, 1, null, function (rsp) {
                     //logger.debug('req_call result:{}', rsp);
                 }, 'test_req_call');//
             },
@@ -750,7 +750,7 @@
                 }
                 that.showVoiceCallModal({id: target, status: 11});
                 let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.call(login_uid, target, null, exttarget, 1, 17, 0, 1, function (rsp) {
+                websdk.request.voiceRequest.call(login_uid, target, null, exttarget, 1, 17, 0, 1, null, function (rsp) {
                     //logger.debug('req_call_app_force result:{}', rsp);
                 }, 'req_call_app_force');//
 
@@ -810,6 +810,16 @@
 
                 that.showGroupCreateModal();
                 callback && callback(Result.succ);
+            },
+
+            showPstnVoiceCallModal: function (target, telno, callback, init_param_obj) {
+                let that = this;
+                let targetObj = {id: target, status: 1, pstn_telno: telno};
+                that.$store.dispatch('showVoiceCallModal', targetObj).then(() => {
+                    logger.debug('showPstnVoiceCallModal callback');
+                    callback && callback(true);
+                });
+                //---------------
             },
 
             resetStateWhenLogout: function (callback) {
