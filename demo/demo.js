@@ -21,7 +21,7 @@ var global_data = {
     param_tgid1: 74269,
     param_tgid2: 74270,
     con_id: 66249,
-    con_other_id: 66254,
+    con_other_id: 66254
 }
 RHTX = true;
 GA = false;
@@ -35,8 +35,10 @@ if (RHTX) {
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
 
-    global_data.ipaddr = '39.106.17.196';
-    global_data.logonName = 'pstn';
+    //global_data.ipaddr = '39.106.17.196';
+    //global_data.logonName = 'pstn';
+    global_data.ipaddr = '198.1.3.166';
+    global_data.logonName = 'fan';
     global_data.con_id = 66266;
 } else if (GA) {
     global_data.ipaddr = '20.75.11.201';
@@ -104,7 +106,7 @@ var api_demo = {
     },
     req_emergencyHandled: function () {
         //uid, extUid, processor, timestamp, ack_type
-        let ts = Math.floor(new Date().getTime() / 1000);
+        var ts = Math.floor(new Date().getTime() / 1000);
         websdk.request.authRequest.emergencyHandled(global_data.param_uid1, null, global_data.con_id, ts, 0, function (rsp) {
             console.log('demo_req_emergencyHandled result:', rsp);
         }, 'demo_req_emergencyHandled');//
@@ -196,7 +198,7 @@ var api_demo = {
     },
 
     req_create_group: function () {
-        let name = 'tg_' + new Date().getTime();
+        var name = 'tg_' + new Date().getTime();
         websdk.request.groupRequest.createGroup(name, [global_data.param_uid1, global_data.param_uid2], null, function (rsp) {
             console.log('demo_req_create_group result:{}', rsp);
         }, 'demo_req_create_group');
@@ -204,7 +206,7 @@ var api_demo = {
 
     req_delete_group: function () {
         // XXX 指定需要删除的组的ID
-        let tgid = 0;//
+        var tgid = 0;//
         websdk.request.groupRequest.deleteGroup(tgid, null, function (rsp) {
             console.log('demo_req_delete_group result:{}', rsp);
         }, 'demo_req_delete_group');
@@ -276,7 +278,7 @@ var api_demo = {
 
     // XXX videoRequest
     req_play_video: function () {
-        let that = this;
+        var that = this;
         //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
         websdk.request.videoRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
             console.log('demo_req_play_video result:{}', rsp);
@@ -415,7 +417,7 @@ var api_demo = {
         websdk.view.showCreateGroupModal(function (result) {
             console.log('showCreateGroupModal result:{}', result);
         });
-    },
+    }
     // XXX other
 
 }

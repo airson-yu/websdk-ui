@@ -113,7 +113,7 @@
                 } else if (status == 67) {
                     // 67 – 对方已接受/接受
                     logger.debug('voice-call-modal accepted');
-                    if (target == that.$store.state.voice_call.target) {
+                    if (target == that.$store.state.voice_call.target || that.pstn_telno == that.$store.state.voice_call.uname) {
                         that.call_established = true;
                         that.$store.dispatch('updateVoiceCallStatus', 2).then(null);
                         that.fresh_ui_call_status(2);
@@ -127,8 +127,8 @@
 
                 } else if (status == 253) {
                     // XXX 正在通话时再发起通话，只需要提示正在通话，不能fresh_ui_call_status
-                    let vcall_ing = this.$store.state.voice_call;
-                    if (!that.call_established && (!vcall_ing.modal_show || vcall_ing.target == this.target)) {
+                    let vcall_ing = that.$store.state.voice_call;
+                    if (!that.call_established && (!vcall_ing.modal_show || vcall_ing.target == that.target || vcall_ing.uname == that.pstn_telno)) {
                         that.on_hide_modal(true);
                     }
                     that.$Message.warning('当前正在进行语音通话，不能再次发起通话');
