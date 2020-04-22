@@ -729,7 +729,7 @@ export default new Vuex.Store({
                 //state.video_call.target = id;
                 state.video_call.target_info = data;
                 state.video_call.uname = data.display_name;
-                state.video_call.is_con = data.info.type == 'console';
+                state.video_call.is_con = data.type == 'console';
                 state.video_call.avatar = data.img_url;
                 //state.video_call.status = target.status;
                 state.video_call.modal_show = true;
