@@ -34,12 +34,15 @@ if (RHTX) {
     global_data.param_tgid2 = 74753;
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
+	
+	 //global_data.con_id = 65776;
+	 //global_data.param_uid1 = 68505;
 
     //global_data.ipaddr = '39.106.17.196';
     //global_data.logonName = 'pstn';
-    global_data.ipaddr = '198.1.3.166';
-    global_data.logonName = 'fan';
-    global_data.con_id = 66266;
+    //global_data.ipaddr = '198.1.3.166';
+    //global_data.logonName = 'fan';
+    //global_data.con_id = 66266;
 } else if (GA) {
     global_data.ipaddr = '20.75.11.201';
     global_data.orgid = 1;
