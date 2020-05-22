@@ -1,12 +1,38 @@
 <template>
-    <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-voice-modal sdk-video-modal" title="视频数据" :width="modal_width" draggable scrollable
-           :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
+    <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-voice-modal sdk-video-modal" title="视频数据"
+           :width="modal_width" draggable scrollable :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal"
+           :closable="false" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>视频数据-{{uname}}</span>
                 <Icon v-show="show_max && !fullscreen" @click="toggleMax" type="md-remove" color="#fff" class="sdk-toggle-max"/>
                 <Icon v-show="!show_max && !fullscreen" @click="toggleMax" type="md-add" color="#fff" class="sdk-toggle-max"/>
                 <Icon @click="toggleFullscreen" type="md-square-outline" color="#fff" class="sdk-toggle-fullscreen"/>
+                <Icon @click="close_confirm" type="md-close" color="#fff" class="sdk-close"/>
+            </div>
+            <div v-show="show_confirm" class="close-confirm" style="position: absolute;right: 0px;top: 0px;">
+                <div class="ivu-modal-content">
+                    <!--<a class="ivu-modal-close"><i class="ivu-icon ivu-icon-ios-close"></i></a>-->
+                    <div class="ivu-modal-body">
+                        <div class="ivu-modal-confirm" style="padding:10px 5px;">
+                            <!--<div class="ivu-modal-confirm-head">
+                                <div class="ivu-modal-confirm-head-icon ivu-modal-confirm-head-icon-confirm">
+                                    <i class="ivu-icon ivu-icon-ios-help-circle"></i>
+                                </div>
+                                <div class="ivu-modal-confirm-head-title">提示</div>
+                            </div>-->
+                            <div class="ivu-modal-confirm-body" style="padding-left: 8px;">
+                                <div>
+                                    <div><span style="color: #fff;">是否需要同时关闭终端的视频？</span></div>
+                                </div>
+                            </div>
+                            <div class="ivu-modal-confirm-footer" style="text-align: center;">
+                                <button @click="close_confirm_cancel" type="button" class="ivu-btn ivu-btn-success ivu-btn-xs"><span>否</span></button>
+                                <button @click="close_confirm_ok" type="button" class="ivu-btn ivu-btn-primary ivu-btn-xs"><span>是</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-show="show_max" class="sdk-panel">
@@ -87,7 +113,8 @@
                     label: '清晰（高码率）'
                 }],
                 fullscreen: false,
-                mute: false
+                mute: false,
+                show_confirm: false
             }
         },
         props: {
@@ -126,6 +153,7 @@
 
         mounted: function () {
             let that = this;
+            that.show_confirm = false;
             //let root = that.$root;
 
             if (that.url) {
@@ -230,13 +258,64 @@
             on_hide_modal(ignore_stop) {// XXX 当modal窗口发起$emit事件通知窗口关闭时，这里继续通知App.vue窗口已经关闭
                 let that = this;
                 //this.resetCallStatus();
+                logger.debug("on_hide_modal ignore_stop:{}", ignore_stop);
                 if (!ignore_stop) {
                     let login_uid = websdk.private_cache.login_uid;
                     websdk.request.videoRequest.stopPlayVideo(login_uid, that.id, null, null, 0, 0, function (rsp) {
                         //logger.debug('req_stop_play_video_domain result:{}', rsp);
                     }, 'req_stop_play_video_video');
                 }
+                //this.$Modal.remove();
                 this.$emit('on-video-cancel');
+            },
+            close_confirm() {
+                let that = this;
+                let action = websdk.websdkui.configApi.get_video_close_action();
+                logger.debug("close_confirm action:{}", action);
+                if (action == 2) {
+                    that.main_modal_show = false;
+                    that.on_hide_modal(true);// 只关闭窗口
+                    logger.debug("close_confirm action 2");
+
+                } else if (action == 3) {
+                    that.main_modal_show = false;
+                    that.on_hide_modal(false);// 通知终端停止推流
+                    logger.debug("close_confirm action 3");
+
+                } else if (action == 1) {
+                    that.show_confirm = true;
+                    /*that.$Modal.confirm({
+                        title: "提示",
+                        content: "<div><span>是否需要关闭终端的视频？</span></div>",
+                        //"<p>新增流程尚未完成，</p><div><span>是否需要</span><span style='color:#ef4836'>关闭窗口</span><span>？</span></div>",
+                        okText: "是",
+                        cancelText: "否",
+                        closable: true,
+                        zIndex: 9999,
+                        onCancel: () => {
+                            that.main_modal_show = false;
+                            that.on_hide_modal(true);// 只关闭窗口
+                            logger.debug("close_confirm onCancel 2");
+                        },
+                        onOk: () => {
+                            that.main_modal_show = false;
+                            that.on_hide_modal(false);// 通知终端停止推流
+                            logger.debug("close_confirm onOk 3");
+                        }
+                    });*/
+                }
+            },
+            close_confirm_cancel() {
+                let that = this;
+                that.main_modal_show = false;
+                that.on_hide_modal(true);// 只关闭窗口
+                logger.debug("close_confirm onCancel 2");
+            },
+            close_confirm_ok() {
+                let that = this;
+                that.main_modal_show = false;
+                that.on_hide_modal(false);// 通知终端停止推流
+                logger.debug("close_confirm onOk 3");
             },
 
             ...mapActions([
@@ -322,6 +401,14 @@
 <!--<style lang="less" scoped src="../assets/css/user-group-modal.less"></style>-->
 <style lang="less" scoped>
 
+    .ivu-modal-content {
+        background-color: #001959;
+    }
+
+    .ivu-modal-wrap {
+        z-index: 9999;
+    }
+
     .sdk-toggle-max {
         font-size: 22px;
         right: 68px;
@@ -333,6 +420,14 @@
     .sdk-toggle-fullscreen {
         font-size: 22px;
         right: 40px;
+        position: absolute;
+        cursor: pointer;
+        //top: 13px;
+    }
+
+    .sdk-close {
+        font-size: 22px;
+        right: 10px;
         position: absolute;
         cursor: pointer;
         //top: 13px;

@@ -86,7 +86,7 @@
             </div>
             <div style="height:40px;line-height: 40px;margin: 0 auto;border-bottom:solid 1px gray;">UI调试</div>
             <div style="margin-top:15px;">
-                <Button style="margin:5px;width: 105px;" type="primary" @click="localShowIMModalUser(param_uid1)">打开个人68505</Button>
+                <Button style="margin:5px;width: 105px;" type="primary" @click="localShowIMModalUser(param_uid1)">打开个人68505/66250</Button>
                 <Button style="margin:5px;width: 105px;" type="primary" @click="localShowIMModalUser(68509)">打开个人68509</Button>
                 <Button style="margin:5px;width: 105px;" type="success" @click="localShowIMModalGroup(param_tgid1)">打开群组74752</Button>
                 <Button style="margin:5px;width: 105px;" type="success" @click="localShowIMModalGroup(param_tgid2)">打开群组74753</Button>
@@ -150,13 +150,19 @@
             //return store.state
             return {
                 //user_modal_show: store.state.user_modal_show,
+                //ip:'39.105.135.70',
+                ipaddr: '39.106.213.127',
+                port: 80,
+                //orgid: 10,
+                orgid: 28,
                 debug: window.debug,
                 username: 'jack',
                 logonName: 'websdkcu1',
                 password: '123456',
                 consoleName: null,
                 client: null,
-                param_uid1: 68505,
+                param_uid1: 66250,
+                //param_uid1: 68505,
                 param_uid2: 68507,
                 param_ext_uid1: 'itrunk_68505',
                 param_ext_uid2: 'itrunk_68506',
@@ -468,7 +474,7 @@
                 document.getElementById('sdk_webapp').innerHTML = '';
             },
             doLogin: function () {
-                websdk.request.authRequest.logon('39.105.135.70', 80, 10, this.logonName, this.password, this.consoleName, function (rsp) {
+                websdk.request.authRequest.logon(this.ipaddr, this.port, this.orgid, this.logonName, this.password, this.consoleName, function (rsp) {
                     //this.request.authRequest.logon(null, 0, 0, 'testcu', '123456', 'c1552965016425r279235228', function (rsp) {
                     //logger.debug('logon result:{}', rsp);
                 }, 'test_req_logon');//

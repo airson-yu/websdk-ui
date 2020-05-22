@@ -1,20 +1,24 @@
 require('../../websdk-core/dist/websdk.core.bundle');
 import vue_boot from "./view/main";
 import logger from "./tools/logger";
+import configApi from "./tools/configApi";
 
 class websdkui {
+
     constructor() {
         this.vm = null;
         this.private_cache = {
             login_uid: null,
             login_user: {},
         };
-        logger.debug('websdk_ui_version: 2020.05.11.01');
+        this.configApi = new configApi();//配置对象
+        logger.debug('websdk_ui_version: 2020.05.22.01');
     }
 
     demo = () => {
         let that = this;
-        window.websdk.request.authRequest.logon('39.105.135.70', 80, 10, 'websdkcu1', '123456', null, function (rsp) {
+        //window.websdk.request.authRequest.logon('39.105.135.70', 80, 10, 'websdkcu1', '123456', null, function (rsp) {
+        window.websdk.request.authRequest.logon('39.106.213.127', 80, 28, 'websdkcu1', '123456', null, function (rsp) {
             logger.debug('init logon result:{}', rsp);
         }, 'app_demo_logon');//test_req_logon
         window.websdk.listeners.userStateNotice(function (rsp) {
@@ -41,6 +45,7 @@ if (window.debug) {
     window.websdk.init(function (result) {
         logger.debug('init:{}', JSON.stringify(result));
         window.websdk.websdkui.demo();
+        window.websdk.websdkui.configApi.set_video_close_action(2);
     });
 }
 
