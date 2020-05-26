@@ -12,7 +12,7 @@ class websdkui {
             login_user: {},
         };
         this.configApi = new configApi();//配置对象
-        logger.debug('websdk_ui_version: 2020.05.22.01');
+        logger.debug('websdk_ui_version: 2020.05.26.01');
     }
 
     demo = () => {
@@ -28,9 +28,21 @@ class websdkui {
 
     init = (callback) => {
         // XXX client调用init方法要有回调，返回Init成功还是失败，失败原因 2019年3月5日12:38:12
-        let processor = window.websdk.core.processor;
-        this.vm = vue_boot.init(processor, callback);
-        return this;
+        let that = this;
+        if (window.is_ie) {
+            logger.debug('websdkui init delay for ie');
+            setTimeout(function () {
+                let processor = window.websdk.core.processor;
+                processor.replace_local_ip_for_ie();//replace_local_ip_for_ie
+                that.vm = vue_boot.init(processor, callback);// init
+                return that;
+            }, 0);// 0 is necessary
+        } else {
+            let processor = window.websdk.core.processor;
+            that.vm = vue_boot.init(processor, callback);
+            return that;
+        }
+
     }
 
 }
