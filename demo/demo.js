@@ -34,9 +34,9 @@ if (RHTX) {
     global_data.param_tgid2 = 74753;
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
-	
-	 //global_data.con_id = 65776;
-	 //global_data.param_uid1 = 68505;
+
+    //global_data.con_id = 65776;
+    //global_data.param_uid1 = 68505;
 
     //global_data.ipaddr = '39.106.17.196';
     //global_data.logonName = 'pstn';
@@ -289,7 +289,7 @@ var api_demo = {
     },
     req_stop_video: function () {
         //stopPlayVideo = (demander, target, extdemander, exttarget, session, channel, callback, cbid) => {
-        websdk.request.videoRequest.stopPlayVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, function (rsp) {
+        websdk.request.videoRequest.stopPlayVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
             console.log('demo_req_stop_video result:{}', rsp);
         }, 'demo_req_stop_video');//
     },

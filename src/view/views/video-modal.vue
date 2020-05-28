@@ -188,7 +188,7 @@
 
             bus.$on(that.stop_play_video_video_evt_id, (rsp) => {
                 if (rsp.target == that.id) {
-                    that.on_hide_modal(true);
+                    that.on_hide_modal('ignore');
                 }
             });
 
@@ -255,13 +255,16 @@
                 that.fullscreen = !that.fullscreen;
                 that.vp.fresh_canvas_toggle_fullscreen(that.fullscreen);
             },
-            on_hide_modal(ignore_stop) {// XXX 当modal窗口发起$emit事件通知窗口关闭时，这里继续通知App.vue窗口已经关闭
+            on_hide_modal(notice_type) {// XXX 当modal窗口发起$emit事件通知窗口关闭时，这里继续通知App.vue窗口已经关闭
+                //notice_type: 'ignore','only_stop_play', 'stop_play_push'
                 let that = this;
                 //this.resetCallStatus();
-                logger.debug("on_hide_modal ignore_stop:{}", ignore_stop);
-                if (!ignore_stop) {
+                logger.debug("on_hide_modal notice_type:{}", notice_type);
+                if (notice_type != 'ignore') {
+                    ////0停止视频播放和推流，1仅停止视频播放，不停止推流
+                    let stop_type = notice_type == 'only_stop_play' ? 1 : 0;
                     let login_uid = websdk.private_cache.login_uid;
-                    websdk.request.videoRequest.stopPlayVideo(login_uid, that.id, null, null, 0, 0, function (rsp) {
+                    websdk.request.videoRequest.stopPlayVideo(login_uid, that.id, null, null, 0, 0, stop_type, function (rsp) {
                         //logger.debug('req_stop_play_video_domain result:{}', rsp);
                     }, 'req_stop_play_video_video');
                 }
@@ -274,12 +277,12 @@
                 logger.debug("close_confirm action:{}", action);
                 if (action == 2) {
                     that.main_modal_show = false;
-                    that.on_hide_modal(true);// 只关闭窗口
+                    that.on_hide_modal('only_stop_play');// 只关闭窗口
                     logger.debug("close_confirm action 2");
 
                 } else if (action == 3) {
                     that.main_modal_show = false;
-                    that.on_hide_modal(false);// 通知终端停止推流
+                    that.on_hide_modal('stop_play_push');// 通知终端停止推流
                     logger.debug("close_confirm action 3");
 
                 } else if (action == 1) {
@@ -308,13 +311,13 @@
             close_confirm_cancel() {
                 let that = this;
                 that.main_modal_show = false;
-                that.on_hide_modal(true);// 只关闭窗口
+                that.on_hide_modal('only_stop_play');// 只关闭窗口
                 logger.debug("close_confirm onCancel 2");
             },
             close_confirm_ok() {
                 let that = this;
                 that.main_modal_show = false;
-                that.on_hide_modal(false);// 通知终端停止推流
+                that.on_hide_modal('stop_play_push');// 通知终端停止推流
                 logger.debug("close_confirm onOk 3");
             },
 
