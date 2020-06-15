@@ -171,7 +171,7 @@
             });
         },
         destroyed: function () {
-            //let that = this;
+            let that = this;
             //let root = that.$root;
             bus.$off('call-status-voice-call');
         },
@@ -237,6 +237,15 @@
                     that.fresh_ui_call_status(2);
                     //on
                 }
+
+                let notice_data = {
+                    cmd_status: 0,
+                    cmd_type: 2,
+                    msg_code: result ? 'notice_voice_call_modal_open' : 'notice_voice_call_modal_close',
+                    target: that.target
+                };
+                websdk.listeners.monitors.notice_dynamic(notice_data);
+
                 /*let that = this;
                 if (result) {
                     if (that.status == 2) {

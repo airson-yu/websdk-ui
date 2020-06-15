@@ -203,12 +203,28 @@
                 }
             });
 
+            let notice_data = {
+                cmd_status: 0,
+                cmd_type: 2,
+                msg_code: 'notice_video_modal_open',
+                target: that.id
+            };
+            websdk.listeners.monitors.notice_dynamic(notice_data);
+
         },
         destroyed: function () {
             let that = this;
             //let root = that.$root;
             bus.$off(that.open_video_video_evt_id);
             bus.$off(that.stop_play_video_video_evt_id);
+
+            let notice_data = {
+                cmd_status: 0,
+                cmd_type: 2,
+                msg_code: 'notice_video_modal_close',
+                target: that.id
+            };
+            websdk.listeners.monitors.notice_dynamic(notice_data);
         },
 
         methods: {

@@ -28,12 +28,18 @@ GA = false;
 if (RHTX) {
     global_data.ipaddr = '39.105.135.70';
     global_data.orgid = 1;
-    global_data.param_uid1 = 68505;
+    global_data.param_uid1 = 65777;
+    //global_data.param_uid1 = 68505;
     global_data.param_uid2 = 68506;
-    global_data.param_tgid1 = 74752;
+    global_data.param_tgid1 = 98711;
+    //global_data.param_tgid1 = 74752;
     global_data.param_tgid2 = 74753;
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
+
+    /*global_data.ipaddr = '123.56.126.189';
+    global_data.param_uid1 = 82043;
+    global_data.param_tgid1 = 98306;*/
 
     //global_data.con_id = 65776;
     //global_data.param_uid1 = 68505;
@@ -390,6 +396,12 @@ var api_demo = {
         }, 'demo');
     },
 
+    dynamicNotice: function (notice_type) {
+        websdk.listeners.dynamicNotice(notice_type, function (rsp) {
+            console.log('demo dynamicNotice type:' + notice_type + ',result:', rsp);
+        }, 'demo');
+    },
+
     // XXX UI
     showUserModal: function () {
         websdk.view.showUserModal(global_data.param_uid1, null, function (result) {
@@ -447,6 +459,14 @@ websdk.init(function (result) {
     api_demo.addGroupMemberNotice();
     api_demo.removeGroupMemberNotice();
     api_demo.groupMemStatusNotice();
+    api_demo.dynamicNotice('notice_im_modal_open');
+    api_demo.dynamicNotice('notice_im_modal_close');
+    api_demo.dynamicNotice('notice_video_modal_open');
+    api_demo.dynamicNotice('notice_video_modal_close');
+    api_demo.dynamicNotice('notice_video_call_modal_open');
+    api_demo.dynamicNotice('notice_video_call_modal_close');
+    api_demo.dynamicNotice('notice_voice_call_modal_open');
+    api_demo.dynamicNotice('notice_voice_call_modal_close');
 
     api_demo.req_login();
 

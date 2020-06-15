@@ -452,6 +452,16 @@ export default {
             }, 1);
         }
 
+        let notice_data = {
+            cmd_status: 0,
+            cmd_type: 2,
+            msg_code: "notice_im_modal_open",
+            target: that.target,
+            im_target_type: that.im_target_type
+        };
+
+        websdk.listeners.monitors.notice_dynamic(notice_data);
+
         // FIXME FOR TEST
         //let that = this;
         /*that.append_image_msg(that, 'image_send', that.my_name, null, that.my_avatar, that.my_avatar, 'test.png', that.my_avatar);
@@ -500,6 +510,16 @@ export default {
         /*websdk.listeners.cancelNotice(websdk.listeners.types.notice_ptt_status);
         websdk.listeners.cancelNotice(websdk.listeners.types.group_mem_status_notice);
         websdk.listeners.cancelNotice(websdk.listeners.types.notice_call_status);*/
+
+        let notice_data = {
+            cmd_status: 0,
+            cmd_type: 2,
+            msg_code: 'notice_im_modal_close',
+            target: that.target,
+            im_target_type: that.im_target_type
+        };
+        websdk.listeners.monitors.notice_dynamic(notice_data);
+
     },
 
     methods: {
