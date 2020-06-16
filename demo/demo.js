@@ -38,7 +38,7 @@ if (RHTX) {
     global_data.con_other_id = 68509;
 
     /*global_data.ipaddr = '123.56.126.189';
-    global_data.param_uid1 = 82043;
+    global_data.param_uid1 = 82045;
     global_data.param_tgid1 = 98306;*/
 
     //global_data.con_id = 65776;
@@ -396,9 +396,9 @@ var api_demo = {
         }, 'demo');
     },
 
-    dynamicNotice: function (notice_type) {
-        websdk.listeners.dynamicNotice(notice_type, function (rsp) {
-            console.log('demo dynamicNotice type:' + notice_type + ',result:', rsp);
+    dynamicNotice: function (msg_code) {
+        websdk.listeners.dynamicNotice(msg_code, function (rsp) {
+            console.log('demo dynamicNotice type:' + msg_code + ',result:', rsp);
         }, 'demo');
     },
 
