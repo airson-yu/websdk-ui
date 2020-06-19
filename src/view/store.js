@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from "vuex";
 import logger from "../tools/logger";
+import _ from "lodash";
 
 
 Vue.use(Vuex);
@@ -94,6 +95,21 @@ export default new Vuex.Store({
         /*getUserModalShow: state => {
             return state.user_modal_show;
         }*/
+        getCurrentVideoList: state => {
+            /*let video  = state.video;
+            let uidList = Object.keys(video);*/
+            //return _.clone(state.video);
+            //return Object.keys(state.video);
+
+            let uidStrList = Object.keys(state.video);
+            let uidList = new Array(uidStrList.length);
+            if (uidStrList.length > 0) {
+                for (let i in uidStrList) {
+                    uidList[i] = parseInt(uidStrList[i]);
+                }
+            }
+            return uidList;
+        }
     },
     mutations: {
         resetState: (state) => {

@@ -828,6 +828,15 @@
                 //---------------
             },
 
+            getPlayVideoUids: function (callback) {
+                let that = this;
+                let uidList = that.$store.getters.getCurrentVideoList;
+                let rsp = {result: true, data: uidList};
+                logger.debug('getPlayVideoUids:{}', rsp);
+                callback && callback(uidList);
+                //---------------
+            },
+
             resetStateWhenLogout: function (callback) {
                 let that = this;
                 that.resetState();

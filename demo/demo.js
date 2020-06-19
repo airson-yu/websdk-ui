@@ -314,6 +314,18 @@ var api_demo = {
         }, 'demo_req_transform_video');//
     },
 
+    req_get_push_video_users: function () {
+        websdk.request.videoRequest.getPushVideoUsers(function (rsp) {
+            console.log('demo_req_get_push_video_users result:{}', rsp);
+        }, 'demo_req_get_push_video_users');//
+    },
+
+    req_get_play_video_uids: function () {
+        websdk.view.getPlayVideoUids(function (rsp) {
+            console.log('demo_req_get_play_video_uids result:{}', rsp);
+        }, 'demo_req_get_play_video_uids');//
+    },
+
     // XXX listeners
     logonNotice: function () {
         websdk.listeners.logonNotice(function (rsp) {
