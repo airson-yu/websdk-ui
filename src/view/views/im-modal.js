@@ -321,7 +321,8 @@ export default {
                             } else {
                                 tmp_user.online = false;
                             }
-                            that.tg_mem_list.push(tmp_user);
+                            let repeat = _.find(that.tg_mem_list, {'uid': tmp_user.uid});
+                            !repeat && that.tg_mem_list.push(tmp_user);
                         }
                         that.fresh_video_icon_from_vuex(that);
                     }
@@ -402,7 +403,8 @@ export default {
                                         tmp_user.online = false;
                                     }
                                     if (login_uid !== tmp_user.uid) {
-                                        that.tg_mem_list.push(tmp_user);
+                                        let repeat = _.find(that.tg_mem_list, {'uid': tmp_user.uid});
+                                        !repeat && that.tg_mem_list.push(tmp_user);
                                     }
                                 }
                                 that.fresh_video_icon_from_vuex(that);

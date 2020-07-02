@@ -18,7 +18,7 @@ var global_data = {
     //param_uid1: 66250,
     param_uid1: 66250,
     param_uid2: 66251,
-    param_tgid1: 74269,
+    param_tgid1: 75739,
     param_tgid2: 74270,
     con_id: 66249,
     con_other_id: 66254
