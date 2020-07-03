@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import {mapActions, mapState, mapGetters} from 'vuex'; //注册 action 和 state
+    import {mapActions} from 'vuex'; //注册 action 和 state
 
     export default {
         name: 'IMImageModal',

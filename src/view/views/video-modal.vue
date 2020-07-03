@@ -71,7 +71,7 @@
     import logger from "../../tools/logger";
     import config from "../../tools/config";
     import bus from '../bus';
-    import {mapActions, mapState, mapGetters} from 'vuex'; //注册 action 和 state
+    import {mapActions, mapGetters} from 'vuex'; //注册 action 和 state
     import res_ring from '../assets/audio/ring.wav';
     import res_avatar1 from '../assets/img/avatar1.png';
     import VideoProcessor from "../../tools/video/videoProcessor";
@@ -182,6 +182,7 @@
             that.stop_play_video_video_evt_id = 'stop-play-video-video-' + client_id;
             that.update_video_set_evt_id = 'update-video-set-' + client_id;
 
+            // eslint-disable-next-line no-unused-vars
             bus.$on(that.open_video_video_evt_id, (rsp) => {
 
             });
@@ -209,7 +210,7 @@
                 msg_code: 'notice_video_modal_open',
                 target: that.id
             };
-            websdk.listeners.monitors.notice_dynamic(notice_data);
+            window.websdk.listeners.monitors.notice_dynamic(notice_data);
 
         },
         destroyed: function () {
@@ -224,7 +225,7 @@
                 msg_code: 'notice_video_modal_close',
                 target: that.id
             };
-            websdk.listeners.monitors.notice_dynamic(notice_data);
+            window.websdk.listeners.monitors.notice_dynamic(notice_data);
         },
 
         methods: {
@@ -237,7 +238,7 @@
             switchCamera() {
                 let that = this;
                 //switchCamera = (target, exttarget, session, channel, type, callback, cbid) => {
-                websdk.request.videoRequest.switchCamera(that.id, null, 0, 0, 0, function (rsp) {
+                window.websdk.request.videoRequest.switchCamera(that.id, null, 0, 0, 0, function (rsp) {
                     logger.debug('req_switch_camera_video result:{}', rsp);
                 }, 'req_switch_camera_video');//
             },
@@ -245,7 +246,7 @@
                 let that = this;
                 that.mute = !that.mute;
                 let mute_num = that.mute ? 1 : 0;
-                websdk.request.videoRequest.videoMute(that.id, null, 0, 0, mute_num, function (rsp) {
+                window.websdk.request.videoRequest.videoMute(that.id, null, 0, 0, mute_num, function (rsp) {
                     //logger.debug('req_video_mute_video result:{}', rsp);
                 }, 'req_video_mute_video');//
 
@@ -254,7 +255,7 @@
                 let that = this;
                 let new_resolution = value;
                 //updateVideoSet = (target, exttarget, session, channel, resolution, quality, callback, cbid) => {
-                websdk.request.videoRequest.updateVideoSet(that.id, null, 0, 0, new_resolution, 0, function (rsp) {
+                window.websdk.request.videoRequest.updateVideoSet(that.id, null, 0, 0, new_resolution, 0, function (rsp) {
                     logger.debug('req_update_video_set_video_resolution result:{}', rsp);
                 }, 'req_update_video_set_video_resolution');//
             },
@@ -262,7 +263,7 @@
                 let that = this;
                 let new_quality = value;
                 //updateVideoSet = (target, exttarget, session, channel, resolution, quality, callback, cbid) => {
-                websdk.request.videoRequest.updateVideoSet(that.id, null, 0, 0, 0, new_quality, function (rsp) {
+                window.websdk.request.videoRequest.updateVideoSet(that.id, null, 0, 0, 0, new_quality, function (rsp) {
                     logger.debug('req_update_video_set_video_quality result:{}', rsp);
                 }, 'req_update_video_set_video_quality');//
             },
@@ -279,8 +280,9 @@
                 if (notice_type != 'ignore') {
                     ////0停止视频播放和推流，1仅停止视频播放，不停止推流
                     let stop_type = notice_type == 'only_stop_play' ? 1 : 0;
-                    let login_uid = websdk.private_cache.login_uid;
-                    websdk.request.videoRequest.stopPlayVideo(login_uid, that.id, null, null, 0, 0, stop_type, function (rsp) {
+                    let login_uid = window.websdk.private_cache.login_uid;
+                    // eslint-disable-next-line no-unused-vars
+                    window.websdk.request.videoRequest.stopPlayVideo(login_uid, that.id, null, null, 0, 0, stop_type, function (rsp) {
                         //logger.debug('req_stop_play_video_domain result:{}', rsp);
                     }, 'req_stop_play_video_video');
                 }
@@ -289,7 +291,7 @@
             },
             close_confirm() {
                 let that = this;
-                let action = websdk.websdkui.configApi.get_video_close_action();
+                let action = window.websdk.websdkui.configApi.get_video_close_action();
                 logger.debug("close_confirm action:{}", action);
                 if (action == 2) {
                     that.main_modal_show = false;
@@ -385,6 +387,7 @@
                     }
                     return name;
                 },
+                // eslint-disable-next-line no-unused-vars
                 set(value) {
                     //this.$store.commit('showUserModal', value);
                     // TODO TODO update username
@@ -403,7 +406,7 @@
             target_self: {
                 get() {
                     // XXX 通过uid和playid都能判断是否为调度台自己的视频
-                    return websdk.private_cache.login_uid === this.id;
+                    return window.websdk.private_cache.login_uid === this.id;
                 },
             },
 

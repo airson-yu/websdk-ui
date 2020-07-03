@@ -121,7 +121,7 @@
                     let tgid = this.target;
                     let refid = this.refid;
                     //refid = 170393064;
-                    websdk.request.voiceRequest.pttReplay(tgid, refid, state, function (rsp) {
+                    window.websdk.request.voiceRequest.pttReplay(tgid, refid, state, function (rsp) {
                         //logger.debug('req_ptt_replay_right result:{}', rsp);
                     }, 'req_ptt_replay_right');//
 

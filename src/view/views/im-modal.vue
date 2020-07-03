@@ -85,7 +85,7 @@
                 <!-- im-left-group -->
                 <div v-if="im_target_type==2" slot="left" class="sdk-left">
                     <div class="sdk-tg-member-list">
-                        <div v-for="item in tg_mem_list">
+                        <div v-bind:key="item.uid" v-for="item in tg_mem_list">
                             <div class="sdk-left-mem-item">
                                 <div @click="showIMModalUser(item.uid)" class="sdk-left-mem-avatar">
                                     <Avatar :src="res_avatar1" style="border: 1px solid #7e7f80;"/>

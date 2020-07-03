@@ -121,12 +121,13 @@
             acceptCall() {
                 let that = this;
                 //let root = this.$root;
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 let call_type = 15;
                 if (that.pstn_telno) {
                     call_type = 32;
                 }
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, call_type, 67, that.pstn_telno, function (rsp) {
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, call_type, 67, that.pstn_telno, function (rsp) {
                     logger.debug('req_call_status_voice_confirm_accept showVoiceCallModal');
                     that.showVoiceCallModal({id: that.target, status: 2, pstn_telno: that.pstn_telno});
                     that.on_hide_modal();
@@ -135,17 +136,19 @@
             rejectCall() {
                 let that = this;
                 //let root = this.$root;
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 let call_type = 15;
                 if (that.pstn_telno) {
                     call_type = 32;
                 }
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, call_type, 69, that.pstn_telno, function (rsp) {
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, call_type, 69, that.pstn_telno, function (rsp) {
                     logger.debug('req_call_status_voice_confirm_reject on_hide_modal');
                     that.on_hide_modal();
                 }, 'req_call_status_voice_confirm_reject');//
             },
 
+            // eslint-disable-next-line no-unused-vars
             on_visible_change(result) {
 
             },

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars,no-empty */
 import _ from "lodash";
 import moment from 'moment';
 import logger from "../../tools/logger";
@@ -80,18 +81,18 @@ export default {
     created: function () {
         let that = this;
         //let root = that.$root;
-        let login_uid = websdk.private_cache.login_uid;
+        let login_uid = window.websdk.private_cache.login_uid;
 
         // TODO TODO load im history req_im_list
         // XXX TODO FIXME 由于这个接口还有问题，暂时屏蔽 2019年6月21日16:29:37
         //reqIMList = (target, exttarget, start, count, im_type, target_type, callback, cbid) => {
-        websdk.request.imRequest.reqIMList(that.id, null, 0, 500, 0, that.im_target_type, function (rsp) {
+        window.websdk.request.imRequest.reqIMList(that.id, null, 0, 500, 0, that.im_target_type, function (rsp) {
             let list = rsp.iminfo;
             if (!list || list.length <= 0) {
                 return;
             }
-            let target = that.id;
-            let im_target_type = that.im_target_type;
+            //let target = that.id;
+            //let im_target_type = that.im_target_type;
             //{"im_type":1,"ts":"2019-06-18T11:20:12","refid":281474976736672,"content":"","sender":68508,"extsender":"itrunk_68505","reciever":68505,"extreciever":"itrunk_68505"}
             let len = list.length - 1;
             for (let i = len; i >= 0; i--) {
@@ -188,7 +189,7 @@ export default {
             that.cur_tgid = login_uid;
             that.target = that.id;
 
-            websdk.request.userRequest.getUserInfo([that.target], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([that.target], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -253,8 +254,8 @@ export default {
 
             let users = rsp.changedUsers;
 
-            _.forEach(users, function (data1, key1) {
-                _.forEach(that.tg_mem_list, function (data, key) {
+            _.forEach(users, function (data1) {
+                _.forEach(that.tg_mem_list, function (data) {
                     if (data.uid === data1.uid) {
                         data.online = data1.state === 1;
                         if (data.online) {
@@ -308,7 +309,7 @@ export default {
                 ids.push(uid);
             }
             if (ids.length > 0) {
-                websdk.request.userRequest.getUserInfo(ids, null, function (rsp) {
+                window.websdk.request.userRequest.getUserInfo(ids, null, function (rsp) {
                     if (!rsp.user_info) {
                         return;
                     }
@@ -370,26 +371,26 @@ export default {
 
         if (that.im_target_type == 2) {
             // 群组里面 that.id 就直接是 cur_tgid
-            websdk.request.groupRequest.enterGroup(login_uid, null, that.cur_tgid, 0, function (rsp) {
+            window.websdk.request.groupRequest.enterGroup(login_uid, null, that.cur_tgid, 0, function (rsp) {
                 //logger.debug('user-modal enterGroup result:{}', rsp);
             }, 'req_enter_group_im');//
 
             that.tg_mem_list = [];
-            let console_self = _.cloneDeep(websdk.private_cache.login_user);
+            let console_self = _.cloneDeep(window.websdk.private_cache.login_user);
             console_self.display_name = '本调度台';
             console_self.online = true;
             that.tg_mem_list.push(console_self);
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
 
             setTimeout(function () { // 异步执行，先让窗口显示出来，再加载成员
-                websdk.request.groupRequest.getGroupInfo([that.cur_tgid], function (rsp) {
+                window.websdk.request.groupRequest.getGroupInfo([that.cur_tgid], function (rsp) {
                     if (!rsp.group_info) {
                         return;
                     }
                     let tg = rsp.group_info[0];
                     let uids = tg.uids;
                     if (uids && uids.length > 0) {
-                        websdk.request.userRequest.getUserInfo(uids, null, function (rsp) {
+                        window.websdk.request.userRequest.getUserInfo(uids, null, function (rsp) {
                             if (!rsp.user_info) {
                                 return;
                             }
@@ -432,7 +433,7 @@ export default {
         if (param.force_call) {
             that.showVoiceCallModal({id: that.target, status: 11});
             let login_uid = websdk.private_cache.login_uid;
-            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 17, 0, 1, function (rsp) {
+            window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 17, 0, 1, function (rsp) {
                 logger.debug('user-modal req_call_im_force result:{}', rsp);
             }, 'req_call_im_force');//
         }*/
@@ -462,7 +463,7 @@ export default {
             im_target_type: that.im_target_type
         };
 
-        websdk.listeners.monitors.notice_dynamic(notice_data);
+        window.websdk.listeners.monitors.notice_dynamic(notice_data);
 
         // FIXME FOR TEST
         //let that = this;
@@ -495,16 +496,16 @@ export default {
         bus.$off(that.stop_play_video_im_evt_id);
         bus.$off(that.stop_play_video_rsp_im_evt_id);
 
-        let login_uid = websdk.private_cache.login_uid;
+        let login_uid = window.websdk.private_cache.login_uid;
         if (that.cur_tgid && that.im_target_type == 2) {
             that.tg_attached = false;
-            websdk.request.groupRequest.leaveGroup(login_uid, null, that.cur_tgid, function (rsp) {
+            window.websdk.request.groupRequest.leaveGroup(login_uid, null, that.cur_tgid, function (rsp) {
                 //logger.debug('user-modal leave_group_im result:{}', rsp);
             }, 'leave_group_im');//
         } else {
             that.dcg_attached = false;
             that.resetDcgAttached(that.id);
-            /*websdk.request.voiceRequest.call(login_uid, that.id, null, null, 1, 20, 0, 0, function (rsp) {
+            /*window.websdk.request.voiceRequest.call(login_uid, that.id, null, null, 1, 20, 0, 0, function (rsp) {
                 //logger.debug('user-modal req_call_ptt_im_stop_hide result:{}', rsp);
             }, 'req_call_ptt_im_stop_hide');//*/
         }
@@ -520,7 +521,7 @@ export default {
             target: that.target,
             im_target_type: that.im_target_type
         };
-        websdk.listeners.monitors.notice_dynamic(notice_data);
+        window.websdk.listeners.monitors.notice_dynamic(notice_data);
 
     },
 
@@ -622,7 +623,7 @@ export default {
                 // XXX dcg时，只有唯一的attach了的可以收发PTT消息
                 return;
             }
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             let sending = false;
             let callerid = rsp.callerid;
             if (callerid == login_uid) {
@@ -648,7 +649,7 @@ export default {
                     that.im_div_scroll_bottom();
                 } else {
                     that.ts_r = moment(ts).format('HH:mm:ss');
-                    websdk.request.userRequest.getUserInfo([callerid], null, function (rsp) {
+                    window.websdk.request.userRequest.getUserInfo([callerid], null, function (rsp) {
                         if (!rsp.user_info) {
                             return;
                         }
@@ -726,7 +727,7 @@ export default {
                     if (sending) {
                     } else {
                         if (that.im_target_type == 2) {//群组里面的发送人需要查询其名字
-                            websdk.request.userRequest.getUserInfo([callerid], null, function (rsp) {
+                            window.websdk.request.userRequest.getUserInfo([callerid], null, function (rsp) {
                                 if (!rsp.user_info) {
                                     return;
                                 }
@@ -827,7 +828,7 @@ export default {
             //{"tgid":74752,"attached_users":[68508],"demander":0,"extdemander":null,"msg_code":"notice_enter_group","cmd_type":2,"session":0,"cmd_status":0,"error_reason":null,"cbid":null}
             if (rsp.attached_users) {
                 let users = rsp.attached_users;
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 _.forEach(users, function (data, key) {
                     that.tg_attached_uids[data] = data;
                     if (data === login_uid) {
@@ -845,7 +846,7 @@ export default {
             }
         },
         on_evt_notice_im(that, rsp) {
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             let callerid = rsp.uid;
             //receive: {"uid":68506,"msg_code":"rsp_send_im","cmd_type":1,"session":0,"cmd_status":0,"error_reason":null,"cbid":null}
 
@@ -895,7 +896,7 @@ export default {
                     }
                 }
                 if (that.im_target_type == 2) { //群组里面的发送人需要查询其名字
-                    websdk.request.userRequest.getUserInfo([callerid], null, function (rsp) {
+                    window.websdk.request.userRequest.getUserInfo([callerid], null, function (rsp) {
                         if (!rsp.user_info) {
                             return;
                         }
@@ -1037,11 +1038,11 @@ export default {
         },
         toggleEditName() {
             return;// FIXME NEXT PHASE
-            logger.debug('toggleEditName');
+            /*logger.debug('toggleEditName');
             if (this.name_edit) {
                 logger.debug('do save');
             }
-            this.name_edit = !this.name_edit;
+            this.name_edit = !this.name_edit;*/
         },
         toggleOperType() {
             this.oper_type == 1 ? this.oper_type = 2 : this.oper_type = 1;
@@ -1053,7 +1054,7 @@ export default {
         reqCallPTT(flag) {
             let that = this;
             let target = that.id;
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             if (flag) {
                 // 先重置状态，等到收到对应通知时再更新UI
                 setTimeout(() => {
@@ -1063,7 +1064,7 @@ export default {
                 }, 1);
                 // start
                 //let uid = this.$store.state.user.uid;
-                websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 1, null, function (rsp) {
+                window.websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 1, null, function (rsp) {
                     //logger.debug('user-modal req_call_ptt_im_start result:{}', rsp);
                 }, 'req_call_ptt_im_start');//
             } else {
@@ -1073,7 +1074,7 @@ export default {
                     that.resetDcgAttached(that.id);
                 }, 1);
                 // end 直接视为成功
-                websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 0, null, function (rsp) {
+                window.websdk.request.voiceRequest.call(login_uid, target, null, null, 1, 20, 0, 0, null, function (rsp) {
                     //logger.debug('user-modal req_call_ptt_im_stop result:{}', rsp);
                 }, 'req_call_ptt_im_stop');//
             }
@@ -1101,7 +1102,7 @@ export default {
             that.ptt_on = true;
             //let login_uid = websdk.private_cache.login_uid;
             //that.id
-            websdk.request.voiceRequest.pttOn(that.cur_tgid, function (rsp) {
+            window.websdk.request.voiceRequest.pttOn(that.cur_tgid, function (rsp) {
                 //logger.debug('req_ptt_on_im result:{}', rsp);
                 that.ptt_send_ing = true; // 测试发现有时发送ptt不会收到status=1的notice，这里先更新状态
                 let now = new Date();
@@ -1115,7 +1116,7 @@ export default {
             that.ptt_on = false;
             //let login_uid = websdk.private_cache.login_uid;
             //that.id
-            websdk.request.voiceRequest.pttOff(that.cur_tgid, function (rsp) {
+            window.websdk.request.voiceRequest.pttOff(that.cur_tgid, function (rsp) {
                 //logger.debug('req_ptt_off_im result:{}', rsp);
                 that.ptt_send_ing = false; // 测试发现有时发送ptt不会收到status=1的notice，这里先更新状态
             }, 'req_ptt_off_im');//
@@ -1140,7 +1141,7 @@ export default {
             let time = now.getTime();
             that.last_text = content;
             //(target, im_type, content, time, callback, cbid)
-            websdk.request.imRequest.sendIMText(that.target, null, 1, content, time, function (rsp) {
+            window.websdk.request.imRequest.sendIMText(that.target, null, 1, content, time, function (rsp) {
                 //logger.debug('req_send_im result:{}', rsp);
                 // 新增消息，状态为发送中
                 that.append_im_msg(that, 'text_send', that.my_name, null, content, that.my_avatar, false);
@@ -1217,8 +1218,8 @@ export default {
                 return false;
             }
             that.showVoiceCallModal({id: that.target, status: 1});
-            let login_uid = websdk.private_cache.login_uid;
-            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, null, function (rsp) {
+            let login_uid = window.websdk.private_cache.login_uid;
+            window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, null, function (rsp) {
                 //logger.debug('user-modal req_call_im result:{}', rsp);
             }, 'req_call_im_15');//
         },
@@ -1230,27 +1231,27 @@ export default {
                 return false;
             }
             this.showVideoCallModal({id: that.target, status: 1});
-            let login_uid = websdk.private_cache.login_uid;
-            websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 1, null, function (rsp) {
+            let login_uid = window.websdk.private_cache.login_uid;
+            window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 1, null, function (rsp) {
                 //logger.debug('user-modal req_call_im result:{}', rsp);
             }, 'req_call_im_1');//
         },
 
         reqPullVideoCall() {
             let that = this;
-            let login_uid = websdk.private_cache.login_uid;
-            websdk.request.videoRequest.playVideo(login_uid, that.target, null, null, 0, 0, 0, function (rsp) {
+            let login_uid = window.websdk.private_cache.login_uid;
+            window.websdk.request.videoRequest.playVideo(login_uid, that.target, null, null, 0, 0, 0, function (rsp) {
                 //logger.debug('user-modal playVideo result:{}', rsp);
             }, 'req_call_im_1');//
         },
 
         showIMModalUser(uid) {
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             if (uid === login_uid) { // 不能打开调度台本身的IM窗口
                 return false;
             }
             let that = this;
-            websdk.request.userRequest.getUserInfo([uid], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([uid], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -1268,13 +1269,13 @@ export default {
         // group operation
         forceEnterGroup() {
             let that = this;
-            websdk.request.groupRequest.forceEnterGroup(that.id, function (rsp) {
+            window.websdk.request.groupRequest.forceEnterGroup(that.id, function (rsp) {
             }, 'force_enter_group_im_tg');//
         },
 
         forceLeaveGroup() {
             let that = this;
-            websdk.request.groupRequest.forceLeaveGroup(that.id, function (rsp) {
+            window.websdk.request.groupRequest.forceLeaveGroup(that.id, function (rsp) {
             }, 'force_leave_group_im_tg');//
         },
 
@@ -1379,7 +1380,7 @@ export default {
             //sendIMFileDone = (target, exttarget, im_type, time, filename, size, ourl, surl, callback, cbid) => {
             let ts = moment().format('YYYY-MM-DD HH:mm:ss');
             let size = rsp.size || file.size || 0;
-            websdk.request.imRequest.sendIMFileDone(that.id, null, 4, ts, rsp.fid, rsp.filename, size, rsp.hurl, rsp.surl, function (rsp) {
+            window.websdk.request.imRequest.sendIMFileDone(that.id, null, 4, ts, rsp.fid, rsp.filename, size, rsp.hurl, rsp.surl, function (rsp) {
             }, 'req_send_im_file_done_im_img');//
 
         },
@@ -1403,7 +1404,7 @@ export default {
 
             let ts = moment().format('YYYY-MM-DD HH:mm:ss');
             let size = rsp.size || file.size || 0;
-            websdk.request.imRequest.sendIMFileDone(that.id, null, 4, ts, rsp.fid, rsp.filename, size, rsp.file_url, rsp.file_url, function (rsp) {
+            window.websdk.request.imRequest.sendIMFileDone(that.id, null, 4, ts, rsp.fid, rsp.filename, size, rsp.file_url, rsp.file_url, function (rsp) {
             }, 'req_send_im_file_done_im_file');//
         },
         onUploadFormatErrorFile(file, fileList) {
@@ -1418,9 +1419,9 @@ export default {
 
         reqPlayVideo(uid) {
             let that = this;
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             that.video_ing_uid = uid;
-            websdk.request.videoRequest.playVideo(login_uid, uid, null, null, 0, 0, 0, function (rsp) {
+            window.websdk.request.videoRequest.playVideo(login_uid, uid, null, null, 0, 0, 0, function (rsp) {
                 logger.debug('req_play_video_im result:{}', rsp);
             }, 'req_play_video_im');//
             that.updateVideoState(uid, 'playVideo');
@@ -1428,25 +1429,25 @@ export default {
 
         reqStopVideo: function (uid) {
             let that = this;
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             that.hideVideoModal(uid);
             that.updateVideoState(uid, 'stopPlayVideo');
             that.video_ing_uid = null;
-            websdk.request.videoRequest.stopPlayVideo(login_uid, uid, null, null, 0, 0, function (rsp) {
+            window.websdk.request.videoRequest.stopPlayVideo(login_uid, uid, null, null, 0, 0, function (rsp) {
                 logger.debug('req_stop_video_im result:{}', rsp);
             }, 'req_stop_video_im');//
         },
         toggleVideoConf() {
             let that = this;
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             that.video_conf_on = !that.video_conf_on;
             that.video_conf_on_not_join = false;
 
             if (that.video_conf_on) {
-                websdk.request.videoRequest.startVideoConf(login_uid, null, that.id, function (rsp) {
+                window.websdk.request.videoRequest.startVideoConf(login_uid, null, that.id, function (rsp) {
                 }, 'req_start_video_conf_im');//
             } else {
-                websdk.request.videoRequest.stopVideoConf(login_uid, null, that.id, function (rsp) {
+                window.websdk.request.videoRequest.stopVideoConf(login_uid, null, that.id, function (rsp) {
                 }, 'req_stop_video_conf_im');//
                 that.updateVideoConf({tgid: that.id, type: 'stop'});
                 // TODO FIXME 这里要指定用户的uid
@@ -1459,18 +1460,18 @@ export default {
         shareVideoConf(uid) {
             if (!uid) return;
             let that = this;
-            let login_uid = websdk.private_cache.login_uid;
+            let login_uid = window.websdk.private_cache.login_uid;
             that.video_conf_share_uid = uid;
             that.video_ing_uid = uid;
-            websdk.request.videoRequest.shareVideoInVideoConf(login_uid, null, that.id, uid, function (rsp) {
+            window.websdk.request.videoRequest.shareVideoInVideoConf(login_uid, null, that.id, uid, function (rsp) {
             }, 'req_share_video_in_video_conf_im');//
             that.updateVideoState(uid, 'shareVideo');
         },
         stopShareVideoConf(uid) {
             if (!uid) return;
             let that = this;
-            let login_uid = websdk.private_cache.login_uid;
-            websdk.request.videoRequest.stopShareVideoInVideoConf(login_uid, null, that.id, uid, function (rsp) {
+            let login_uid = window.websdk.private_cache.login_uid;
+            window.websdk.request.videoRequest.stopShareVideoInVideoConf(login_uid, null, that.id, uid, function (rsp) {
             }, 'req_stop_share_video_in_video_conf_im');//
             that.video_conf_share_uid = null;
             that.updateVideoState(uid, 'stopShareVideo');
@@ -1500,7 +1501,7 @@ export default {
             logger.debug('updateVideoState:{}-{}', uid, oper);
             let that = this;
             if (oper === 'playVideo') { // XXX 可以同时摘取多个视频，但只能同时分享一个视频 2019年7月19日15:54:39
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 for (let j in that.tg_mem_list) {
                     let item = that.tg_mem_list[j];
                     if (item.uid == uid) {
@@ -1530,7 +1531,7 @@ export default {
                 }
 
             } else if (oper === 'shareVideo') { // XXX 可以同时摘取多个视频，但只能同时分享一个视频 2019年7月19日15:54:39
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 for (let j in that.tg_mem_list) {
                     let item = that.tg_mem_list[j];
                     if (item.uid == uid) {
@@ -1571,7 +1572,7 @@ export default {
         justNoticeLocation() {
             let that = this;
             logger.debug('justNoticeLocation:{}', that.id);
-            websdk.listeners.noticeWebUserLocation(that.id);
+            window.websdk.listeners.noticeWebUserLocation(that.id);
         },
 
         ...mapActions([

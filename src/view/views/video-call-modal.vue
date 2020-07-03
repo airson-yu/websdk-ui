@@ -223,7 +223,7 @@
             });
         },
         destroyed: function () {
-            let that = this;
+            //let that = this;
             //let root = that.$root;
             bus.$off('call-status-video-call');
         },
@@ -238,7 +238,8 @@
                 let that = this;
                 that.mute = !that.mute;
                 let mute_num = that.mute ? 1 : 0;
-                websdk.request.videoRequest.videoMute(that.target, null, 0, 0, mute_num, function (rsp) {
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.videoRequest.videoMute(that.target, null, 0, 0, mute_num, function (rsp) {
                     //logger.debug('req_video_mute_video result:{}', rsp);
                 }, 'req_video_mute_video_call');//
 
@@ -254,9 +255,9 @@
             },*/
             callStop() {
                 let that = this;
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 //if (that.call_status == 1 || that.call_status == 2) {
-                websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 0, null, function (rsp) {
+                window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 1, 0, 0, null, function (rsp) {
                     logger.debug('video_call_req_call_stop result:{}', rsp);
                 }, 'video_call_req_call_stop');//
                 //}
@@ -325,7 +326,7 @@
                     msg_code: result ? 'notice_video_call_modal_open' : 'notice_video_call_modal_close',
                     target: that.target
                 };
-                websdk.listeners.monitors.notice_dynamic(notice_data);
+                window.websdk.listeners.monitors.notice_dynamic(notice_data);
 
                 /*let that = this;
                 let root = that.$root;

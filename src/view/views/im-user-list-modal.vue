@@ -7,7 +7,7 @@
                     <Input v-model="user_search" class="sdk-search-ipt" search clearable placeholder=""/>
                     <div class="sdk-search-line"></div>
                     <CheckboxGroup v-model="user_list_checked" class="sdk-checkbox">
-                        <div v-for="item in user_list">
+                        <div v-bind:key="item.uid" v-for="item in user_list">
                             <Checkbox :label="item.uid" v-show="!item.search_hide">
                                 <Icon type="md-person" size="20" class="sdk-avatar"/>
                                 <span class="sdk-uname">{{item.display_name}}</span>
@@ -30,7 +30,7 @@
 
 <script>
     import _ from "lodash";
-    import {mapActions, mapState, mapGetters} from 'vuex'; //注册 action 和 state
+    import {mapActions, mapState} from 'vuex'; //注册 action 和 state
 
     export default {
         name: 'IMUserListModal',
@@ -74,13 +74,15 @@
                 if (that.oper_type == 'add') {
                     let to_add_ids = _.difference(that.user_list_checked, that.user_list_old_mem_ids);
                     if (to_add_ids && to_add_ids.length > 0) {
-                        websdk.request.groupRequest.addGroupMember(that.id, to_add_ids, null, function (rsp) {
+                        // eslint-disable-next-line no-unused-vars
+                        window.websdk.request.groupRequest.addGroupMember(that.id, to_add_ids, null, function (rsp) {
                             //
                         }, 'req_add_group_member_im_user_list');//
                     }
                 } else if (that.oper_type == 'remove') {
                     if (that.user_list_checked && that.user_list_checked.length > 0) {
-                        websdk.request.groupRequest.removeGroupMember(that.id, that.user_list_checked, null, function (rsp) {
+                        // eslint-disable-next-line no-unused-vars
+                        window.websdk.request.groupRequest.removeGroupMember(that.id, that.user_list_checked, null, function (rsp) {
                             //
                         }, 'req_remove_group_member_im_user_list');//
                     }
@@ -107,13 +109,13 @@
                     that.user_list_old_mem_ids = [];
 
                     if (that.oper_type == 'add') {
-                        websdk.request.userRequest.getUserInfo(null, null, function (rsp1) {
+                        window.websdk.request.userRequest.getUserInfo(null, null, function (rsp1) {
                             if (!rsp1.user_info) {
                                 return;
                             }
                             that.user_list = rsp1.user_info;
 
-                            websdk.request.groupRequest.getGroupInfo([that.id], function (rsp2) {
+                            window.websdk.request.groupRequest.getGroupInfo([that.id], function (rsp2) {
                                 if (!rsp2.group_info) {
                                     return;
                                 }
@@ -142,14 +144,14 @@
 
                     } else if (that.oper_type == 'remove') {
 
-                        websdk.request.groupRequest.getGroupInfo([that.id], function (rsp2) {
+                        window.websdk.request.groupRequest.getGroupInfo([that.id], function (rsp2) {
                             if (!rsp2.group_info) {
                                 return;
                             }
                             let tg = rsp2.group_info[0];
                             let uids = tg.uids;
                             if (uids && uids.length > 0) {
-                                websdk.request.userRequest.getUserInfo(uids, null, function (rsp3) {
+                                window.websdk.request.userRequest.getUserInfo(uids, null, function (rsp3) {
                                     if (!rsp3.user_info) {
                                         return;
                                     }
@@ -178,14 +180,14 @@
         },
 
         watch: {
-            user_search: function (newVal, oldVal) {
+            user_search: function (newVal) {
                 let that = this;
                 if (!newVal) {
                     for (let i in that.user_list) {
                         that.user_list[i].search_hide = false;
                     }
                 } else {
-                    _.forEach(that.user_list, function (data, key) {
+                    _.forEach(that.user_list, function (data) {
                         if (data.display_name.indexOf(newVal) > -1) {
                             data.search_hide = false;
                         } else {

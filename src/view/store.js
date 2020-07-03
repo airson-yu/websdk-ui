@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from "vuex";
 import logger from "../tools/logger";
-import _ from "lodash";
-
 
 Vue.use(Vuex);
 
@@ -189,7 +187,7 @@ export default new Vuex.Store({
                 //let that = this;
                 if (type === 1) {
                     let id = target.id || target.uid;
-                    websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+                    window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                         if (!rsp.user_info) {
                             return;
                         }
@@ -211,7 +209,7 @@ export default new Vuex.Store({
                     }, 'store_im_req_user_profile');//
                 } else if (type === 2) {
                     let id = target.id || target.uid;
-                    websdk.request.groupRequest.getGroupInfo([id], function (rsp) {
+                    window.websdk.request.groupRequest.getGroupInfo([id], function (rsp) {
                         if (!rsp.group_info) {
                             return;
                         }
@@ -313,7 +311,7 @@ export default new Vuex.Store({
             if (target.reload) {
                 //let that = this;
                 let id = target.id || target.uid;
-                websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+                window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                     if (!rsp.user_info) {
                         return;
                     }
@@ -411,6 +409,7 @@ export default new Vuex.Store({
             }
         },
 
+        // eslint-disable-next-line no-unused-vars
         updateVideoStatus: (state, target) => {
             //
         },
@@ -449,9 +448,11 @@ export default new Vuex.Store({
                 return;
             }
         },
+        // eslint-disable-next-line no-unused-vars
         showGroupCreateModal: (state, target) => {
             state.group_create_modal_show = true;
         },
+        // eslint-disable-next-line no-unused-vars
         hideGroupCreateModal: (state, id) => {
             state.group_create_modal_show = false;
         },
@@ -499,7 +500,7 @@ export default new Vuex.Store({
             state.voice_confirm.target = id;
             state.voice_confirm.status = target.status;
 
-            websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -551,7 +552,7 @@ export default new Vuex.Store({
             state.voice_ptt_confirm.target = id;
             state.voice_ptt_confirm.status = target.status;
 
-            websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -617,7 +618,7 @@ export default new Vuex.Store({
             state.voice_call.target = id;
             state.voice_call.status = target.status;
 
-            websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -672,7 +673,7 @@ export default new Vuex.Store({
             state.video_confirm.target = id;
             state.video_confirm.status = target.status;
 
-            websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -737,7 +738,7 @@ export default new Vuex.Store({
             state.video_call.target = id;
             state.video_call.status = target.status;
 
-            websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
+            window.websdk.request.userRequest.getUserInfo([id], null, function (rsp) {
                 if (!rsp.user_info) {
                     return;
                 }
@@ -870,6 +871,7 @@ export default new Vuex.Store({
         updateDcgAttached(context, uid) {
             context.commit('updateDcgAttached', uid);
         },
+        // eslint-disable-next-line no-unused-vars
         resetDcgAttached: (context, uid) => {
             context.commit('resetDcgAttached');
         },

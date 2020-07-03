@@ -12,11 +12,11 @@ class websdkui {
             login_user: {},
         };
         this.configApi = new configApi();//配置对象
-        logger.debug('websdk_ui_version: 2020.07.02.01');
+        logger.debug('websdk_ui_version: 2020.07.03.01');
     }
 
     demo = () => {
-        let that = this;
+        //let that = this;
         //window.websdk.request.authRequest.logon('39.105.135.70', 80, 10, 'websdkcu1', '123456', null, function (rsp) {
         window.websdk.request.authRequest.logon('39.106.213.127', 80, 28, 'websdkcu1', '123456', null, function (rsp) {
             logger.debug('init logon result:{}', rsp);

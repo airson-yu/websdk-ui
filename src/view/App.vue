@@ -115,6 +115,9 @@
 </template>
 
 <script>
+    /* eslint-disable no-unused-vars */
+
+    import _ from "lodash";
     import logger from "../tools/logger";
     import moment from 'moment';
     import bus from './bus';
@@ -184,23 +187,23 @@
             });*/
         },
         destroyed: function () {
-            let that = this;
-            let root = that.$root;
+            //let that = this;
+            //let root = that.$root;
         },
         methods: {
             /**-------- XXX GLOBAL LISTENERS --------**/
             init_global_listeners: function () {
                 let that = this;
                 //let root = this.$root;
-                let listeners = websdk.listeners;
+                let listeners = window.websdk.listeners;
                 listeners.callStatusNotice(function (rsp) {
                     let demander = rsp.demander;
                     let extdemander = rsp.extdemander;
                     let target = rsp.target;
-                    let exttarget = rsp.exttarget;
+                    //let exttarget = rsp.exttarget;
                     let call_type = rsp.call_type;
                     let status = rsp.status;
-                    let login_uid = websdk.private_cache.login_uid;
+                    let login_uid = window.websdk.private_cache.login_uid;
                     let client_id = login_uid === demander ? target : demander;
                     logger.debug('bus.$emit.call-status:{}', client_id);
                     let call_status_im_evt_id = 'call-status-im-' + client_id;
@@ -223,7 +226,7 @@
                             }, {'attached': true});
                         } else if (status == 65) {
                             // XXX TODO 提示用户，有终端发起半双工请求（请求通话）
-                            websdk.request.userRequest.getUserInfo([demander], null, function (rsp) {
+                            window.websdk.request.userRequest.getUserInfo([demander], null, function (rsp) {
                                 if (!rsp.user_info) {
                                     return;
                                 }
@@ -235,7 +238,7 @@
                     } else if (call_type == 16) { // 16:  全双工RTT（BMS->Console only）
                         if (status == 65) {
                             // XXX TODO 提示用户，有终端发起半双工请求（请求通话）
-                            websdk.request.userRequest.getUserInfo([demander], null, function (rsp) {
+                            window.websdk.request.userRequest.getUserInfo([demander], null, function (rsp) {
                                 if (!rsp.user_info) {
                                     return;
                                 }
@@ -268,7 +271,7 @@
                         }
                         that.last_refid = rsp.refid;
                     }
-                    let login_uid = websdk.private_cache.login_uid;
+                    let login_uid = window.websdk.private_cache.login_uid;
                     let client_id = login_uid === rsp.target ? rsp.callerid : rsp.target;
                     logger.debug('bus.$emit.ptt-status:{}', client_id);
                     let ptt_status_im_evt_id = 'ptt-status-im-' + client_id;
@@ -313,7 +316,7 @@
                     bus.$emit(group_mem_status_im_evt_id, rsp);
                 }, '_app');
                 listeners.noticeIM(function (rsp) {
-                    let login_uid = websdk.private_cache.login_uid;
+                    let login_uid = window.websdk.private_cache.login_uid;
                     let client_id = login_uid === rsp.target ? rsp.uid : rsp.target;
                     client_id || (client_id = rsp.uid); //rsp_send_im中没有target
                     //let client_id = rsp.target;
@@ -333,7 +336,7 @@
                     } else {
                         exttargets = [rsp.extuid];
                     }
-                    websdk.request.userRequest.getUserInfo(targets, exttargets, function (rsp2) {
+                    window.websdk.request.userRequest.getUserInfo(targets, exttargets, function (rsp2) {
                         if (!rsp2.user_info) {
                             return;
                         }
@@ -474,18 +477,18 @@
                 document.getElementById('sdk_webapp').innerHTML = '';
             },
             doLogin: function () {
-                websdk.request.authRequest.logon(this.ipaddr, this.port, this.orgid, this.logonName, this.password, this.consoleName, function (rsp) {
+                window.websdk.request.authRequest.logon(this.ipaddr, this.port, this.orgid, this.logonName, this.password, this.consoleName, function (rsp) {
                     //this.request.authRequest.logon(null, 0, 0, 'testcu', '123456', 'c1552965016425r279235228', function (rsp) {
                     //logger.debug('logon result:{}', rsp);
                 }, 'test_req_logon');//
             },
             req_logout: function () {
-                websdk.request.authRequest.logout(function (rsp) {
+                window.websdk.request.authRequest.logout(function (rsp) {
                     //logger.debug('logout result:{}', rsp);
                 }, 'test_req_logout');//
             },
             req_user_profile: function () {
-                websdk.request.userRequest.getUserInfo([this.param_uid1], null, function (rsp) {
+                window.websdk.request.userRequest.getUserInfo([this.param_uid1], null, function (rsp) {
                     if (!rsp.user_info) {
                         return;
                     }
@@ -493,13 +496,13 @@
                 }, 'test_req_user_profile');//
             },
             req_user_state: function () {
-                websdk.request.userRequest.noticeUserState([this.param_uid1], null, function (rsp) {
-                    //websdk.request.userRequest.noticeUserState(null, [this.param_ext_uid1], function (rsp) {
+                window.websdk.request.userRequest.noticeUserState([this.param_uid1], null, function (rsp) {
+                    //window.websdk.request.userRequest.noticeUserState(null, [this.param_ext_uid1], function (rsp) {
                     //logger.debug('req_user_state result:{}', rsp);
                 }, 'test_req_user_state');//
             },
             req_grp_profile: function () {
-                websdk.request.groupRequest.getGroupInfo([], function (rsp) { //this.param_tgid1
+                window.websdk.request.groupRequest.getGroupInfo([], function (rsp) { //this.param_tgid1
                     if (!rsp.group_info) {
                         return;
                     }
@@ -507,121 +510,121 @@
                 }, 'test_req_grp_profile');//
             },
             /*req_grp_profile: function () {
-                websdk.request.groupRequest.getGroupInfo([this.param_tgid1], function (rsp) {
+                window.websdk.request.groupRequest.getGroupInfo([this.param_tgid1], function (rsp) {
                     logger.debug('req_grp_profile result:{}', rsp);
                 }, 'test_req_grp_profile');//
             },*/
             req_params_set: function () {
-                websdk.request.userRequest.setUserParams([this.param_uid1], null, {'gps_report': 0}, function (rsp) {
-                    //websdk.request.userRequest.setUserParams(null, [this.param_ext_uid1], {'gps_report': 0}, function (rsp) {
+                window.websdk.request.userRequest.setUserParams([this.param_uid1], null, {'gps_report': 0}, function (rsp) {
+                    //window.websdk.request.userRequest.setUserParams(null, [this.param_ext_uid1], {'gps_report': 0}, function (rsp) {
                     //logger.debug('req_params_set result:{}', rsp);
                 }, 'test_req_params_set');//
             },
 
             req_query_gps: function () {
-                websdk.request.gpsRequest.queryGPS(this.param_uid1, null, function (rsp) {
+                window.websdk.request.gpsRequest.queryGPS(this.param_uid1, null, function (rsp) {
                     //logger.debug('req_query_gps result:{}', rsp);
                 }, 'test_req_query_gps');//
             },
 
             req_query_history_gps: function () {
-                websdk.request.gpsRequest.queryHistoryGPS(this.param_uid1, null, '2019-05-11 16:00:46', '2019-05-11 22:00:46', function (rsp) {
-                    //websdk.request.gpsRequest.queryHistoryGPS(null, this.param_ext_uid1, '2019-05-11 16:00:46', '2019-05-11 22:00:46', function (rsp) {
+                window.websdk.request.gpsRequest.queryHistoryGPS(this.param_uid1, null, '2019-05-11 16:00:46', '2019-05-11 22:00:46', function (rsp) {
+                    //window.websdk.request.gpsRequest.queryHistoryGPS(null, this.param_ext_uid1, '2019-05-11 16:00:46', '2019-05-11 22:00:46', function (rsp) {
                     //logger.debug('req_query_history_gps result:{}', rsp);
                 }, 'test_req_query_history_gps');//
             },
 
             req_call: function () {
                 //call = (demander, target, channel, call_type, priority, callback, cbid) => {
-                websdk.request.voiceRequest.call(this.param_uid1, this.param_uid2, null, null, 1, 20, 0, 1, null, function (rsp) {
+                window.websdk.request.voiceRequest.call(this.param_uid1, this.param_uid2, null, null, 1, 20, 0, 1, null, function (rsp) {
                     //logger.debug('req_call result:{}', rsp);
                 }, 'test_req_call');//
             },
 
             req_ptt_on: function () {
-                websdk.request.voiceRequest.pttOn(this.con_id, function (rsp) {
+                window.websdk.request.voiceRequest.pttOn(this.con_id, function (rsp) {
                     //logger.debug('req_ptt_on result:{}', rsp);
                 }, 'test_req_ptt_on');//
             },
 
             req_ptt_off: function () {
-                websdk.request.voiceRequest.pttOff(this.con_id, function (rsp) {
+                window.websdk.request.voiceRequest.pttOff(this.con_id, function (rsp) {
                     //logger.debug('req_ptt_off result:{}', rsp);
                 }, 'test_req_ptt_off');//
             },
 
             req_enter_group: function () {
-                websdk.request.groupRequest.enterGroup(this.param_uid1, null, this.param_tgid1, 0, function (rsp) {
+                window.websdk.request.groupRequest.enterGroup(this.param_uid1, null, this.param_tgid1, 0, function (rsp) {
                     //logger.debug('req_enter_group result:{}', rsp);
                 }, 'test_req_enter_group');//
             },
 
             req_leave_group: function () {
-                websdk.request.groupRequest.leaveGroup(this.param_uid1, null, this.param_tgid1, function (rsp) {
+                window.websdk.request.groupRequest.leaveGroup(this.param_uid1, null, this.param_tgid1, function (rsp) {
                     //logger.debug('req_leave_group result:{}', rsp);
                 }, 'test_req_leave_group');//
             },
 
             req_force_enter_group: function () {
-                websdk.request.groupRequest.forceEnterGroup(this.param_tgid1, function (rsp) {
+                window.websdk.request.groupRequest.forceEnterGroup(this.param_tgid1, function (rsp) {
                     //logger.debug('req_force_enter_group result:{}', rsp);
                 }, 'test_req_force_enter_group');//
             },
 
             req_force_leave_group: function () {
-                websdk.request.groupRequest.forceLeaveGroup(this.param_tgid1, function (rsp) {
+                window.websdk.request.groupRequest.forceLeaveGroup(this.param_tgid1, function (rsp) {
                     //logger.debug('req_force_leave_group result:{}', rsp);
                 }, 'test_req_force_leave_group');//
             },
 
             req_add_grp_mem: function () {
-                websdk.request.groupRequest.addGroupMember(this.param_tgid1, [this.param_uid2], null, function (rsp) {
+                window.websdk.request.groupRequest.addGroupMember(this.param_tgid1, [this.param_uid2], null, function (rsp) {
                     //logger.debug('req_add_grp_mem result:{}', rsp);
                 }, 'test_req_add_grp_mem');//
             },
 
             req_rem_grp_mem: function () {
-                websdk.request.groupRequest.removeGroupMember(this.param_tgid1, [this.param_uid2], null, function (rsp) {
+                window.websdk.request.groupRequest.removeGroupMember(this.param_tgid1, [this.param_uid2], null, function (rsp) {
                     //logger.debug('req_rem_grp_mem result:{}', rsp);
                 }, 'test_req_rem_grp_mem');//
             },
 
             req_play_video: function () {
-                websdk.request.videoRequest.playVideo(this.con_id, this.param_uid1, null, null, 0, 0, 0, function (rsp) {
+                window.websdk.request.videoRequest.playVideo(this.con_id, this.param_uid1, null, null, 0, 0, 0, function (rsp) {
                     //logger.debug('req_play_video result:{}', rsp);
                 }, 'test_req_play_video');//
             },
 
             req_stop_play_video: function () {
-                websdk.request.videoRequest.stopPlayVideo(this.con_id, this.param_uid1, null, null, 0, 0, function (rsp) {
+                window.websdk.request.videoRequest.stopPlayVideo(this.con_id, this.param_uid1, null, null, 0, 0, function (rsp) {
                     //logger.debug('req_stop_play_video result:{}', rsp);
                 }, 'test_req_stop_play_video');//
             },
 
             req_send_im: function () {
                 //target, exttarget, im_type, content, time,
-                websdk.request.imRequest.sendIMText(this.param_uid1, null, 'text', 'test', new Date(), function (rsp) {
-                    //websdk.request.imRequest.sendIMText(null, this.param_ext_uid1, 'text', 'test', new Date(), function (rsp) {
+                window.websdk.request.imRequest.sendIMText(this.param_uid1, null, 'text', 'test', new Date(), function (rsp) {
+                    //window.websdk.request.imRequest.sendIMText(null, this.param_ext_uid1, 'text', 'test', new Date(), function (rsp) {
                     //logger.debug('req_send_im result:{}', rsp);
                 }, 'test_req_send_im');//
             },
 
             req_im_list: function () {
                 //reqIMList = (target, start, count, im_type, callback, cbid) => {
-                websdk.request.imRequest.reqIMList(this.con_id, null, 0, 1000, 0, 1, function (rsp) {
+                window.websdk.request.imRequest.reqIMList(this.con_id, null, 0, 1000, 0, 1, function (rsp) {
                     //logger.debug('req_im_list result:{}', rsp);
                 }, 'test_req_im_list');//
             },
 
             req_delete_grp: function (tgid) {
-                websdk.request.groupRequest.deleteGroup(tgid, function (rsp) {
+                window.websdk.request.groupRequest.deleteGroup(tgid, function (rsp) {
                     //logger.debug('req_delete_grp result:{}', rsp);
                 }, 'test_req_delete_grp');//
             },
 
             req_stop_video: function () {
                 //stopPlayVideo = (demander, target, extdemander, exttarget, session, channel, callback, cbid) => {
-                websdk.request.videoRequest.stopPlayVideo(this.con_id, this.param_uid1, null, null, 0, 0, function (rsp) {
+                window.websdk.request.videoRequest.stopPlayVideo(this.con_id, this.param_uid1, null, null, 0, 0, function (rsp) {
                     //logger.debug('req_stop_video result:{}', rsp);
                 }, 'test_req_stop_video');//
             },
@@ -633,7 +636,7 @@
                     uid = this.param_uid1;
                 }
                 let that = this;
-                websdk.request.userRequest.getUserInfo([uid], null, function (rsp) {
+                window.websdk.request.userRequest.getUserInfo([uid], null, function (rsp) {
                     if (!rsp.user_info) {
                         return;
                     }
@@ -649,7 +652,7 @@
                     tgid = this.param_tgid1;
                 }
                 let that = this;
-                websdk.request.groupRequest.getGroupInfo([tgid], function (rsp) {
+                window.websdk.request.groupRequest.getGroupInfo([tgid], function (rsp) {
                     if (!rsp.group_info) {
                         return;
                     }
@@ -689,8 +692,8 @@
 
             localShowVideoModal: function () {
                 let that = this;
-                websdk.request.userRequest.getUserInfo([this.param_uid1], null, function (rsp) {
-                    //websdk.request.userRequest.getUserInfo(null, [this.param_ext_uid1], function (rsp) {
+                window.websdk.request.userRequest.getUserInfo([this.param_uid1], null, function (rsp) {
+                    //window.websdk.request.userRequest.getUserInfo(null, [this.param_ext_uid1], function (rsp) {
                     let target = rsp.user_info[0];
                     that.$store.dispatch('showVideoModal', target).then(() => {
                     });
@@ -698,9 +701,9 @@
             },
 
             videoTest: function () {
-                let that = this;
+                //let that = this;
                 //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
-                websdk.request.videoRequest.playVideo(this.con_id, this.param_uid1, null, null, 0, 0, 0, function (rsp) {
+                window.websdk.request.videoRequest.playVideo(this.con_id, this.param_uid1, null, null, 0, 0, 0, function (rsp) {
 
                 }, 'req_play_video_test');//
             },
@@ -742,7 +745,7 @@
                 that.hideVideoModal(id);
                 /* XXX 2019年7月24日16:35:27
                 let login_uid = websdk.private_cache.login_uid;
-                websdk.request.videoRequest.stopPlayVideo(login_uid, id, null, null, 0, 0, function (rsp) {
+                window.websdk.request.videoRequest.stopPlayVideo(login_uid, id, null, null, 0, 0, function (rsp) {
                     //logger.debug('req_stop_play_video_domain result:{}', rsp);
                 }, 'req_stop_play_video_domain');//*/
             },
@@ -755,13 +758,13 @@
                     exttarget = null;
                 }
                 that.showVoiceCallModal({id: target, status: 11});
-                let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.call(login_uid, target, null, exttarget, 1, 17, 0, 1, null, function (rsp) {
+                let login_uid = window.websdk.private_cache.login_uid;
+                window.websdk.request.voiceRequest.call(login_uid, target, null, exttarget, 1, 17, 0, 1, null, function (rsp) {
                     //logger.debug('req_call_app_force result:{}', rsp);
                 }, 'req_call_app_force');//
 
                 let ts = Math.floor(new Date().getTime() / 1000);
-                websdk.request.authRequest.emergencyHandled(target, exttarget, login_uid, ts, 0, function (rsp) {
+                window.websdk.request.authRequest.emergencyHandled(target, exttarget, login_uid, ts, 0, function (rsp) {
                     //logger.debug('req_emergencyHandled_domain result:{}', rsp);
                 }, 'req_emergencyHandled_domain');//
 
@@ -775,7 +778,7 @@
                 let that = this;
                 let param_uid = uid ? [uid] : null;
                 let param_extUid = extUid ? [extUid] : null;
-                websdk.request.userRequest.getUserInfo(param_uid, param_extUid, function (rsp) {
+                window.websdk.request.userRequest.getUserInfo(param_uid, param_extUid, function (rsp) {
                     if (!rsp.user_info || rsp.user_info.length <= 0) {
                         callback && callback(false);
                         return;
@@ -792,7 +795,7 @@
 
             showGroupModal: function (tgid, callback) {
                 let that = this;
-                websdk.request.groupRequest.getGroupInfo([tgid], function (rsp) {
+                window.websdk.request.groupRequest.getGroupInfo([tgid], function (rsp) {
                     if (!rsp.group_info || rsp.group_info.length <= 0) {
                         callback && callback(false);
                         return;

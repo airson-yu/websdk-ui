@@ -171,7 +171,7 @@
             });
         },
         destroyed: function () {
-            let that = this;
+            //let that = this;
             //let root = that.$root;
             bus.$off('call-status-voice-call');
         },
@@ -193,13 +193,14 @@
             },*/
             callStop() {
                 let that = this;
-                let login_uid = websdk.private_cache.login_uid;
+                let login_uid = window.websdk.private_cache.login_uid;
                 let call_type = 15;
                 if (that.pstn_telno) {
                     call_type = 32;
                 }
                 //if (that.call_status == 1 || that.call_status == 11 || that.call_status == 2) {
-                websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, call_type, 0, 0, that.pstn_telno, function (rsp) {
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, call_type, 0, 0, that.pstn_telno, function (rsp) {
                     //logger.debug('voice_call_req_call_stop result:{}', rsp);
                 }, 'voice_call_req_call_stop');//
                 //}
@@ -244,7 +245,7 @@
                     msg_code: result ? 'notice_voice_call_modal_open' : 'notice_voice_call_modal_close',
                     target: that.target
                 };
-                websdk.listeners.monitors.notice_dynamic(notice_data);
+                window.websdk.listeners.monitors.notice_dynamic(notice_data);
 
                 /*let that = this;
                 if (result) {

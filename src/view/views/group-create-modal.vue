@@ -7,7 +7,7 @@
             <div style="padding:3px;">选择组成员：</div>
             <Input v-model="user_search" class="sdk-search-ipt" search clearable placeholder="搜索组成员"/>
             <CheckboxGroup v-model="user_list_checked" class="sdk-checkbox">
-                <div v-for="item in user_list">
+                <div v-bind:key="item.uid" v-for="item in user_list">
                     <Checkbox :label="item.uid" v-show="!item.search_hide">
                         <Icon type="md-person" size="20" class="sdk-avatar"/>
                         <span class="sdk-uname">{{item.display_name}}</span>
@@ -27,7 +27,7 @@
 
 <script>
     import _ from "lodash";
-    import {mapActions, mapState, mapGetters} from 'vuex'; //注册 action 和 state
+    import {mapActions, mapState} from 'vuex'; //注册 action 和 state
 
     export default {
         name: 'GroupCreateModal',
@@ -77,7 +77,7 @@
                 if (to_add_ids && to_add_ids.length > 0) {
                     mem_uids = to_add_ids;
                 }
-                websdk.request.groupRequest.createGroup(that.tg_name, mem_uids, null, function (rsp) {
+                window.websdk.request.groupRequest.createGroup(that.tg_name, mem_uids, null, function (rsp) {
                     if (rsp.cmd_status !== 0) {
                         rsp.error = rsp.error || '临时组创建失败';
                         that.$Message.warning(rsp.error);
@@ -106,7 +106,7 @@
                     that.user_list = [];
                     that.user_list_checked = [];
 
-                    websdk.request.userRequest.getUserInfo(null, null, function (rsp1) {
+                    window.websdk.request.userRequest.getUserInfo(null, null, function (rsp1) {
                         if (!rsp1.user_info) {
                             return;
                         }
@@ -129,6 +129,7 @@
         },
 
         watch: {
+            // eslint-disable-next-line no-unused-vars
             user_search: function (newVal, oldVal) {
                 let that = this;
                 if (!newVal) {
@@ -136,6 +137,7 @@
                         that.user_list[i].search_hide = false;
                     }
                 } else {
+                    // eslint-disable-next-line no-unused-vars
                     _.forEach(that.user_list, function (data, key) {
                         if (data.display_name.indexOf(newVal) > -1) {
                             data.search_hide = false;

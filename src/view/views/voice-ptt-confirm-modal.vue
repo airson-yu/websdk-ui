@@ -94,10 +94,11 @@
 
             acceptCall() {
                 let that = this;
-                let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 67, null, function (rsp) {
+                let login_uid = window.websdk.private_cache.login_uid;
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 67, null, function (rsp) {
                     logger.debug('req_call_status_voice_ptt_confirm_accept showIMModal');
-                    websdk.request.userRequest.getUserInfo([that.target], null, function (rsp) {
+                    window.websdk.request.userRequest.getUserInfo([that.target], null, function (rsp) {
                         if (!rsp.user_info) {
                             return;
                         }
@@ -119,13 +120,15 @@
             rejectCall() {
                 let that = this;
                 //let root = this.$root;
-                let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 69, null, function (rsp) {
+                let login_uid = window.websdk.private_cache.login_uid;
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 20, 69, null, function (rsp) {
                     logger.debug('req_call_status_voice_ptt_confirm_reject on_hide_modal');
                     that.on_hide_modal();
                 }, 'req_call_status_voice_ptt_confirm_reject');//
             },
 
+            // eslint-disable-next-line no-unused-vars
             on_visible_change(result) {
 
             },

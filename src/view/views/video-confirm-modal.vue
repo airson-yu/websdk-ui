@@ -124,8 +124,9 @@
             acceptCall() {
                 let that = this;
                 //let root = this.$root;
-                let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 1, 67, null, function (rsp) {
+                let login_uid = window.websdk.private_cache.login_uid;
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 1, 67, null, function (rsp) {
                     that.showVideoCallModal({id: that.target, status: 1});
                     that.on_hide_modal();
                 }, 'req_call_status_video_confirm_accept');//
@@ -133,12 +134,14 @@
             rejectCall() {
                 let that = this;
                 //let root = this.$root;
-                let login_uid = websdk.private_cache.login_uid;
-                websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 1, 69, null, function (rsp) {
+                let login_uid = window.websdk.private_cache.login_uid;
+                // eslint-disable-next-line no-unused-vars
+                window.websdk.request.voiceRequest.callStatus(login_uid, that.target, null, null, 1, 1, 69, null, function (rsp) {
                     that.on_hide_modal();
                 }, 'req_call_status_video_confirm_reject');//
             },
 
+            // eslint-disable-next-line no-unused-vars
             on_visible_change(result) {
 
             },

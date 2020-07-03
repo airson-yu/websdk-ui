@@ -1,5 +1,3 @@
-import logger from "../../tools/logger";
-
 class VideoPlayer {
     constructor() {
     }
@@ -18,6 +16,7 @@ class VideoPlayer {
         return renderContext;
     }
 
+    // eslint-disable-next-line no-unused-vars
     setupCanvas(canvas, options) {
         let gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         if (!gl)
@@ -111,6 +110,7 @@ class VideoPlayer {
     fullscreen() {
         let node = document.getElementById('sdk_vidPlayerComp');
         let canvas = document.getElementById('sdk_canvas');
+        // eslint-disable-next-line no-unused-vars
         let childrens = node.children;
         let fullScreen;
 

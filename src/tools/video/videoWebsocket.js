@@ -1,5 +1,4 @@
 import logger from "../logger";
-import Result from "../result";
 
 class VideoWebsocket {
     constructor(url, options) {
@@ -52,6 +51,7 @@ class VideoWebsocket {
         this.socket.onclose = this.onClose.bind(this);
     }
 
+    // eslint-disable-next-line no-unused-vars
     resume(secondsHeadroom) {
     }
 

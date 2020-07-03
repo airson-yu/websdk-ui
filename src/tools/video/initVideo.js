@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import VideoWebsocket from "./VideoWebsocket";
 import logger from "../../tools/logger";
 
@@ -66,16 +67,20 @@ class InitVideo {
 
             ws.binaryType = 'arraybuffer';
 
+            // eslint-disable-next-line no-undef
             if (!GLOBAL_DATA[index]['renderContext']) {
                 var canvas = document.getElementById(dom);
                 canvas.width = 1280;
                 canvas.height = 720;
+                // eslint-disable-next-line no-undef
                 var renderContext = setupCanvas(canvas, {
                     preserveDrawingBuffer: false
                 });
+                // eslint-disable-next-line no-undef
                 GLOBAL_DATA[index]['renderContext'] = renderContext;
             }
 
+            // eslint-disable-next-line no-undef,no-redeclare
             var renderContext = GLOBAL_DATA[index]['renderContext'];
 
             ws.addEventListener('message', function (event) {
@@ -98,6 +103,7 @@ class InitVideo {
                         return;
                     }
                     var final_data = uint8View.subarray(12);
+                    // eslint-disable-next-line no-undef
                     renderFrame(renderContext, final_data, width, height, ylen, uvlen);
                     logger.debug(Date.now() - s);
                 }
