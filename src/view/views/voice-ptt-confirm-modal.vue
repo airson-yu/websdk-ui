@@ -1,5 +1,5 @@
 <template>
-    <Modal v-model="voice_ptt_confirm_modal_show" class="sdk-voice-modal" draggable scrollable :width=340 :z-index="5000"
+    <Modal v-model="voice_ptt_confirm_modal_show" class="sdk-modal sdk-voice-modal sdk-voice-ptt-confirm-modal" draggable scrollable :width=340 :z-index="5000"
            v-on:on-cancel="on_hide_modal">
         <div slot="header" style="">
         </div>

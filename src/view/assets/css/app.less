@@ -105,7 +105,7 @@
 
 }
 
-.sdk-voice-modal {
+.sdk-voice-modal, .sdk-video-modal {
 
   @win-bg-color: #1E2E37;
   @win-head-color: #1E2E37;
@@ -151,7 +151,7 @@
   }
 }
 
-.sdk-voice-call-modal {
+.sdk-voice-call-modal, .sdk-video-call-modal {
   @win-body-color: #0E1A23;
   // XXX theme_blue start
   @win-body-color: #011D63;
@@ -167,7 +167,7 @@
 
 }
 
-.sdk-video-modal {
+/*.sdk-video-modal {
   @win-body-color: #0E1A23;
 
   .ivu-modal-header {
@@ -186,9 +186,16 @@
     padding: 2px 2px;
   }
 
-}
+}*/
 
 .sdk-group-create-modal {
+  @win-body-color: #0E1A23;
+  @win-foot-color: #595957;
+  // XXX theme_blue start
+  @win-body-color: #011D63;
+  @win-foot-color: #001959;
+  // XXX theme_blue end
+
   .ivu-modal-header {
     padding: 2px 4px;
   }
@@ -198,8 +205,12 @@
     right: 2px;
   }
 
+  .ivu-modal-body {
+    background-color: @win-body-color;
+  }
+
   .sdk-search-ipt input {
-    background-color: #585756;
+    background-color: @win-body-color; //#585756;
     border-color: #9E9E9E;
     //border: none !important;
     //border-bottom: 1px solid #fff;
@@ -212,13 +223,19 @@
   }
 
   .ivu-modal-footer {
-    background-color: #515456;
-    border-top: 1px solid #515456;
+    background-color: @win-foot-color;
+    border-top: 1px solid @win-foot-color;
+    //padding: 5px 15px;
   }
 
 }
 
 .sdk-user-list-modal {
+  @win-body-color: #0E1A23;
+  @win-foot-color: #595957;
+  // XXX theme_blue start
+  @win-body-color: #011D63;
+  @win-foot-color: #001959;
 
   .ivu-modal-content {
     top: 70px;
@@ -242,18 +259,18 @@
 
     .ivu-tabs-nav {
       .ivu-tabs-ink-bar {
-        background-color: #585756;
+        background-color: @win-body-color; //#585756;
       }
 
       .ivu-tabs-tab-active {
         color: #fff;
-        background-color: #585756;
+        background-color: @win-body-color; //#585756;
       }
     }
   }
 
   .sdk-search-ipt input {
-    background-color: #585756;
+    background-color: @win-body-color; //#585756;
     border-color: #585756;
     border: none !important;
     //border-bottom: 1px solid #fff;
@@ -266,8 +283,9 @@
   }
 
   .ivu-modal-footer {
-    background-color: #515456;
-    border-top: 1px solid #515456;
+    background-color: @win-foot-color;
+    border-top: 1px solid @win-foot-color;
+    //padding: 5px 15px;
   }
 }
 

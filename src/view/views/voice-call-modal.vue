@@ -1,5 +1,5 @@
 <template>
-    <Modal v-model="voice_call_modal_show" class="sdk-voice-modal sdk-voice-call-modal" title="语音通话" draggable scrollable :width=484 :z-index="5000"
+    <Modal v-model="voice_call_modal_show" class="sdk-modal sdk-voice-modal sdk-voice-call-modal" title="语音通话" draggable scrollable :width=484 :z-index="5000"
            v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div slot="header">
             <div class="ivu-modal-header-inner">

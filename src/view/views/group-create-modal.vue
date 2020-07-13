@@ -1,5 +1,5 @@
 <template>
-    <Modal v-model="group_create_modal_show" class="sdk-user-modal sdk-group-create-modal" draggable scrollable :title="modal_title" :width=400 :z-index="1000"
+    <Modal v-model="group_create_modal_show" class="sdk-modal sdk-user-modal sdk-group-create-modal" draggable scrollable :title="modal_title" :width=400 :z-index="1000"
            v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div class="sdk-user-list-container">
             <div style="padding:3px;">组名：</div>

@@ -1,5 +1,5 @@
 <template>
-    <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-voice-modal sdk-video-modal" title="视频数据"
+    <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-modal sdk-video-modal sdk-video-main-modal" title="视频数据"
            :width="modal_width" draggable scrollable :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal"
            :closable="false" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
         <div slot="header">
@@ -292,7 +292,25 @@
             close_confirm() {
                 let that = this;
                 let action = window.websdk.websdkui.configApi.get_video_close_action();
-                logger.debug("close_confirm action:{}", action);
+                let pull_action = window.websdk.websdkui.configApi.get_video_pull_close_action();//调度台拉视频
+                let push_action = window.websdk.websdkui.configApi.get_video_push_close_action();//主动推视频
+                let data = this.$store.state.video[that.id];
+                let video_type = 0;//1pull，2push, 0未知
+                if (data) {
+                    video_type = data.type || 0;
+                }
+                if (video_type == 1) {
+                    if (pull_action) {
+                        action = pull_action;
+                    }
+
+                } else if (video_type == 2) {
+                    if (push_action) {
+                        action = push_action;
+                    }
+
+                }
+                logger.debug("close_confirm video_type:{}, action:{}", video_type, action);
                 if (action == 2) {
                     that.main_modal_show = false;
                     that.on_hide_modal('only_stop_play');// 只关闭窗口
