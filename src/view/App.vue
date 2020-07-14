@@ -737,7 +737,7 @@
                 let playid = rsp.playid;
                 let resolution = rsp.resolution;
                 let url = config.build_video_url(playid);
-                that.showVideoModal({id: rsp.target, reload: true, url: url, resolution: resolution, channel: channel, playid: playid});
+                that.showVideoModal({id: rsp.target, reload: true, url: url, resolution: resolution, channel: channel, playid: playid, type: rsp.type});
             },
 
             hideVideoModalStopVideo: function (id) {

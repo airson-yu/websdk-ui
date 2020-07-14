@@ -297,9 +297,11 @@ export default new Vuex.Store({
                 return false;
             }
 
+            //logger.debug('showVideoModal type:{}', target.type);
+
             let obj = {
                 id: null,
-                type: target.type || 0,//1pull，2push, 0未知
+                type: target.type, //0主动推的视频PUSH，2tg视频会商，3告警触发的视频，4拉取的视频PULL
                 info: null,
                 main_modal_show: true,
                 url: target.url,

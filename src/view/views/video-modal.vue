@@ -295,16 +295,21 @@
                 let pull_action = window.websdk.websdkui.configApi.get_video_pull_close_action();//调度台拉视频
                 let push_action = window.websdk.websdkui.configApi.get_video_push_close_action();//主动推视频
                 let data = this.$store.state.video[that.id];
-                let video_type = 0;//1pull，2push, 0未知
+                let video_type = -1;//0主动推的视频PUSH，2tg视频会商，3告警触发的视频，4拉取的视频PULL，-1未知
+                //logger.debug('action:{},pull:{},push:{}', action, pull_action, push_action);
                 if (data) {
-                    video_type = data.type || 0;
+                    video_type = data.type;
+                    if (video_type === undefined) {
+                        logger.warn('video_type undefined,reset to -1');
+                        video_type = -1;
+                    }
                 }
-                if (video_type == 1) {
+                if (video_type === 4) {
                     if (pull_action) {
                         action = pull_action;
                     }
 
-                } else if (video_type == 2) {
+                } else if (video_type === 0) {
                     if (push_action) {
                         action = push_action;
                     }

@@ -29,8 +29,8 @@ class configApi {
             logger.warn("set_video_pull_close_action action invalid:{}", action);
             return false;
         }
-        this.video_push_close_action = parseInt(action);
-        logger.debug("set_video_pull_close_action action:{}", this.video_push_close_action);
+        this.video_pull_close_action = parseInt(action);
+        logger.debug("set_video_pull_close_action action:{}", this.video_pull_close_action);
         return true;
     }
 
