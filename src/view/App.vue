@@ -376,6 +376,10 @@
                 listeners.playVideoNotice(function (rsp) {
                     let client_id = rsp.target;
                     logger.debug('bus.$emit.play-video:{}', client_id);
+                    if (rsp.playid === 0) {
+                        logger.debug('notice_play_video playid=0, ignore:{}', client_id);
+                        return;
+                    }
                     let open_video_video_evt_id = 'open-video-video-' + client_id;
                     bus.$emit(open_video_video_evt_id, rsp);
                     that.initShowVideo(that, rsp, true);
