@@ -114,7 +114,8 @@
                 }],
                 fullscreen: false,
                 mute: false,
-                show_confirm: false
+                show_confirm: false,
+                close_manually: false
             }
         },
         props: {
@@ -189,6 +190,7 @@
 
             bus.$on(that.stop_play_video_video_evt_id, (rsp) => {
                 if (rsp.target == that.id) {
+                    that.update_close_manually(that, false);
                     that.on_hide_modal('ignore');
                 }
             });
@@ -223,7 +225,8 @@
                 cmd_status: 0,
                 cmd_type: 2,
                 msg_code: 'notice_video_modal_close',
-                target: that.id
+                target: that.id,
+                manually: that.close_manually
             };
             window.websdk.listeners.monitors.notice_dynamic(notice_data);
         },
@@ -272,6 +275,9 @@
                 that.fullscreen = !that.fullscreen;
                 that.vp.fresh_canvas_toggle_fullscreen(that.fullscreen);
             },
+            update_close_manually(that, manually) {
+                that.close_manually = manually;
+            },
             on_hide_modal(notice_type) {// XXX 当modal窗口发起$emit事件通知窗口关闭时，这里继续通知App.vue窗口已经关闭
                 //notice_type: 'ignore','only_stop_play', 'stop_play_push'
                 let that = this;
@@ -318,11 +324,13 @@
                 logger.debug("close_confirm video_type:{}, action:{}", video_type, action);
                 if (action == 2) {
                     that.main_modal_show = false;
+                    that.update_close_manually(that, true);
                     that.on_hide_modal('only_stop_play');// 只关闭窗口
                     logger.debug("close_confirm action 2");
 
                 } else if (action == 3) {
                     that.main_modal_show = false;
+                    that.update_close_manually(that, true);
                     that.on_hide_modal('stop_play_push');// 通知终端停止推流
                     logger.debug("close_confirm action 3");
 
@@ -352,12 +360,14 @@
             close_confirm_cancel() {
                 let that = this;
                 that.main_modal_show = false;
+                that.update_close_manually(that, true);
                 that.on_hide_modal('only_stop_play');// 只关闭窗口
                 logger.debug("close_confirm onCancel 2");
             },
             close_confirm_ok() {
                 let that = this;
                 that.main_modal_show = false;
+                that.update_close_manually(that, true);
                 that.on_hide_modal('stop_play_push');// 通知终端停止推流
                 logger.debug("close_confirm onOk 3");
             },

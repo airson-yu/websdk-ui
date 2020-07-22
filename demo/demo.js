@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 var global_data = {
     //ipaddr: '39.105.135.70',
     ipaddr: '39.106.213.127',
@@ -292,7 +293,7 @@ var api_demo = {
 
     // XXX videoRequest
     req_play_video: function () {
-        var that = this;
+        //var that = this;
         //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
         websdk.request.videoRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
             console.log('demo_req_play_video result:{}', rsp);
