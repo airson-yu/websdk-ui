@@ -149,12 +149,15 @@ var api_demo = {
     },
     req_user_state: function () {
         //websdk.request.userRequest.noticeUserState([global_data.param_uid1], null, function (rsp) {
-        websdk.request.userRequest.getUserStateAsync([global_data.param_uid1], null, function (rsp) {
+        websdk.request.userRequest.getUserStateAsync(null, null, function (rsp) {
             console.log('demo_req_user_state result:', rsp);
         }, 'demo_req_user_state');//
     },
 
     req_add_admin_users: function () {
+        //var uids = [65835, 65836];
+        //var ext_uids = ['itrunk_65835', 'itrunk_65836'];
+        //websdk.request.userRequest.addAdminUsers(uids, null, function (rsp) {
         websdk.request.userRequest.addAdminUsers([global_data.param_uid1], null, function (rsp) {
             console.log('demo_req_add_admin_users result:{}', rsp);
         }, 'demo_req_add_admin_users');//
