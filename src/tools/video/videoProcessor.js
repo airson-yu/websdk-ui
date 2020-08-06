@@ -106,8 +106,8 @@ class VideoProcessor {
         if (width >= 720) { //1280*720 1280的视频太大，缩小一点
             //this.canvas_default_w = config.video_canvas_default_w * 1.36; //640
             //this.canvas_default_h = 720 / 1280 * config.video_canvas_default_w * 1.36;
-            this.canvas_default_w = 1280; //640
-            this.canvas_default_h = 720; //480
+            this.canvas_default_w = 1280; //1280 640 1280*0.8=1024
+            this.canvas_default_h = 720; //720 480 720*0.8=578
         } else {
             this.canvas_default_w = config.video_canvas_default_w; //640
             this.canvas_default_h = config.video_canvas_default_h; //480

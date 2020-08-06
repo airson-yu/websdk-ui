@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
 var global_data = {
     //ipaddr: '39.105.135.70',
-    ipaddr: '39.106.117.194',
+    ipaddr: '39.106.213.127',
     port: 80,
     //orgid: 10,
-    orgid: 1,
+    orgid: 28,
     username: '',
     consoleName: null,
     client: null,
-    logonName: 'websdk01',
+    logonName: 'websdkcu1',
     password: '123456',
     /*param_uid1: 68505,
     param_uid2: 68506,
@@ -17,12 +17,12 @@ var global_data = {
     con_id: 68508,
     con_other_id: 68509,*/
     //param_uid1: 66250,
-    param_uid1: 67876,
-    param_uid2: 67877,
-    param_tgid1: 100509,
-    param_tgid2: 100512,
-    con_id: 83644,
-    con_other_id: 83645
+    param_uid1: 66250,
+    param_uid2: 66251,
+    param_tgid1: 75739,
+    param_tgid2: 74270,
+    con_id: 66249,
+    con_other_id: 66254
 }
 RHTX = true;
 GA = false;
@@ -96,7 +96,6 @@ var api_demo = {
 
     // XXX authRequest
     req_login: function () {
-        document.getElementById('sdk_tip').innerText = '正在登录中...';
         websdk.request.authRequest.logon(global_data.ipaddr, global_data.port, global_data.orgid, global_data.logonName, global_data.password, global_data.consoleName, 2, function (rsp) {
             console.log('demo_req_logon result:', rsp);
             if (rsp.cmd_status === 0) {
@@ -424,14 +423,6 @@ var api_demo = {
             console.log('demo groupMemStatusNotice result:', rsp);
         }, 'demo');
     },
-    errMsgNotice: function () {
-        websdk.listeners.ErrMsg(function (rsp) {
-            console.log('demo ErrMsg result:', rsp);
-            if (rsp.cmd_status == 52001) {
-                document.getElementById('sdk_tip').innerText = '尚未登录';
-            }
-        }, 'demo');
-    },
 
     dynamicNotice: function (msg_code) {
         websdk.listeners.dynamicNotice(msg_code, function (rsp) {
@@ -500,7 +491,6 @@ websdk.init(function (result) {
     api_demo.addGroupMemberNotice();
     api_demo.removeGroupMemberNotice();
     api_demo.groupMemStatusNotice();
-    api_demo.errMsgNotice();
     api_demo.dynamicNotice('notice_im_modal_open');
     api_demo.dynamicNotice('notice_im_modal_close');
     api_demo.dynamicNotice('notice_video_modal_open');
@@ -510,7 +500,7 @@ websdk.init(function (result) {
     api_demo.dynamicNotice('notice_voice_call_modal_open');
     api_demo.dynamicNotice('notice_voice_call_modal_close');
 
-    //api_demo.req_login();
+    api_demo.req_login();
 
     //设置关闭视频时的操作: 1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
     websdk.websdkui && websdk.websdkui.configApi.set_video_close_action(1);
