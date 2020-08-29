@@ -5,6 +5,7 @@ import logger from "../logger";
 
 class VideoProcessor {
     constructor(url, dom_id, modal_outer_id, modal_obj) {
+        logger.debug("video processor construct");
         this.canvas = null;
         this.modal_obj = modal_obj;
         if (dom_id) {
@@ -51,7 +52,6 @@ class VideoProcessor {
         this.renderContext9 = this.videoPlayer9.createRenderContext(document.getElementById('c8'));*/
 
     }
-
 
     fresh_canvas_toggle_fullscreen(fullscreen) {
         this.fullscreen = fullscreen;

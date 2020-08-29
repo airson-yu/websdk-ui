@@ -5,6 +5,7 @@ import logger from "../logger";
  */
 class VideoWebsocket {
     constructor(url, options) {
+        logger.debug("video ws construct");
         this.url = url;
         this.options = options;
         this.socket = null;
@@ -23,10 +24,12 @@ class VideoWebsocket {
     }
 
     connect(processor) {
+        logger.debug("video ws connect");
         this.processor = processor
     }
 
     destroy() {
+        logger.debug("ws destroy");
         clearTimeout(this.reconnectTimeoutId);
         this.shouldAttemptReconnect = false;
         this.socket.close()
@@ -62,6 +65,7 @@ class VideoWebsocket {
 
     // eslint-disable-next-line no-unused-vars
     resume(secondsHeadroom) {
+        logger.debug("video ws resume:{}", secondsHeadroom);
     }
 
     /*heartbeat() {
@@ -94,11 +98,13 @@ class VideoWebsocket {
      * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices
      */
     clear_webgl_context() {
-        if (this.processor.renderContext) {
+        logger.debug("video ws clear_webgl_context");
+        let context = this.processor.renderContext;
+        if (context && !context.isContextLost()) {
             logger.debug("clear_webgl_context");
-            this.processor.renderContext.flush();
-            let ext = this.processor.renderContext.getExtension('WEBGL_lose_context');
+            let ext = context.getExtension('WEBGL_lose_context');
             ext && ext.loseContext();
+            context.flush();
             /* scene.renderer.currentRenderTarget.gl.getExtension('WEBGL_lose_context').loseContext(); */
             /*scene.renderer.destroy();*/
         }
