@@ -1,6 +1,6 @@
 <template>
     <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-modal sdk-video-modal sdk-video-main-modal" title="视频数据"
-           :width="modal_width" draggable scrollable :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal"
+           :width="modal_width" scrollable :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal"
            :closable="false" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
         <div slot="header">
             <div class="ivu-modal-header-inner">
@@ -75,6 +75,8 @@
     import res_ring from '../assets/audio/ring.wav';
     import res_avatar1 from '../assets/img/avatar1.png';
     import VideoProcessor from "../../tools/video/videoProcessor";
+    import $ from 'jquery';
+    import 'jquery-ui/ui/widgets/draggable';
 
     export default {
         name: 'VideoModal',
@@ -156,6 +158,8 @@
             let that = this;
             that.show_confirm = false;
             //let root = that.$root;
+
+            $('.sdk-video-main-modal .ivu-modal').draggable();
 
             if (that.url) {
                 let dom_id = that.sdk_video_canvas_id;

@@ -24,7 +24,7 @@ var global_data = {
     con_id: 83644,
     con_other_id: 83645
 }
-RHTX = false;
+RHTX = true;
 GA = false;
 if (RHTX) {
     global_data.ipaddr = '39.105.135.70';
@@ -38,10 +38,12 @@ if (RHTX) {
     global_data.con_id = 65576;
     global_data.con_other_id = 68509;
 
+    global_data.logonName = 'websdkcu1';
     global_data.ipaddr = '123.56.126.189';
     global_data.orgid = 1;
-    global_data.param_uid1 = 65803;
-    global_data.param_tgid1 = 98781;
+    global_data.param_uid1 = 65812;
+    global_data.param_uid2 = 65813;
+    global_data.param_tgid1 = 98787;
 
     /*global_data.ipaddr = '123.56.126.189';
     global_data.param_uid1 = 82045;
