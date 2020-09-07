@@ -1,6 +1,6 @@
 <template>
-    <Modal v-model="user_list_modal_show" class="sdk-modal sdk-user-modal sdk-user-list-modal" draggable scrollable :title="modal_title" :width=400 :z-index="1000"
-           v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
+    <Modal v-model="user_list_modal_show" class="sdk-modal sdk-user-modal sdk-user-list-modal" scrollable :title="modal_title"
+           :width=400 :z-index="1000" :mask="false" v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div class="sdk-user-list-container">
             <Tabs size="small" class="sdk-tabs">
                 <TabPane label="个人">
@@ -31,6 +31,8 @@
 <script>
     import _ from "lodash";
     import {mapActions, mapState} from 'vuex'; //注册 action 和 state
+    import $ from 'jquery';
+    import 'jquery-ui/ui/widgets/draggable';
 
     export default {
         name: 'IMUserListModal',
@@ -59,6 +61,9 @@
                 type: String,
                 default: ''
             },
+        },
+        mounted: function () {
+          $('.sdk-user-list-modal .ivu-modal').draggable();
         },
         created: function () {
 

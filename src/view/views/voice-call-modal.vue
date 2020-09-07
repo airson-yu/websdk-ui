@@ -1,6 +1,6 @@
 <template>
-    <Modal v-model="voice_call_modal_show" class="sdk-modal sdk-voice-modal sdk-voice-call-modal" title="语音通话" draggable scrollable :width=484 :z-index="5000"
-           v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
+    <Modal v-model="voice_call_modal_show" class="sdk-modal sdk-voice-modal sdk-voice-call-modal" title="语音通话" scrollable
+           :width=484 :z-index="5000" :mask="false" v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>语音通话</span>
@@ -45,6 +45,8 @@
     import {mapActions, mapState, mapGetters} from 'vuex'; //注册 action 和 state
     import res_ring from '../assets/audio/ring.wav';
     import res_avatar1 from '../assets/img/avatar1.png';
+    import $ from 'jquery';
+    import 'jquery-ui/ui/widgets/draggable';
 
     export default {
         name: 'VoiceCallModal',
@@ -86,6 +88,9 @@
         },
         mounted: function () {
             let that = this;
+
+          $('.sdk-voice-call-modal .ivu-modal').draggable();
+
             //let root = that.$root;
             bus.$on('call-status-voice-call', (rsp) => {
                 if (rsp.call_type !== 15 && rsp.call_type !== 17 && rsp.call_type !== 32) {

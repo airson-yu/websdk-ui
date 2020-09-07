@@ -1,6 +1,6 @@
 <template>
-    <Modal v-model="group_create_modal_show" class="sdk-modal sdk-user-modal sdk-group-create-modal" draggable scrollable :title="modal_title" :width=400 :z-index="1000"
-           v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
+    <Modal v-model="group_create_modal_show" class="sdk-modal sdk-user-modal sdk-group-create-modal" scrollable :title="modal_title"
+           :width=400 :z-index="1000" :mask="false" v-on:on-cancel="on_hide_modal" v-on:on-visible-change="on_visible_change">
         <div class="sdk-user-list-container">
             <div style="padding:3px;">组名：</div>
             <Input v-model="tg_name" class="sdk-search-ipt" clearable placeholder="请输入组名"/>
@@ -28,6 +28,8 @@
 <script>
     import _ from "lodash";
     import {mapActions, mapState} from 'vuex'; //注册 action 和 state
+    import $ from 'jquery';
+    import 'jquery-ui/ui/widgets/draggable';
 
     export default {
         name: 'GroupCreateModal',
@@ -56,6 +58,9 @@
                 type: String,
                 default: ''
             },*/
+        },
+        mounted: function () {
+          $('.sdk-group-create-modal .ivu-modal').draggable();
         },
         created: function () {
 

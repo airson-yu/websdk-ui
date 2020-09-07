@@ -1,7 +1,7 @@
 <template>
     <Modal :id="sdk_video_modal_id" v-model="main_modal_show" class="sdk-modal sdk-video-modal sdk-video-main-modal" title="视频数据"
            :width="modal_width" scrollable :z-index="5000" :fullscreen="fullscreen" class-name="sdk-fullscreen-toggle-modal"
-           :closable="false" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
+           :closable="false" :mask="false" v-on:on-cancel="on_hide_modal"> <!-- :width=width -->
         <div slot="header">
             <div class="ivu-modal-header-inner">
                 <span>视频数据-{{uname}}</span>
@@ -253,6 +253,7 @@
                 let that = this;
                 that.mute = !that.mute;
                 let mute_num = that.mute ? 1 : 0;
+              // eslint-disable-next-line no-unused-vars
                 window.websdk.request.videoRequest.videoMute(that.id, null, 0, 0, mute_num, function (rsp) {
                     //logger.debug('req_video_mute_video result:{}', rsp);
                 }, 'req_video_mute_video');//

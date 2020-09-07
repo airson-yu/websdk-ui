@@ -15,6 +15,8 @@ import IMFileRight from "../components/im-file-right.vue";
 import IMFileLeft from "../components/im-file-left.vue";
 import res_avatar1 from '../assets/img/avatar1.png';
 import res_file1 from '../assets/audio/alert.wav';
+import $ from 'jquery';
+import 'jquery-ui/ui/widgets/draggable';
 
 export default {
     name: 'IMModal',
@@ -423,6 +425,9 @@ export default {
     },
     mounted: function () {
         let that = this;
+
+        $('.sdk-user-main-modal .ivu-modal').draggable();
+
         let param = that.init_param_obj;
         if (param.attached) {
             that.last_dcg_attached = true;

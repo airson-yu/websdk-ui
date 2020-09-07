@@ -1,6 +1,6 @@
 <template>
-    <Modal v-model="main_modal_show" class="sdk-modal sdk-user-modal sdk-user-main-modal" draggable scrollable :title=uname :width=1000 :z-index=1000
-           :footer-hide=true v-on:on-cancel=on_hide_modal v-on:on-visible-change=on_visible_change><!--:width=510-->
+    <Modal v-model="main_modal_show" class="sdk-modal sdk-user-modal sdk-user-main-modal" scrollable :title=uname :width=1000 :z-index=1000
+           :mask="false" :footer-hide=true v-on:on-cancel=on_hide_modal v-on:on-visible-change=on_visible_change><!--:width=510-->
         <div class="sdk-im-split">
             <Split v-model="im_split" min="150" max="300">
 
