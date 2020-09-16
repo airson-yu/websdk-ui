@@ -32,6 +32,9 @@ class websdkui {
         // XXX 这里加个保护，禁止重复init，这样会造成UI组件重复显示 2020年7月2日15:12:9
         if (window.websdk.init_done === true) {
             logger.warn('repeated init ignore');
+
+            // TODO TODO 这里禁止重复init，但是要执行回调
+
             return that;
         }
         window.websdk.init_done = true;
