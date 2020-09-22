@@ -33,7 +33,8 @@ class websdkui {
         if (window.websdk.init_done === true) {
             logger.warn('repeated init ignore');
 
-            // TODO TODO 这里禁止重复init，但是要执行回调
+            // XXX 这里禁止重复init，但是要执行回调
+            window.websdk.core.processor.init(null, callback);
 
             return that;
         }
