@@ -84,6 +84,7 @@ var api_demo = {
             api_demo.userQueryGPSNotice();
             api_demo.callStatusNotice();
             api_demo.pttStatusNotice();
+            api_demo.groupAttachInfoNotice();
             api_demo.enterGroupNotice();
             api_demo.leaveGroupNotice();
             api_demo.addGroupMemberNotice();
@@ -106,6 +107,13 @@ var api_demo = {
 
                 // XXX 设置当前调度台账号的ID，其他接口会使用此ID
                 global_data.con_id = rsp.uid;
+
+                //设置关闭视频时的操作: 1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
+                websdk.websdkui && websdk.websdkui.configApi.set_video_close_action(1);
+                //只针对终端主动推的视频 0：与set_video_close_action一致，1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
+                websdk.websdkui && websdk.websdkui.configApi.set_video_push_close_action(3);
+                //只针对调度台拉取的视频 0：与set_video_close_action一致，1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
+                websdk.websdkui && websdk.websdkui.configApi.set_video_pull_close_action(3);
 
             } else {
                 document.getElementById('sdk_tip').innerText = '登录失败';
@@ -180,6 +188,14 @@ var api_demo = {
     },
 
     // XXX groupRequest
+    req_group_attach_info: function (targets) {
+        if (!targets) {
+            targets = [global_data.param_tgid1];
+        }
+        websdk.request.groupRequest.getGroupAttachInfo(targets, function (rsp) { // [global_data.param_tgid1]
+            console.log('demo_req_group_attach_info result:', rsp);
+        }, 'demo_req_group_attach_info');//
+    },
     req_grp_profile: function (targets) {
         if (!targets) {
             targets = null;
@@ -401,6 +417,11 @@ var api_demo = {
             console.log('demo pttStatusNotice result:', rsp);
         });
     },
+    groupAttachInfoNotice: function () {
+        websdk.listeners.groupAttachInfoNotice(function (rsp) {
+            console.log('demo groupAttachInfoNotice result:', rsp);
+        }, 'demo');
+    },
     enterGroupNotice: function () {
         websdk.listeners.enterGroupNotice(function (rsp) {
             console.log('demo enterGroupNotice result:', rsp);
@@ -497,6 +518,7 @@ websdk.init(function (result) {
     api_demo.userQueryGPSNotice();
     api_demo.callStatusNotice();
     api_demo.pttStatusNotice();
+    api_demo.groupAttachInfoNotice();
     api_demo.enterGroupNotice();
     api_demo.leaveGroupNotice();
     api_demo.addGroupMemberNotice();
@@ -513,12 +535,5 @@ websdk.init(function (result) {
     api_demo.dynamicNotice('notice_voice_call_modal_close');
 
     //api_demo.req_login();
-
-    //设置关闭视频时的操作: 1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
-    websdk.websdkui && websdk.websdkui.configApi.set_video_close_action(1);
-    //只针对终端主动推的视频 0：与set_video_close_action一致，1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
-    websdk.websdkui && websdk.websdkui.configApi.set_video_push_close_action(3);
-    //只针对调度台拉取的视频 0：与set_video_close_action一致，1:询问, 2:只关闭视频窗口, 3:关闭视频窗口并结束推流
-    websdk.websdkui && websdk.websdkui.configApi.set_video_pull_close_action(3);
 
 });
