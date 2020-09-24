@@ -19,8 +19,8 @@ module.exports = {
     output: {
         filename: 'websdk.ui.bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        /*library: 'websdk',
-        libraryTarget: 'umd'*/
+        library: 'websdk',
+        libraryTarget: 'umd'
     },
     /*externals: {
         lodash: {
