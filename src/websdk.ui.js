@@ -12,7 +12,7 @@ class websdkui {
             login_user: {},
         };
         this.configApi = new configApi();//配置对象
-        logger.debug('websdk_ui_version: R08.00.35,date: 20200924');
+        logger.debug('websdk_ui_version: R08.00.36,date: 20200929');
     }
 
     demo = () => {

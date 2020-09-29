@@ -43,7 +43,7 @@
                     <div>正在等待视频数据...</div>
                 </div>
             </div>
-            <div style="min-width:288px;min-height:288px;"><!--  v-bind:style="{height: height + 'px' }" margin:1px 1px 0px 1px; -->
+            <div style="min-width:288px;min-height:240px;"><!-- 240 for: 320*240  v-bind:style="{height: height + 'px' }" margin:1px 1px 0px 1px; -->
                 <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:0px 0px -4px 0px;"></canvas>
             </div>
         </div>
