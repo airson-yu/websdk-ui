@@ -118,7 +118,7 @@
         mounted: function () {
             let that = this;
 
-          $('.sdk-video-call-modal .ivu-modal').draggable();
+            $('.sdk-video-call-modal .ivu-modal').draggable();
 
             //let root = that.$root;
             bus.$on('call-status-video-call', (rsp) => {

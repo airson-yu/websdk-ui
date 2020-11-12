@@ -89,7 +89,7 @@
         mounted: function () {
             let that = this;
 
-          $('.sdk-voice-call-modal .ivu-modal').draggable();
+            $('.sdk-voice-call-modal .ivu-modal').draggable();
 
             //let root = that.$root;
             bus.$on('call-status-voice-call', (rsp) => {

@@ -160,6 +160,7 @@
             //let root = that.$root;
 
             $('.sdk-video-main-modal .ivu-modal').draggable();
+            $('.sdk-video-main-modal .ivu-modal-fullscreen').draggable("disable");
 
             if (that.url) {
                 let dom_id = that.sdk_video_canvas_id;
@@ -279,6 +280,10 @@
                 let that = this;
                 that.fullscreen = !that.fullscreen;
                 that.vp.fresh_canvas_toggle_fullscreen(that.fullscreen);
+                setTimeout(function (){
+                  $('.sdk-video-main-modal .ivu-modal').draggable("enable");
+                  $('.sdk-video-main-modal .ivu-modal-fullscreen').draggable("disable");
+                }, 100);
             },
             update_close_manually(that, manually) {
                 that.close_manually = manually;
