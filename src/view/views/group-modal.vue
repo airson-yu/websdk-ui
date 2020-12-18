@@ -1,15 +1,15 @@
 <template>
-    <div>
-    </div>
+  <div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'GroupModal',
-        props: {
-            msg: String
-        }
-    }
+export default {
+  name: 'GroupModal',
+  props: {
+    msg: String
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

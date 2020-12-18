@@ -25,6 +25,7 @@ class VideoProcessor {
         this.fullscreen_w = 0;
         this.fullscreen_h = 0;
         this.fullscreen = false;
+        this.modal_scale_orgin = false;//true:支持上大屏，1280的视频的也展示原始大小，false:不上大屏，最大高度不超过显示屏高度
         this.fresh_canvas_scale(this.canvas_default_w, this.canvas_default_h, false);
         this.videoPlayer = new VideoPlayer();
         this.renderContext = this.videoPlayer.createRenderContext(this.canvas);
@@ -100,14 +101,21 @@ class VideoProcessor {
     fresh_canvas_scale(width, height, fresh_context) {
         // XXX 窗口大小保持不变，只改变比例 2019年11月7日12:50:34
         if (this.modal_obj) {
-            //this.modal_obj.modal_width = width >= height ? (width + 4) : (height + 4);
-            this.modal_obj.modal_width = width + 4; // XXX 窗口宽度也随之变化 2019年11月19日17:31:1
+            let modal_adapt_width;
+            if (width >= height) {
+                //还是限制大小比较好，想放大视频窗口可以点击全屏展示 2020年12月18日11:05:01
+                modal_adapt_width = width >= 1280 ? (this.modal_scale_orgin ? 1280 : 768) : width;
+                /*// 横屏就不限制窗口宽度
+                modal_adapt_width = width;*/
+            } else {
+                modal_adapt_width = width >= 720 ? (this.modal_scale_orgin ? 720 : 432) : width;
+            }
+            this.modal_obj.modal_width = modal_adapt_width + 4; // XXX 窗口宽度也随之变化 2019年11月19日17:31:1
         }
+
         if (width >= 720) { //1280*720 1280的视频太大，缩小一点
-            //this.canvas_default_w = config.video_canvas_default_w * 1.36; //640
-            //this.canvas_default_h = 720 / 1280 * config.video_canvas_default_w * 1.36;
-            this.canvas_default_w = 1280; //1280 640 1280*0.8=1024
-            this.canvas_default_h = 720; //720 480 720*0.8=578
+            this.canvas_default_w = this.modal_scale_orgin ? 1280 : 768; //1280 640 1280*0.8=1024  0.6:768  0.65:832
+            this.canvas_default_h = this.modal_scale_orgin ? 720 : 432; //720 480 720*0.8=578      0.6:432  0.65:468
         } else {
             this.canvas_default_w = config.video_canvas_default_w; //640
             this.canvas_default_h = config.video_canvas_default_h; //480
@@ -126,6 +134,9 @@ class VideoProcessor {
             if (width >= height) {
                 this.canvas_last_fix_w = this.canvas_default_w;
                 this.canvas_last_fix_h = this.canvas_default_h;
+                /*// 横屏不限制宽高，使用原始值
+                this.canvas_last_fix_w = width;
+                this.canvas_last_fix_h = height;*/
             } else {
                 this.canvas_last_fix_w = this.canvas_default_h;
                 this.canvas_last_fix_h = this.canvas_default_w;
@@ -136,6 +147,11 @@ class VideoProcessor {
                 this.canvas.height = this.canvas_default_h;
                 this.canvas_last_fix_w = this.canvas_default_w;
                 this.canvas_last_fix_h = this.canvas_default_h;
+                /*// 横屏不限制宽高，使用原始值
+                this.canvas.width = width;
+                this.canvas.height = height;
+                this.canvas_last_fix_w = width;
+                this.canvas_last_fix_h = height;*/
             } else {
                 this.canvas.width = this.canvas_default_h;
                 this.canvas.height = this.canvas_default_w;
