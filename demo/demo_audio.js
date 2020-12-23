@@ -12,7 +12,7 @@ var global_data = {
     param_uid2: 65813,
     param_tgid1: 98787,
     param_tgid2: 100512,
-    con_id: 83644,
+    con_id: 81965, //83644, //登录后会自动更新
     con_other_id: 83645
 }
 
@@ -198,6 +198,7 @@ var api_demo = {
     req_ptt_off: function () {
         websdk.request.voiceRequest.pttOff(global_data.param_tgid1, function (rsp) {
             console.log('demo_req_ptt_off result:{}', rsp);
+            api_demo.req_get_audio_list();
         }, 'demo_req_ptt_off');//
     },
     voice_pstn_call: function () {
@@ -238,6 +239,19 @@ var api_demo = {
         websdk.request.voiceRequest.call(global_data.con_id, null, null, null, 0, 32, 0, 0, telno, function (rsp) {
             console.log('demo_voice_pstn_call_stop result:{}', rsp);
         }, 'demo_voice_pstn_call_stop');//
+    },
+
+    req_get_audio_list: function (){
+        console.log('req_get_audio_list');
+        var url = api_demo.build_url('/data/api/audio/list');
+        var param = 'uid=' + global_data.con_id+'&start=0&length=2';
+        $('#audio_grid').empty();
+        api_demo.post(url, param, function (data) {
+            //console.log(data);
+            audio_obj.renderGrid(data.rows);
+        }, function (e) {
+            console.warn("getAudioList error:{}", e);
+        });
     },
 
     // XXX videoRequest
@@ -412,8 +426,50 @@ var api_demo = {
         websdk.view.showCreateGroupModal(function (result) {
             console.log('showCreateGroupModal result:{}', result);
         });
-    }
+    },
     // XXX other
+
+    /** build full url */
+    build_url: function (uri) {
+        if (global_data.ipaddr && global_data.port) {
+
+            return 'http://' + global_data.ipaddr + ':' + global_data.port + uri;
+            //return 'http://localhost:8888' + uri;
+        } else {
+            console.warn('global_data ipaddr or port empty');
+        }
+        return null;
+    },
+    /** ajax post */
+    post: function (url, param, callback, callback_err) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', url, true);
+        xhr.setRequestHeader('Access-Control-Allow-Origin', url);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                callback(this.response);
+            }
+        }
+        /*xhr.ontimeout = function(e) {};
+        if(onError){
+            xhr.onerror = function(e) {
+                onError(e);
+            };
+        }*/
+        xhr.timeout = 1200000; // 20分钟请求未完成就超时
+        if (callback_err) {
+            xhr.ontimeout = function (e) {
+                callback_err(e);
+            };
+            xhr.onerror = function (e) {
+                callback_err(e);
+            };
+        }
+        xhr.responseType = 'json';
+        xhr.send(param);
+        return xhr;
+    }
 
 }
 
@@ -457,3 +513,127 @@ websdk.init(function (result) {
     //api_demo.req_login();
 
 });
+
+window.addEventListener('unhandledrejection', function (event) {
+    if (event.reason.code == 9) { // code:9, message:"The element has no supported sources.", name:"NotSupportedError"
+        alert('音频文件已经不存在，无法播放');
+    }
+    //console.log(event.reason);
+});
+
+var audio_obj = {
+
+    renderGrid: function (data) {
+        if (!data || data.length <= 0) {
+            return;
+        }
+        var dom = '';
+        for (let i = 0; i < data.length; i++) {
+            var row = data[i];
+            dom += '<div style="padding:3px;">' + this.renderGridRow(row.path, row, {row: row.id}) + '</div>';
+        }
+        $('#audio_grid').html(dom);
+    },
+
+    renderGridRow: function (data, row, meta) {
+        var btn_id = 'media_' + row.suffix + '_' + row.id;
+        var path = data;//'/data/static/ring.mp3'
+
+        //path = './assets/adk/audio/ring.wav';
+        //path = 'https://localhost:8443/data/static/ring.mp3';
+
+        var dom;
+        if (path.indexOf('http') >= 0) { //已经是可以播放的url
+            dom = '<button id="' + btn_id + '" class="btn btn-default btn-xs mgBtm0" style="" onclick="audio_obj.doPlay(\'' + btn_id + '\', \'' + path + '\', \'' + row.suffix + '\', \'' + row.id + '\', ' + meta.row + ');">播放</button>' +
+                '<span id="play_' + btn_id + '" style="display: none;">' +
+                '<button style="float:left;" class="btn btn-default btn-xs mgBtm0" style="" onclick="audio_obj.doStop(\'' + btn_id + '\');">停止</button><audio preload id="audio_' + btn_id + '" onended="audio_obj.onAudioEnd(\'' + btn_id + '\', ' + meta.row + ');" src="' + path + '"></audio>' +
+                '</span>';
+        } else {
+            dom = '<button id="' + btn_id + '" class="btn btn-default btn-xs mgBtm0" style="" onclick="audio_obj.doPlay(\'' + btn_id + '\', \'' + path + '\', \'' + row.suffix + '\', \'' + row.id + '\' ,' + meta.row + ');">播放</button><span id="play_' + btn_id + '"></span>';
+        }
+        return dom;
+    },
+
+    doPlay: function (btn_id, path, suffix, id, row) {
+        /*var audio = document.getElementById('audio_dom_id');
+        audio.setAttribute('src', src);
+        audio.play();*/
+
+        var $audio_html = $('#play_' + btn_id).html();
+        if ($audio_html) {
+
+            $('#' + btn_id).hide();
+            $('#play_' + btn_id).show();
+
+            if ($('#play_' + btn_id + ' div.audioplayer').length <= 0) {
+                $('#audio_' + btn_id).audioPlayer();
+                //$('#audio_' + btn_id).parent().css('margin-left', '40px');//.css('float', 'right');//.css('width', '80%')
+                $('#audio_' + btn_id).parent().css('margin-left', '40px');//.css('float', 'right');//.css('width', '80%')
+                setTimeout(function () {
+                    $('#audio_' + btn_id + '+div').click();
+                }, 200);
+            } else {
+                $('#audio_' + btn_id + '+div').click();
+            }
+            return;
+        }
+
+        //lh.mask('正在加载语音，请稍等...');
+        $.post(api_demo.build_url('/api/audio/load'), {suffix: suffix, id: id, path: path}, function (rsp) {
+            /*// FIXME FOR TEST
+            if (!rsp.success) {
+                rsp.success = true;
+                rsp.url = '/data/static/ring.mp3';
+                rsp.url = 'h-t-t-p-s-:-/-/-l-ocalhost:8443/rtv/file/rt_audio/20180614/73795/65581_73795_116599310_20180614102903.wav';
+            }
+            // FIXME END*/
+
+            setTimeout(function () { // 延时加载音频是因为，服务器音频转换可能尚未完成
+                if (rsp.success) {
+                    lh.hideMask();
+                    //var $dom = $('#' + btn_id);
+                    $('#' + btn_id).hide();
+                    var dom = '<button style="float: left;" class="btn btn-default btn-xs mgBtm0" onclick="doStop(\'' + btn_id + '\');">停止</button><audio preload id="audio_' + btn_id + '" onerror="onAudioError(\'' + btn_id + '\', ' + row + ');" onended="onAudioEnd(\'' + btn_id + '\', ' + row + ');" src="' + rsp.url + '"></audio>';
+                    $('#play_' + btn_id).html(dom);
+                    //$dom.replaceWith(dom);
+                    $('#audio_' + btn_id).audioPlayer();
+                    $('#audio_' + btn_id).parent().css('margin-left', '40px');//.css('float', 'right');//.css('width', '80%')
+                    setTimeout(function () {
+                        $('#audio_' + btn_id + '+div').click();
+                    }, 200);
+                } else {
+                    lh.hideMask();
+                    lh.alert(rsp.msg);
+                }
+            }, 2000);
+
+        });
+    },
+
+    doStop: function (btn_id) {
+        // audio element的load方法与jQuery的load方法冲突，这里使用原生方法调用 2020年2月6日14:46:8
+        // (Uncaught TypeError: Cannot read property 'indexOf' of undefined at k.fn.init.k.fn.load (jquery-3.4.1.min.js:formatted:3981))
+        $('#audio_' + btn_id)[0].load();
+        $('#' + btn_id).show();
+        var $aobj = $('#play_' + btn_id + ' a')[0];
+        if ($aobj && $aobj.text == 'Pause') {
+            $('#audio_' + btn_id + '+div').click();
+        }
+        $('#play_' + btn_id).hide();
+    },
+
+    onAudioEnd: function (btn_id, row) { // 自动连播
+        console.log('onAudioEnd:', btn_id, row);
+    },
+
+    onAudioError: function (btn_id) { // 加载失败
+        //先隐藏当前播放条
+        $('#audio_' + btn_id + '+div').click();
+        $('#play_' + btn_id).hide();
+        $('#' + btn_id).show();
+
+        console.log('onAudioError:', btn_id);
+    }
+
+}
+

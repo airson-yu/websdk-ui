@@ -21,7 +21,7 @@ var global_data = {
     param_uid2: 67877,
     param_tgid1: 100509,
     param_tgid2: 100512,
-    con_id: 83644,
+    con_id: 83644, //登录后会自动更新
     con_other_id: 83645
 }
 RHTX = true;
