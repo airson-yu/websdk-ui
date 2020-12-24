@@ -290,7 +290,10 @@ export default {
       that.vp.fresh_canvas_toggle_fullscreen(that.fullscreen);
       setTimeout(function () {
         $('.sdk-video-main-modal .ivu-modal').draggable("enable");
-        $('.sdk-video-main-modal .ivu-modal-fullscreen').draggable("disable");
+        $('.sdk-video-main-modal .ivu-modal-fullscreen')
+            .css('left', '0px') // 解决拖动过窗口后全屏时全屏位置产生偏移的问题 2020年12月24日18:12:24
+            .css('top', '0px')
+            .draggable("disable");
       }, 100);
     },
     update_close_manually(that, manually) {

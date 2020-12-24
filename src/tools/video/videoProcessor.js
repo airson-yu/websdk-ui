@@ -100,22 +100,24 @@ class VideoProcessor {
 
     fresh_canvas_scale(width, height, fresh_context) {
         // XXX 窗口大小保持不变，只改变比例 2019年11月7日12:50:34
+        let scale_w = 640; //1280 640 1280*0.8=1024 0.5:640  0.55:704  0.6:768  0.65:832
+        let scale_h = 360; //720  480 720*0.8=578   0.5:360  0.55:396  0.6:432  0.65:468
         if (this.modal_obj) {
             let modal_adapt_width;
             if (width >= height) {
                 //还是限制大小比较好，想放大视频窗口可以点击全屏展示 2020年12月18日11:05:01
-                modal_adapt_width = width >= 1280 ? (this.modal_scale_orgin ? 1280 : 768) : width;
+                modal_adapt_width = width >= 1280 ? (this.modal_scale_orgin ? 1280 : scale_w) : width;
                 /*// 横屏就不限制窗口宽度
                 modal_adapt_width = width;*/
             } else {
-                modal_adapt_width = width >= 720 ? (this.modal_scale_orgin ? 720 : 432) : width;
+                modal_adapt_width = width >= 720 ? (this.modal_scale_orgin ? 720 : scale_h) : width;
             }
             this.modal_obj.modal_width = modal_adapt_width + 4; // XXX 窗口宽度也随之变化 2019年11月19日17:31:1
         }
 
         if (width >= 720) { //1280*720 1280的视频太大，缩小一点
-            this.canvas_default_w = this.modal_scale_orgin ? 1280 : 768; //1280 640 1280*0.8=1024  0.6:768  0.65:832
-            this.canvas_default_h = this.modal_scale_orgin ? 720 : 432; //720 480 720*0.8=578      0.6:432  0.65:468
+            this.canvas_default_w = this.modal_scale_orgin ? 1280 : scale_w; //1280 640 1280*0.8=1024 0.55:704  0.6:768  0.65:832
+            this.canvas_default_h = this.modal_scale_orgin ? 720 : scale_h; //720 480 720*0.8=578     0.55:396  0.6:432  0.65:468
         } else {
             this.canvas_default_w = config.video_canvas_default_w; //640
             this.canvas_default_h = config.video_canvas_default_h; //480

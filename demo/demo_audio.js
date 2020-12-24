@@ -1,19 +1,19 @@
 /* eslint-disable no-undef */
 var global_data = {
-    ipaddr: '123.56.126.189',
-    port: 80,
-    orgid: 1,
+    ipaddr: '123.56.126.189',//服务器IP
+    port: 80,//服务器端口
+    orgid: 1,//组织编号
     username: '',
     consoleName: null,
     client: null,
-    logonName: 'websdkcu1',
-    password: '123456',
-    param_uid1: 65812,
-    param_uid2: 65813,
-    param_tgid1: 98787,
-    param_tgid2: 100512,
-    con_id: 81965, //83644, //登录后会自动更新
-    con_other_id: 83645
+    logonName: 'websdkcu1',//登录名
+    password: '123456',//密码
+    param_uid1: 65812,//测试用户1ID
+    param_uid2: 65813,//测试用户2ID
+    param_tgid1: 98787,//测试群组1ID
+    param_tgid2: 100512,//测试群组2ID
+    con_id: 81965, //当前登录的调度台ID
+    con_other_id: 83645//可忽略
 }
 
 var api_demo = {
@@ -198,7 +198,7 @@ var api_demo = {
     req_ptt_off: function () {
         websdk.request.voiceRequest.pttOff(global_data.param_tgid1, function (rsp) {
             console.log('demo_req_ptt_off result:{}', rsp);
-            api_demo.req_get_audio_list();
+            //api_demo.req_get_audio_list();
         }, 'demo_req_ptt_off');//
     },
     voice_pstn_call: function () {
@@ -244,7 +244,7 @@ var api_demo = {
     req_get_audio_list: function (){
         console.log('req_get_audio_list');
         var url = api_demo.build_url('/data/api/audio/list');
-        var param = 'uid=' + global_data.con_id+'&start=0&length=2';
+        var param = 'uid=' + global_data.con_id+'&start=0&length=100';
         $('#audio_grid').empty();
         api_demo.post(url, param, function (data) {
             //console.log(data);
@@ -579,7 +579,7 @@ var audio_obj = {
         }
 
         //lh.mask('正在加载语音，请稍等...');
-        $.post(api_demo.build_url('/api/audio/load'), {suffix: suffix, id: id, path: path}, function (rsp) {
+        $.post(api_demo.build_url('/data/api/audio/load'), {suffix: suffix, id: id, path: path}, function (rsp) {
             /*// FIXME FOR TEST
             if (!rsp.success) {
                 rsp.success = true;
@@ -590,10 +590,10 @@ var audio_obj = {
 
             setTimeout(function () { // 延时加载音频是因为，服务器音频转换可能尚未完成
                 if (rsp.success) {
-                    lh.hideMask();
+                    //lh.hideMask();
                     //var $dom = $('#' + btn_id);
                     $('#' + btn_id).hide();
-                    var dom = '<button style="float: left;" class="btn btn-default btn-xs mgBtm0" onclick="doStop(\'' + btn_id + '\');">停止</button><audio preload id="audio_' + btn_id + '" onerror="onAudioError(\'' + btn_id + '\', ' + row + ');" onended="onAudioEnd(\'' + btn_id + '\', ' + row + ');" src="' + rsp.url + '"></audio>';
+                    var dom = '<button style="float: left;" class="btn btn-default btn-xs mgBtm0" onclick="audio_obj.doStop(\'' + btn_id + '\');">停止</button><audio preload id="audio_' + btn_id + '" onerror="audio_obj.onAudioError(\'' + btn_id + '\', ' + row + ');" onended="audio_obj.onAudioEnd(\'' + btn_id + '\', ' + row + ');" src="' + rsp.url + '"></audio>';
                     $('#play_' + btn_id).html(dom);
                     //$dom.replaceWith(dom);
                     $('#audio_' + btn_id).audioPlayer();
@@ -602,8 +602,8 @@ var audio_obj = {
                         $('#audio_' + btn_id + '+div').click();
                     }, 200);
                 } else {
-                    lh.hideMask();
-                    lh.alert(rsp.msg);
+                    //lh.hideMask();
+                    alert(rsp.msg);
                 }
             }, 2000);
 

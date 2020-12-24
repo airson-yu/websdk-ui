@@ -1,102 +1,41 @@
 /* eslint-disable no-undef */
 var global_data = {
-    //ipaddr: '39.105.135.70',
-    ipaddr: '39.106.117.194',
+    ipaddr: '123.57.63.112',
     port: 80,
-    //orgid: 10,
-    orgid: 1,
+    orgid: 59,
     username: '',
     consoleName: null,
     client: null,
     logonName: 'websdk01',
-    password: '123456',
-    /*param_uid1: 68505,
-    param_uid2: 68506,
-    param_tgid1: 74752,
-    param_tgid2: 74753,
-    con_id: 68508,
-    con_other_id: 68509,*/
-    //param_uid1: 66250,
-    param_uid1: 67876,
-    param_uid2: 67877,
-    param_tgid1: 100509,
-    param_tgid2: 100512,
-    con_id: 83644, //登录后会自动更新
-    con_other_id: 83645
+    password: 'QWEasd',
+    param_uid1: 201217,
+    param_uid2: 201218,
+    param_tgid1: 230489,
+    param_tgid2: 230488,
+    con_id: 201219, //登录后会自动更新
+    con_other_id: 201220
 }
-RHTX = true;
-GA = false;
-if (RHTX) {
-    global_data.ipaddr = '39.105.135.70';
-    global_data.orgid = 1;
-    global_data.param_uid1 = 65777;
-    //global_data.param_uid1 = 68505;
-    global_data.param_uid2 = 68506;
-    global_data.param_tgid1 = 98711;
-    //global_data.param_tgid1 = 74752;
-    global_data.param_tgid2 = 74753;
-    global_data.con_id = 65576;
-    global_data.con_other_id = 68509;
 
-    global_data.logonName = 'websdkcu1';
-    global_data.ipaddr = '123.56.126.189';
-    global_data.orgid = 1;
-    global_data.param_uid1 = 65812;
-    global_data.param_uid2 = 65813;
-    global_data.param_tgid1 = 98787;
+document.getElementById('sdk_server_tip').style.display = 'block';
 
-    /*global_data.ipaddr = '123.56.126.189';
-    global_data.param_uid1 = 82045;
-    global_data.param_tgid1 = 98306;*/
-
-    //global_data.con_id = 65776;
-    //global_data.param_uid1 = 68505;
-
-    //global_data.ipaddr = '39.106.17.196';
-    //global_data.logonName = 'pstn';
-    //global_data.ipaddr = '198.1.3.166';
-    //global_data.logonName = 'fan';
-    //global_data.con_id = 66266;
-} else if (GA) {
-    global_data.ipaddr = '20.75.11.201';
-    global_data.orgid = 1;
-    global_data.logonName = 'cdsjydzh';
-    global_data.param_uid1 = 65619;
-} else {
-    document.getElementById('sdk_server_tip').style.display = 'block';
+function load_config(init) {
+    global_data.ipaddr = document.getElementById('ipaddr').value;
+    global_data.port = document.getElementById('port').value;
+    global_data.orgid = document.getElementById('orgid').value;
+    global_data.logonName = document.getElementById('logonName').value;
+    global_data.password = document.getElementById('password').value;
+    global_data.param_uid1 = document.getElementById('param_uid1').value;
+    global_data.param_uid2 = document.getElementById('param_uid2').value;
+    global_data.param_tgid1 = document.getElementById('param_tgid1').value;
+    global_data.param_tgid2 = document.getElementById('param_tgid2').value;
+    if (!init) {
+        document.getElementById('cfg_tip').innerText = '配置已更新';
+    }
 }
+
+load_config(true);
 
 var api_demo = {
-
-    init: function () {
-        websdk.init(function (result) {
-
-            console.log('websdk.init result:', result);
-
-            api_demo.logonNotice();
-            api_demo.logoutNotice();
-            api_demo.emergencyAlarmNotice();
-            api_demo.emergencyHandledNotice();
-            api_demo.userProfileNotice();
-            api_demo.userParamsNotice();
-            api_demo.userStateNotice();
-            api_demo.userGPSNotice();
-            api_demo.userQueryGPSNotice();
-            api_demo.callStatusNotice();
-            api_demo.pttStatusNotice();
-            api_demo.groupAttachInfoNotice();
-            api_demo.enterGroupNotice();
-            api_demo.leaveGroupNotice();
-            api_demo.addGroupMemberNotice();
-            api_demo.removeGroupMemberNotice();
-            api_demo.groupMemStatusNotice();
-
-            api_demo.req_login();
-
-        });
-
-    },
-
     // XXX authRequest
     req_login: function () {
         document.getElementById('sdk_tip').innerText = '正在登录中...';
@@ -503,6 +442,7 @@ websdk.init(function (result) {
 
     if (window.websdk.private_cache && window.websdk.private_cache.login_uid) {
         document.getElementById('sdk_tip').innerText = '登录成功';
+        global_data.con_id = window.websdk.private_cache.login_uid;
     }
 
     console.log('websdk.init result:', result);

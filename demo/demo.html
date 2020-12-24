@@ -22,6 +22,15 @@
             margin: 5px;
             width: 150px;
         }
+
+        .cfg_row {
+            padding-top: 5px;
+        }
+
+        .cfg_label {
+            width: 140px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -30,16 +39,43 @@
     <div>WEBSDK Client DEMO:</div>
     <div style="color:green;">按F12打开开发者工具并切换到console面板即可查看LOG输出(推荐使用chrome浏览器)</div>
     <div style="color:green;border-bottom: 1px solid gray;">
-        <div>请先确保已下载并成功安装调度台服务软件：（链接：https://pan.baidu.com/s/1TyF1oIkYxeRQxy3y5Cf8kg 提取码：kuie）
-            <a href="https://pan.baidu.com/s/1TyF1oIkYxeRQxy3y5Cf8kg" target="_blank">点击下载</a>
+        <div>请先确保已下载并成功安装调度台服务软件（ConsoleService-8.0.37.exe）：（链接: https://pan.baidu.com/s/1ZYXOMzWDFLkZMOjKwYiRPg 密码:
+            puno）
+            <a href="https://pan.baidu.com/s/1ZYXOMzWDFLkZMOjKwYiRPg" target="_blank">点击下载</a>
         </div>
-        <!--<div>请先确保已下载并成功安装调度台服务软件：（链接：https://pan.baidu.com/s/1kgs1QnDT9j_I61WEGm1rbA 提取码：szc7）
-            <a href="https://pan.baidu.com/s/1kgs1QnDT9j_I61WEGm1rbA" target="_blank">点击下载</a>
-        </div>-->
         <div id="sdk_server_tip" style="display: none;">
-            <div>服务器IP：39.106.213.127，端口：80，公司ID：28</div>
-            <div><span style="padding-right: 40px;">终端账号1：19900000011 密码：123456</span><span>终端账号2：19900000012 密码：123456</span></div>
-            <div><span style="padding-right: 40px;">终端账号3：19900000013 密码：123456</span><span>终端账号4：19900000014 密码：123456</span></div>
+            <div style="">配置信息：</div>
+            <div class="cfg_row">
+                <span class="cfg_label">服务器IP：</span>
+                <input id="ipaddr" value="123.57.63.112"/>
+                端口：<input id="port" value="80"/> 组织ID：<input id="orgid" value="59"/>
+            </div>
+            <div class="cfg_row"><span>
+                <span class="cfg_label">调度台账号：</span>
+                <input id="logonName" value="websdk01"/> 密码：<input id="password" value="QWEasd"/></span>
+            </div>
+            <div class="cfg_row">
+                <span><span class="cfg_label">终端账号1 ID：</span>
+                    <input id="param_uid1" value="201217"/></span><span>账号：19900000011 密码：QWEasd </span>
+            </div>
+            <div class="cfg_row">
+                <span><span class="cfg_label">终端账号2 ID：</span>
+                    <input id="param_uid2" value="201218"/></span><span>账号：19900000012 密码：QWEasd </span>
+            </div>
+            <div class="cfg_row">
+                <span><span class="cfg_label">群组1 ID：</span>
+                    <input id="param_tgid1" value="230489"/></span><span></span>
+            </div>
+            <div class="cfg_row">
+                <span><span class="cfg_label">群组2 ID：</span>
+                    <input id="param_tgid2" value="230488"/></span><span></span>
+            </div>
+            <div class="cfg_row">
+                <button onclick="load_config();">保存并刷新配置信息</button>
+                <span>如果已经登录需要先手动点击退出登录，再更新配置信息</span>
+            </div>
+            <div id="cfg_tip" class="cfg_row"></div>
+            <div class="cfg_row"></div>
         </div>
     </div>
     <div class="demo-btn">
