@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 //全局配置信息，修改配置后，刷新页面才会生效
 var global_data = {
-    ipaddr: '123.57.63.112123',//服务器IP
+    ipaddr: '123.57.63.112',//服务器IP
     port: 80,//服务器端口
     orgid: 59,//组织编号
     consoleName: null,//当调度台账号绑定有多个调度台时，需要指定登录哪个调度台，这里填写调度台的名称
