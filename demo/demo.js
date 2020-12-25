@@ -1,24 +1,38 @@
 /* eslint-disable no-undef */
+//全局配置信息，修改配置后，刷新页面才会生效
 var global_data = {
-    ipaddr: '123.57.63.112',//服务器IP
+    ipaddr: '123.57.63.112123',//服务器IP
     port: 80,//服务器端口
     orgid: 59,//组织编号
-    username: '',
-    consoleName: null,
-    client: null,
+    consoleName: null,//当调度台账号绑定有多个调度台时，需要指定登录哪个调度台，这里填写调度台的名称
     logonName: 'websdk01',//调度台登录账号
     password: 'QWEasd',//调度台登录密码
     param_uid1: 201217,//测试终端1ID
     param_uid2: 201218,//测试终端2ID
     param_tgid1: 230489,//测试群组1ID
-    param_tgid2: 230488,//测试群组1ID
+    param_tgid2: 230488,//测试群组2ID
     con_id: 201219, //当前登录的调度台ID，调度台登录后会自动更新
     con_other_id: 201220 //可忽略
 }
 
 document.getElementById('sdk_server_tip').style.display = 'block';
 
-function load_config(init) {
+function init_config() {
+    document.getElementById('ipaddr').value = global_data.ipaddr;
+    document.getElementById('port').value = global_data.port;
+    document.getElementById('orgid').value = global_data.orgid;
+    document.getElementById('logonName').value = global_data.logonName;
+    document.getElementById('password').value = global_data.password;
+    document.getElementById('param_uid1').value = global_data.param_uid1;
+    document.getElementById('param_uid2').value = global_data.param_uid2;
+    document.getElementById('param_tgid1').value = global_data.param_tgid1;
+    document.getElementById('param_tgid2').value = global_data.param_tgid2;
+}
+
+init_config();
+
+// eslint-disable-next-line no-unused-vars
+function update_config() {
     global_data.ipaddr = document.getElementById('ipaddr').value;
     global_data.port = document.getElementById('port').value;
     global_data.orgid = document.getElementById('orgid').value;
@@ -28,12 +42,8 @@ function load_config(init) {
     global_data.param_uid2 = document.getElementById('param_uid2').value;
     global_data.param_tgid1 = document.getElementById('param_tgid1').value;
     global_data.param_tgid2 = document.getElementById('param_tgid2').value;
-    if (!init) {
-        document.getElementById('cfg_tip').innerText = '配置已更新';
-    }
+    document.getElementById('cfg_tip').innerText = '配置已更新';
 }
-
-load_config(true);
 
 var api_demo = {
     // XXX authRequest
