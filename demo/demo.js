@@ -1,19 +1,19 @@
 /* eslint-disable no-undef */
 var global_data = {
-    ipaddr: '123.57.63.112',
-    port: 80,
-    orgid: 59,
+    ipaddr: '123.57.63.112',//服务器IP
+    port: 80,//服务器端口
+    orgid: 59,//组织编号
     username: '',
     consoleName: null,
     client: null,
-    logonName: 'websdk01',
-    password: 'QWEasd',
-    param_uid1: 201217,
-    param_uid2: 201218,
-    param_tgid1: 230489,
-    param_tgid2: 230488,
-    con_id: 201219, //登录后会自动更新
-    con_other_id: 201220
+    logonName: 'websdk01',//调度台登录账号
+    password: 'QWEasd',//调度台登录密码
+    param_uid1: 201217,//测试终端1ID
+    param_uid2: 201218,//测试终端2ID
+    param_tgid1: 230489,//测试群组1ID
+    param_tgid2: 230488,//测试群组1ID
+    con_id: 201219, //当前登录的调度台ID，调度台登录后会自动更新
+    con_other_id: 201220 //可忽略
 }
 
 document.getElementById('sdk_server_tip').style.display = 'block';
