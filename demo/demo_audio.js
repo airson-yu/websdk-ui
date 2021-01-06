@@ -241,24 +241,40 @@ var api_demo = {
         }, 'demo_voice_pstn_call_stop');//
     },
 
-    req_get_audio_list: function (){
+    req_get_audio_list: function () {
         console.log('req_get_audio_list');
-        var url = api_demo.build_url('/data/api/audio/list');
-        var param = 'uid=' + global_data.con_id+'&start=0&length=100';
+        /*var url = api_demo.build_url('/data/api/audio/list');
+        var param = 'uid=' + global_data.con_id + '&start=0&length=100';
         $('#audio_grid').empty();
         api_demo.post(url, param, function (data) {
             //console.log(data);
             audio_obj.renderGrid(data.rows);
         }, function (e) {
             console.warn("getAudioList error:{}", e);
-        });
+        });*/
+        websdk.request.voiceRequest.getAudioList(null, null, null, null, null, null, null, null, function (rsp) {
+            console.log('demo_req_get_audio_list result:{}', rsp);
+            $('#audio_grid').empty();
+            audio_obj.renderGrid(rsp.rows);
+        }, 'demo_req_get_audio_list');//
+    },
+
+    req_transform_audio: function (audioid, suffix, path, callback) {
+        /*
+        audioid = 4;
+        suffix = '202101'；
+        path = '20210105/98787/65811_98787_278367890_20210105142033.amr';*/
+        websdk.request.voiceRequest.transformAudio(audioid, suffix, path, function (rsp) {
+            console.log('demo_req_transform_audio result:{}', rsp);
+            callback(rsp);
+        }, 'demo_req_transform_audio');//
     },
 
     // XXX videoRequest
     req_play_video: function () {
         //var that = this;
         //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
-        websdk.request.videoRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
+        websdk.request.voiceRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
             console.log('demo_req_play_video result:{}', rsp);
         }, 'demo_req_play_video');//
     },
@@ -430,7 +446,7 @@ var api_demo = {
     // XXX other
 
     /** build full url */
-    build_url: function (uri) {
+    /*build_url: function (uri) {
         if (global_data.ipaddr && global_data.port) {
 
             return 'http://' + global_data.ipaddr + ':' + global_data.port + uri;
@@ -439,9 +455,9 @@ var api_demo = {
             console.warn('global_data ipaddr or port empty');
         }
         return null;
-    },
+    },*/
     /** ajax post */
-    post: function (url, param, callback, callback_err) {
+    /*post: function (url, param, callback, callback_err) {
         var xhr = new XMLHttpRequest();
         xhr.open('post', url, true);
         xhr.setRequestHeader('Access-Control-Allow-Origin', url);
@@ -451,12 +467,12 @@ var api_demo = {
                 callback(this.response);
             }
         }
-        /*xhr.ontimeout = function(e) {};
+        /!*xhr.ontimeout = function(e) {};
         if(onError){
             xhr.onerror = function(e) {
                 onError(e);
             };
-        }*/
+        }*!/
         xhr.timeout = 1200000; // 20分钟请求未完成就超时
         if (callback_err) {
             xhr.ontimeout = function (e) {
@@ -469,7 +485,7 @@ var api_demo = {
         xhr.responseType = 'json';
         xhr.send(param);
         return xhr;
-    }
+    }*/
 
 }
 
@@ -579,7 +595,9 @@ var audio_obj = {
         }
 
         //lh.mask('正在加载语音，请稍等...');
-        $.post(api_demo.build_url('/data/api/audio/load'), {suffix: suffix, id: id, path: path}, function (rsp) {
+
+        api_demo.req_transform_audio(id, suffix, path, function (rsp) {
+            //$.post(api_demo.build_url('/data/api/audio/load'), {suffix: suffix, id: id, path: path}, function (rsp) {
             /*// FIXME FOR TEST
             if (!rsp.success) {
                 rsp.success = true;
