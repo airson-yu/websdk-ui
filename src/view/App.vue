@@ -609,7 +609,7 @@ export default {
     },
 
     req_play_video: function () {
-      window.websdk.request.videoRequest.playVideo(this.con_id, this.param_uid1, null, null, 0, 0, 0, function (rsp) {
+      window.websdk.request.videoRequest.playVideo(this.con_id, this.param_uid1, null, null, 0, 0, 0, 0,function (rsp) {
         //logger.debug('req_play_video result:{}', rsp);
       }, 'test_req_play_video');//
     },

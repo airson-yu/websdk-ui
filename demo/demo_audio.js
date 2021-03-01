@@ -274,7 +274,7 @@ var api_demo = {
     req_play_video: function () {
         //var that = this;
         //playVideo = (demander, target, extdemander, exttarget, session, channel, resolution, callback, cbid) => {
-        websdk.request.voiceRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, function (rsp) {
+        websdk.request.voiceRequest.playVideo(global_data.con_id, global_data.param_uid1, null, null, 0, 0, 0, 0,function (rsp) {
             console.log('demo_req_play_video result:{}', rsp);
         }, 'demo_req_play_video');//
     },
