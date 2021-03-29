@@ -469,8 +469,24 @@ var api_demo = {
         websdk.view.showCreateGroupModal(function (result) {
             console.log('showCreateGroupModal result:{}', result);
         });
-    }
+    },
+
     // XXX other
+    setLogLevelNone: function () {
+        websdk.request.baseRequest.setLogLevelNone(function (result) {
+            console.log('setLogLevelNone result:{}', result);
+        });
+    },
+    setLogLevelDebug: function () {
+        websdk.request.baseRequest.setLogLevelDebug(function (result) {
+            console.log('setLogLevelDebug result:{}', result);
+        });
+    },
+    getCurLogLevel: function () {
+        websdk.request.baseRequest.getCurLogLevel(function (result) {
+            console.log('getCurLogLevel result:{}', result);
+        });
+    },
 
 }
 
