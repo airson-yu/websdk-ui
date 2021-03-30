@@ -1,7 +1,7 @@
 <template>
   <Modal v-model="voice_call_modal_show" class="sdk-modal sdk-voice-modal sdk-voice-call-modal" title="语音通话" scrollable
-         :width=484 :z-index="5000" :mask="false" v-on:on-cancel="on_hide_modal"
-         v-on:on-visible-change="on_visible_change">
+         :width=242 :z-index="5000" :mask="false" v-on:on-cancel="on_hide_modal"
+         v-on:on-visible-change="on_visible_change"> <!-- width=484 -->
     <div slot="header">
       <div class="ivu-modal-header-inner">
         <span>语音通话</span>
@@ -379,10 +379,11 @@ export default {
 }
 
 .sdk-panel {
-  height: 488px; //388 340
+  height: 194px; //488 388 340
   text-align: center;
   font-size: large;
-  padding: 115px 20px 20px 20px; //60px 20px 20px 20px
+  //padding: 115px 20px 20px 20px; //60px 20px 20px 20px
+  padding: 5px;
 }
 
 .sdk-volume-bar {

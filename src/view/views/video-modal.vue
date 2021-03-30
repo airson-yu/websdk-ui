@@ -52,7 +52,7 @@
         <canvas :id="sdk_video_canvas_id" style="max-width:100%;max-height:100%;margin:0px 0px -4px 0px;"></canvas>
       </div>
     </div>
-    <div v-show="playid !== 0" slot="footer" class="sdk-tac">
+    <div v-show="playid !== 0" slot="footer" class="sdk-tac" style="padding-left: 0px;padding-right: 0px;">
       <!--<Button @click="switchCamera" size="small">
           <Icon type="ios-reverse-camera-outline" color="#111"/>
       </Button>-->
@@ -60,16 +60,14 @@
       <Icon v-show="!mute" @click="switchMute" type="md-volume-up" size="24" style="cursor: pointer;" title="点击关闭声音"/>
       <Icon @click="switchCamera" type="ios-reverse-camera-outline" size="30" style="cursor: pointer;" title="切换摄像头"/>
       <span>分辨率:</span>
-      <Select v-model="cur_resolution" size="small" style="width:80px;" v-on:on-change="updateVideoSetResolution">
+      <Select v-model="cur_resolution" size="small" style="width:18%;" v-on:on-change="updateVideoSetResolution">
         <Option v-for="item in resolution_list" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
-      <span>画面质量:</span>
-      <Select v-model="quality" size="small" style="width:41px;" v-on:on-change="updateVideoSetQuality">
+      <span>画质:</span>
+      <Select v-model="quality" size="small" style="width:17%;" v-on:on-change="updateVideoSetQuality">
         <Option v-for="item in quality_list" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
-      <div class="sdk-oper-item" title="语音通话">
-        <Icon @click="reqCall" type="ios-call-outline" class="sdk-icon-btn"/>
-      </div>
+      <Icon @click="reqCall" type="ios-call-outline" size="30" style="cursor: pointer;" title="语音通话"/>
     </div>
   </Modal>
 </template>
@@ -414,9 +412,9 @@ export default {
       if (!that.check_call_status('语音')) {
         return false;
       }
-      that.showVoiceCallModal({id: that.target, status: 1});
+      that.showVoiceCallModal({id: that.id, status: 1});
       let login_uid = window.websdk.private_cache.login_uid;
-      window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, null, function (rsp) {
+      window.websdk.request.voiceRequest.call(login_uid, that.id, null, null, 1, 15, 0, 1, null, function (rsp) {
         //logger.debug('user-modal req_call_im result:{}', rsp);
       }, 'req_call_video_modal');//
     },
@@ -573,29 +571,6 @@ export default {
 .sdk-uname {
   //margin: 20px;
   word-break: break-all;
-}
-
-.sdk-oper-item {
-  float: left;
-  width: 25%;
-}
-
-.sdk-pointer {
-  cursor: pointer;
-}
-
-.sdk-icon-btn {
-  cursor: pointer;
-  color: #fff;
-  font-size: 40px;
-}
-
-.sdk-icon-btn:hover {
-  color: #2b85e4 !important;
-}
-
-.sdk-icon-btn-on {
-  color: #f90 !important
 }
 </style>
 

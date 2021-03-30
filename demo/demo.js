@@ -492,8 +492,8 @@ var api_demo = {
 
 websdk.init(function (result) {
 
-    websdk.websdkui.configApi.setLogLevelNone(function (result) {
-        console.log('setLogLevelNone result:{}', result);
+    websdk.websdkui.configApi.setLogLevelDebug(function (result) {
+        console.log('setLogLevelDebug result:{}', result);
     });
 
     //websdk.view = websdk.vm.$children[0];
