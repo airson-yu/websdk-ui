@@ -1,5 +1,6 @@
 import moment from 'moment';
 
+/** core和ui都有logger,需要同步更新，设置日志级别也要注意同步，ui中设置日志级别会同时设置core的日志级别(core-baseRequest.js, ui-configApi.js) */
 let logger = {
     //this.processor = processor;
     //this.config = processor.config;
@@ -114,14 +115,14 @@ let logger = {
                 //logger.dom_id && (this.log_dom(msg, level_name));
             } else if (level_num <= this.level_list.notice) {
                 this.dev_mode && console.info.apply(console, args_for_console);
+                // eslint-disable-next-line no-undef
                 ui.alert(msg);
             }
 
             this.output(level_num, level_name, msg);
         }
         return logger;
-    }
-    ,
+    },
 
     debug: function (msg) {
         return this.private_log(this.level_list.debug, this.level_name_list.debug, msg, arguments);
