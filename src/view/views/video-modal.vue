@@ -67,6 +67,9 @@
       <Select v-model="quality" size="small" style="width:41px;" v-on:on-change="updateVideoSetQuality">
         <Option v-for="item in quality_list" :value="item.value" :key="item.value">{{ item.label }}</Option>
       </Select>
+      <div class="sdk-oper-item" title="语音通话">
+        <Icon @click="reqCall" type="ios-call-outline" class="sdk-icon-btn"/>
+      </div>
     </div>
   </Modal>
 </template>
@@ -393,8 +396,34 @@ export default {
       logger.debug("close_confirm onOk 3");
     },
 
+    check_call_status(type) {
+      let that = this;
+      if (that.$store.state.voice_call.modal_show) {
+        that.$Message.warning('当前正在语音通话，无法发起' + type + '通话');
+        return false;
+      } else if (that.$store.state.video_call.modal_show) {
+        that.$Message.warning('当前正在视频通话，无法发起' + type + '通话');
+        return false;
+      }
+      return true;
+    },
+
+    reqCall() {
+      let that = this;
+      // check status
+      if (!that.check_call_status('语音')) {
+        return false;
+      }
+      that.showVoiceCallModal({id: that.target, status: 1});
+      let login_uid = window.websdk.private_cache.login_uid;
+      window.websdk.request.voiceRequest.call(login_uid, that.target, null, null, 1, 15, 0, 1, null, function (rsp) {
+        //logger.debug('user-modal req_call_im result:{}', rsp);
+      }, 'req_call_video_modal');//
+    },
+
     ...mapActions([
-      'showVideoModal', 'hideVideoModal', 'setVideoWS'
+      'showVideoModal', 'hideVideoModal', 'setVideoWS',
+      'showVoiceConfirmModal', 'hideVoiceConfirmModal', 'showVoiceCallModal', 'hideVoiceCallModal',
     ]),
     // 使用对象展开运算符将 getter 混入 computed 对象中
     ...mapGetters([
@@ -544,6 +573,29 @@ export default {
 .sdk-uname {
   //margin: 20px;
   word-break: break-all;
+}
+
+.sdk-oper-item {
+  float: left;
+  width: 25%;
+}
+
+.sdk-pointer {
+  cursor: pointer;
+}
+
+.sdk-icon-btn {
+  cursor: pointer;
+  color: #fff;
+  font-size: 40px;
+}
+
+.sdk-icon-btn:hover {
+  color: #2b85e4 !important;
+}
+
+.sdk-icon-btn-on {
+  color: #f90 !important
 }
 </style>
 
