@@ -54,6 +54,43 @@ class configApi {
         return this.video_push_close_action;
     }
 
+    /** log config */
+
+    setLogLevelAll = (callback) => {
+        logger.setLevel(logger.level_list.all);
+        window.websdk.request.baseRequest.setLogLevelAll();
+        return this.getCurLogLevel(callback);
+    }
+
+    setLogLevelDebug = (callback) => {
+        logger.setLevel(logger.level_list.debug);
+        window.websdk.request.baseRequest.setLogLevelDebug();
+        return this.getCurLogLevel(callback);
+    }
+
+    setLogLevelWarn = (callback) => {
+        logger.setLevel(logger.level_list.warn);
+        window.websdk.request.baseRequest.setLogLevelWarn();
+        return this.getCurLogLevel(callback);
+    }
+
+    setLogLevelNone = (callback) => {
+        logger.setLevel(logger.level_list.none);
+        window.websdk.request.baseRequest.setLogLevelNone();
+        return this.getCurLogLevel(callback);
+    }
+
+    getCurLogLevel = (callback) => {
+        for (let i in logger.level_list) {
+            let val = logger.level_list[i];
+            if (val == logger.level) {
+                callback && callback(i);
+                return;
+            }
+        }
+        callback && callback();
+    }
+
 }
 
 export default configApi;

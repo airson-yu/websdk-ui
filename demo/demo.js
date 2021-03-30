@@ -473,17 +473,17 @@ var api_demo = {
 
     // XXX other
     setLogLevelNone: function () {
-        websdk.request.baseRequest.setLogLevelNone(function (result) {
+        websdk.websdkui.configApi.setLogLevelNone(function (result) {
             console.log('setLogLevelNone result:{}', result);
         });
     },
     setLogLevelDebug: function () {
-        websdk.request.baseRequest.setLogLevelDebug(function (result) {
+        websdk.websdkui.configApi.setLogLevelDebug(function (result) {
             console.log('setLogLevelDebug result:{}', result);
         });
     },
     getCurLogLevel: function () {
-        websdk.request.baseRequest.getCurLogLevel(function (result) {
+        websdk.websdkui.configApi.getCurLogLevel(function (result) {
             console.log('getCurLogLevel result:{}', result);
         });
     },
@@ -491,6 +491,10 @@ var api_demo = {
 }
 
 websdk.init(function (result) {
+
+    websdk.websdkui.configApi.setLogLevelNone(function (result) {
+        console.log('setLogLevelNone result:{}', result);
+    });
 
     //websdk.view = websdk.vm.$children[0];
 
